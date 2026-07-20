@@ -1,0 +1,36 @@
+generated: '2026-07-18'
+method: searched
+source: openapi/dyspatch-openapi-original.json
+docs: https://docs.dyspatch.io/administration/creating_api_keys/
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  detail: >-
+    Single scheme: a static Bearer API key sent in the Authorization header
+    (Authorization: Bearer <key>). API keys are created in the Dyspatch admin
+    dashboard and come in read-only and read & write permission levels. No OAuth
+    2.0, OIDC, or scope surface.
+schemes:
+- name: Bearer
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: |-
+    Set Bearer followed by your API key as the Authorization header in your
+    API requests.
+
+    ```shell
+    Authorization: Bearer [example key]
+    ```
+
+    Below is an example curl request with an API key in the Authorization header.
+
+    ```shell
+    curl --request GET \
+    --url https://api.dyspatch.io/templates \
+    --header 'Authorization: Bearer [example key]' \
+    --header 'Accept: application/v
+  sources:
+  - openapi/dyspatch-openapi-original.json
