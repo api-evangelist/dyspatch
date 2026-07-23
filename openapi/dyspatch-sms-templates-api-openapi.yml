@@ -1,0 +1,651 @@
+openapi: 3.0.0
+info:
+  version: '2026.06'
+  title: Dyspatch Blocks SMS Templates API
+  description: '# Introduction
+
+
+    The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
+
+    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
+
+    See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
+
+    how to implement Dyspatch.
+
+
+    ## Generating API Clients
+
+    Dyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.
+
+    '
+  contact:
+    name: Dyspatch Support
+    url: https://docs.dyspatch.io
+    email: support@dyspatch.io
+  termsOfService: https://www.dyspatch.io/legal/terms-of-service/
+servers:
+- url: https://api.dyspatch.io
+tags:
+- name: SMS Templates
+  description: 'SMS Templates are the SMS templates found in your Dyspatch account. Only the
+
+    published Template Draft is returned.
+
+
+    A typical integration will start with using the Templates list endpoint to iterate through and sync Templates.
+
+    '
+paths:
+  /sms/templates:
+    get:
+      operationId: getSMSTemplates
+      security:
+      - Bearer: []
+      summary: List SMS Templates
+      description: Gets a list of SMS Template Metadata objects for all published templates. Up to 25 results returned before results are paginated.
+      tags:
+      - SMS Templates
+      parameters:
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/version'
+      - $ref: '#/components/parameters/templateNameFilter'
+      - $ref: '#/components/parameters/templateFolderFilter'
+      - $ref: '#/components/parameters/templateWorkspaceFilter'
+      responses:
+        '200':
+          description: A list of SMS templates
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/TemplatesRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+  /sms/templates/{templateId}:
+    get:
+      operationId: getSMSTemplateById
+      security:
+      - Bearer: []
+      summary: Get SMS Template by ID
+      description: Gets an SMS template object with the matching ID. Templates without a published draft will result in an error.
+      tags:
+      - SMS Templates
+      parameters:
+      - $ref: '#/components/parameters/templateId'
+      - $ref: '#/components/parameters/smsTargetLanguage'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: A template object with the requested ID. Templates without a published draft will result in an error.
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the current time window
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/SMSTemplateRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+  /sms/render/template/{templateId}:
+    post:
+      operationId: renderSMSTemplate
+      security:
+      - Bearer: []
+      summary: Render SMS Template by ID
+      description: Renders an SMS template using the provided data.
+      tags:
+      - SMS Templates
+      parameters:
+      - $ref: '#/components/parameters/templateId'
+      - $ref: '#/components/parameters/version'
+      requestBody:
+        description: JSON object containing template data for the render
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenderBody'
+        required: false
+      responses:
+        '200':
+          description: Rendered template contents incorporating the data passed in the request body.
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the current time window
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/SMSTemplateRender'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+  /sms/render/template/{templateId}/{languageId}:
+    post:
+      operationId: renderSMSTemplateByLCID
+      security:
+      - Bearer: []
+      summary: Render Localized SMS Template by ID
+      description: Renders an SMS template for the selected language using the provided data.
+      tags:
+      - SMS Templates
+      parameters:
+      - $ref: '#/components/parameters/templateId'
+      - $ref: '#/components/parameters/languageId'
+      - $ref: '#/components/parameters/version'
+      requestBody:
+        description: JSON object containing template data for the render
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenderBody'
+        required: false
+      responses:
+        '200':
+          description: Rendered template contents in the selected language, incorporating the data passed in the request body.
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the current time window
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/SMSTemplateRender'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    LocalizationMetaRead:
+      type: object
+      description: localization metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/localizationId'
+        name:
+          $ref: '#/components/schemas/localizationName'
+        url:
+          $ref: '#/components/schemas/localizationUrl'
+        localeGroup:
+          $ref: '#/components/schemas/localeGroupId'
+        languages:
+          $ref: '#/components/schemas/languages'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+    tagId:
+      type: string
+      example: /An opaque, unique identifier for a tag
+      description: tag_01gpe172x7p6aa1c9grr48efq8
+    localizationName:
+      type: string
+      example: English (US)
+      description: The user-specified name of a localization
+    templateDescription:
+      type: string
+      description: A description of the template
+      example: Description of Template
+    SMSTemplateRead:
+      type: object
+      description: list of template metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/templateId'
+        name:
+          $ref: '#/components/schemas/templateName'
+        description:
+          $ref: '#/components/schemas/templateDescription'
+        url:
+          $ref: '#/components/schemas/templateUrl'
+        compiled:
+          $ref: '#/components/schemas/SMSCompiledRead'
+        path:
+          $ref: '#/components/schemas/path'
+        workspaceId:
+          $ref: '#/components/schemas/workspaceId'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        publishedDraftId:
+          $ref: '#/components/schemas/draftId'
+        localizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalizationMetaRead'
+          description: A list of the Template's available localizations
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedTagsMetaRead'
+          description: A list of Tags assigned to the Template
+    languages:
+      type: array
+      items:
+        type: string
+        example: fr-FR
+      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
+
+        '
+    localizationUrl:
+      type: string
+      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific localization
+    APIError:
+      type: object
+      description: possible errors from the api
+      properties:
+        code:
+          type: string
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          - prohibited_action
+          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
+        message:
+          type: string
+          description: Human readable error message
+        parameter:
+          type: string
+          description: The invalid parameter, if 'code' is invalid_parameter
+    SMSContent:
+      type: object
+      description: sms draft content
+      properties:
+        type:
+          type: string
+          example: Text
+          description: What type of content this contains (text or image)
+        value:
+          type: string
+          example: This is some text
+          description: The value of the content
+    templateUrl:
+      type: string
+      example: /templates/tem_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific template
+    SMSTemplateRender:
+      type: object
+      description: rendered template with data
+      properties:
+        sender:
+          type: string
+          example: John Doe
+          description: Sender name
+        phone:
+          type: string
+          example: 123-456-7890
+          description: Sender phone number
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/SMSContent'
+    tagName:
+      type: string
+      example: My Tag
+      description: The user-specified name of a tag
+    cursor:
+      type: object
+      description: Information about paginated results
+      properties:
+        next:
+          type: string
+          description: A cursor to fetch the next page of results
+        hasMore:
+          type: boolean
+          description: Whether there is a next page of results
+    variables:
+      type: array
+      items:
+        type: string
+        example: myVar
+      description: 'a list of variables used in the template
+
+        '
+    templateName:
+      type: string
+      description: The name of a template
+      example: Template Name
+    AssignedTagsMetaRead:
+      type: object
+      description: assigned tags metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/tagId'
+        name:
+          $ref: '#/components/schemas/tagName'
+    draftId:
+      type: string
+      description: An opaque, unique identifier for a draft
+      example: tdft_g3L7Cw6Hp5wU
+    localizationId:
+      type: string
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
+    SMSCompiledRead:
+      type: object
+      description: revision data
+      properties:
+        sender:
+          type: string
+          example: John Doe
+          description: Sender name
+        phone:
+          type: string
+          example: 123-456-7890
+          description: Sender phone number
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/SMSContent'
+        variables:
+          $ref: '#/components/schemas/variables'
+    templateId:
+      type: string
+      description: An opaque, unique identifier for a template
+      example: tem_g3L7Cw6Hp5wU
+    path:
+      type: string
+      description: The folder path location for this object
+      example: fdr_01gb8vd6pz/fdr_01gqjmdbq/fdr_01gqjmg1
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      type: string
+      example: lgr_alka38ajla301
+    TemplateMetaRead:
+      type: object
+      description: the template metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/templateId'
+        name:
+          $ref: '#/components/schemas/templateName'
+        description:
+          $ref: '#/components/schemas/templateDescription'
+        url:
+          $ref: '#/components/schemas/templateUrl'
+        path:
+          $ref: '#/components/schemas/path'
+        workspaceId:
+          $ref: '#/components/schemas/workspaceId'
+        localizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalizationMetaRead'
+          description: A list of the template's available localization objects
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        publishedDraftId:
+          $ref: '#/components/schemas/draftId'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedTagsMetaRead'
+          description: A list of Tags assigned to the Template
+    TemplatesRead:
+      type: object
+      description: list of template metadata
+      properties:
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateMetaRead'
+          description: A list of template metadata objects
+    RenderBody:
+      type: object
+      properties:
+        variable name:
+          description: string, number, boolean, array, object or null
+      example:
+        var1: value 1
+        var2: value 2
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    workspaceId:
+      type: string
+      description: The workspace this object belongs to
+      example: fdr_01gb8vd6pz
+  parameters:
+    templateFolderFilter:
+      name: folderId
+      in: query
+      description: Filter templates by folder ID (immediate children only)
+      required: false
+      schema:
+        type: string
+    templateId:
+      name: templateId
+      in: path
+      description: A template ID
+      required: true
+      schema:
+        type: string
+    languageId:
+      name: languageId
+      in: path
+      description: 'A language ID (eg: en-US)'
+      required: true
+      schema:
+        type: string
+    templateWorkspaceFilter:
+      name: workspaceId
+      in: query
+      description: Filter templates by workspace ID (includes all nested folders)
+      required: false
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    templateNameFilter:
+      name: name
+      in: query
+      description: Filter templates by name (case-insensitive partial match)
+      required: false
+      schema:
+        type: string
+    smsTargetLanguage:
+      name: targetLanguage
+      in: query
+      description: The type of templating language to use when compiling the content.
+      required: false
+      schema:
+        type: string
+        enum:
+        - sms
+        - handlebars
+        - liquid
+        - django
+        - jinja
+        - ampscript
+        - klaviyo
+        - brevo
+        - sendpulse
+        - iterablehandlebars
+        - dotdigitalliquid
+    cursor:
+      name: cursor
+      in: query
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      required: false
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InternalError:
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: 'Set Bearer followed by your API key as the Authorization header in your
+
+        API requests.
+
+
+        ```shell
+
+        Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678
+
+        ```
+
+
+        Below is an example curl request with an API key in the Authorization header.
+
+
+        ```shell
+
+        curl --request GET \
+
+        --url https://api.dyspatch.io/templates \
+
+        --header ''Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678'' \
+
+        --header ''Accept: application/vnd.dyspatch.2026.06+json''
+
+        ```
+
+        '
+x-tagGroups:
+- name: Email
+  tags:
+  - Templates
+  - Drafts
+  - Localizations
+- name: Platform
+  tags:
+  - Workspaces
+  - Blocks
+  - Tags
+  - Customer Profiles
+  - Themes
+- name: Other Communication Channels
+  tags:
+  - SMS Templates
+  - SMS Drafts
+  - SMS Localizations
+  - Push Templates
+  - Push Drafts
+  - Push Localizations
+  - Live Activity Templates
+  - Live Activity Drafts
+  - Live Activity Localizations
+  - Voice Templates
+  - Voice Drafts
+  - Voice Localizations

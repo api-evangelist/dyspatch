@@ -1,0 +1,556 @@
+openapi: 3.0.0
+info:
+  version: '2026.06'
+  title: Dyspatch Blocks API
+  description: '# Introduction
+
+
+    The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
+
+    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
+
+    See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
+
+    how to implement Dyspatch.
+
+
+    ## Generating API Clients
+
+    Dyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.
+
+    '
+  contact:
+    name: Dyspatch Support
+    url: https://docs.dyspatch.io
+    email: support@dyspatch.io
+  termsOfService: https://www.dyspatch.io/legal/terms-of-service/
+servers:
+- url: https://api.dyspatch.io
+tags:
+- name: Blocks
+paths:
+  /blocks:
+    get:
+      operationId: getBlocks
+      security:
+      - Bearer: []
+      summary: List Blocks
+      description: Gets a list of Blocks
+      tags:
+      - Blocks
+      parameters:
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: A list of blocks
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/BlocksRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+  /blocks/{blockId}:
+    get:
+      operationId: getBlock
+      security:
+      - Bearer: []
+      summary: Get Block by ID
+      description: Gets a block with the matching ID.
+      tags:
+      - Blocks
+      parameters:
+      - $ref: '#/components/parameters/version'
+      - $ref: '#/components/parameters/blockId'
+      responses:
+        '200':
+          description: A block
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/BlockRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+  /blocks/{blockId}/localizations:
+    get:
+      operationId: getLocalizationsForBlock
+      security:
+      - Bearer: []
+      summary: Get localizations on a block
+      description: Returns localization metadata for the block
+      tags:
+      - Blocks
+      parameters:
+      - $ref: '#/components/parameters/blockId'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: A list of localizations
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the current time window
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LocalizationMetaRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+  /blocks/{blockId}/localizationKeys:
+    get:
+      operationId: getBlockLocalizationKeys
+      security:
+      - Bearer: []
+      summary: Get localization keys
+      description: Returns the list of values that need to be translated for the block.
+      tags:
+      - Blocks
+      parameters:
+      - $ref: '#/components/parameters/blockId'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: Localization keys
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LocalizationKeyRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+  /blocks/{blockId}/localizations/{languageId}:
+    put:
+      operationId: saveBlockLocalization
+      security:
+      - Bearer: []
+      summary: Create or update a block localization
+      description: Inserts a localization or sets the name on an existing localization that already uses the languageId
+      tags:
+      - Blocks
+      parameters:
+      - $ref: '#/components/parameters/blockId'
+      - $ref: '#/components/parameters/languageId'
+      - $ref: '#/components/parameters/version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: English (US)
+        required: true
+      responses:
+        '200':
+          description: Successful upsert
+    delete:
+      operationId: deleteBlockLocalization
+      security:
+      - Bearer: []
+      summary: Remove a localization
+      description: Deletes the localization with the given language ID if it exists
+      tags:
+      - Blocks
+      parameters:
+      - $ref: '#/components/parameters/blockId'
+      - $ref: '#/components/parameters/languageId'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: Successful delete
+  /blocks/{blockId}/localizations/{languageId}/translations:
+    get:
+      operationId: getBlockTranslations
+      security:
+      - Bearer: []
+      summary: Get Block Translations for Language
+      description: Returns the translations for the given language in key/value pairs.
+      tags:
+      - Blocks
+      parameters:
+      - $ref: '#/components/parameters/blockId'
+      - $ref: '#/components/parameters/languageId'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+                example:
+                  Hello %(name)s: Bonjour %(name)s
+                  Welcome: Bienvenue
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: setBlockTranslations
+      security:
+      - Bearer: []
+      summary: Set translations for language
+      description: Completely replaces any existing translations for the given language with those provided in request body. Variables embedded in keys or values are expected to be in the format `%(my_variable)s` and will automatically convert to the correct Dyspatch format depending on the type of template. Accepts key/value pairs in JSON format.
+      tags:
+      - Blocks
+      parameters:
+      - $ref: '#/components/parameters/blockId'
+      - $ref: '#/components/parameters/languageId'
+      - $ref: '#/components/parameters/version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+              example:
+                Hello %(name)s: Bonjour %(name)s
+                Welcome: Bienvenue
+        required: true
+      responses:
+        '200':
+          description: Successful
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    LocalizationMetaRead:
+      type: object
+      description: localization metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/localizationId'
+        name:
+          $ref: '#/components/schemas/localizationName'
+        url:
+          $ref: '#/components/schemas/localizationUrl'
+        localeGroup:
+          $ref: '#/components/schemas/localeGroupId'
+        languages:
+          $ref: '#/components/schemas/languages'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+    tagId:
+      type: string
+      example: /An opaque, unique identifier for a tag
+      description: tag_01gpe172x7p6aa1c9grr48efq8
+    localizationName:
+      type: string
+      example: English (US)
+      description: The user-specified name of a localization
+    languages:
+      type: array
+      items:
+        type: string
+        example: fr-FR
+      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
+
+        '
+    localizationUrl:
+      type: string
+      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific localization
+    APIError:
+      type: object
+      description: possible errors from the api
+      properties:
+        code:
+          type: string
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          - prohibited_action
+          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
+        message:
+          type: string
+          description: Human readable error message
+        parameter:
+          type: string
+          description: The invalid parameter, if 'code' is invalid_parameter
+    BlocksRead:
+      type: object
+      description: list of blocks
+      properties:
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockRead'
+          description: A list of block objects
+    tagName:
+      type: string
+      example: My Tag
+      description: The user-specified name of a tag
+    blockName:
+      type: string
+      example: Header Block
+      description: The user-specified name of a block
+    blockId:
+      type: string
+      description: An opaque, unique identifier for a block
+      example: blk_01gpe172x7p6aa1c9grr48efq8
+    cursor:
+      type: object
+      description: Information about paginated results
+      properties:
+        next:
+          type: string
+          description: A cursor to fetch the next page of results
+        hasMore:
+          type: boolean
+          description: Whether there is a next page of results
+    AssignedTagsMetaRead:
+      type: object
+      description: assigned tags metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/tagId'
+        name:
+          $ref: '#/components/schemas/tagName'
+    blockUrl:
+      type: string
+      example: /blocks/blk_01gpe172x7p6aa1c9grr48efq8
+      description: The API url for a specific block
+    LocalizationKeyRead:
+      type: object
+      description: localization key
+      properties:
+        key:
+          type: string
+        comment:
+          type: string
+    localizationId:
+      type: string
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
+    BlockRead:
+      type: object
+      description: block data
+      properties:
+        id:
+          $ref: '#/components/schemas/blockId'
+        name:
+          $ref: '#/components/schemas/blockName'
+        description:
+          $ref: '#/components/schemas/blockDescription'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedTagsMetaRead'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        url:
+          $ref: '#/components/schemas/blockUrl'
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      type: string
+      example: lgr_alka38ajla301
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    blockDescription:
+      type: string
+      description: The user-specified description of a block
+  responses:
+    NotFound:
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InternalError:
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    languageId:
+      name: languageId
+      in: path
+      description: 'A language ID (eg: en-US)'
+      required: true
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    blockId:
+      name: blockId
+      in: path
+      description: A block ID
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: 'Set Bearer followed by your API key as the Authorization header in your
+
+        API requests.
+
+
+        ```shell
+
+        Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678
+
+        ```
+
+
+        Below is an example curl request with an API key in the Authorization header.
+
+
+        ```shell
+
+        curl --request GET \
+
+        --url https://api.dyspatch.io/templates \
+
+        --header ''Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678'' \
+
+        --header ''Accept: application/vnd.dyspatch.2026.06+json''
+
+        ```
+
+        '
+x-tagGroups:
+- name: Email
+  tags:
+  - Templates
+  - Drafts
+  - Localizations
+- name: Platform
+  tags:
+  - Workspaces
+  - Blocks
+  - Tags
+  - Customer Profiles
+  - Themes
+- name: Other Communication Channels
+  tags:
+  - SMS Templates
+  - SMS Drafts
+  - SMS Localizations
+  - Push Templates
+  - Push Drafts
+  - Push Localizations
+  - Live Activity Templates
+  - Live Activity Drafts
+  - Live Activity Localizations
+  - Voice Templates
+  - Voice Drafts
+  - Voice Localizations

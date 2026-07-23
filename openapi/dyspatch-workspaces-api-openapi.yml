@@ -1,0 +1,344 @@
+openapi: 3.0.0
+info:
+  version: '2026.06'
+  title: Dyspatch Blocks Workspaces API
+  description: '# Introduction
+
+
+    The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
+
+    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
+
+    See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
+
+    how to implement Dyspatch.
+
+
+    ## Generating API Clients
+
+    Dyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.
+
+    '
+  contact:
+    name: Dyspatch Support
+    url: https://docs.dyspatch.io
+    email: support@dyspatch.io
+  termsOfService: https://www.dyspatch.io/legal/terms-of-service/
+servers:
+- url: https://api.dyspatch.io
+tags:
+- name: Workspaces
+paths:
+  /workspaces:
+    get:
+      operationId: listWorkspaces
+      security:
+      - Bearer: []
+      summary: List Workspaces
+      description: Gets a list of Workspace objects for all workspaces. Up to 25 results returned before results are paginated.
+      tags:
+      - Workspaces
+      parameters:
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: A list of workspaces
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/WorkspacesRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+  /workspaces/{folderId}:
+    get:
+      operationId: listFolder
+      security:
+      - Bearer: []
+      summary: List Folder
+      description: Gets a Folder with a list of its sub-folders for the provided id.
+      tags:
+      - Workspaces
+      parameters:
+      - $ref: '#/components/parameters/folderId'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: Folder
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/FolderList'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    FolderList:
+      type: object
+      description: folder with a list of its sub-folders
+      properties:
+        id:
+          $ref: '#/components/schemas/folderId'
+        name:
+          $ref: '#/components/schemas/folderName'
+        description:
+          $ref: '#/components/schemas/folderDescription'
+        url:
+          $ref: '#/components/schemas/folderUrl'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        subfolders:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolderRead'
+          description: A list of sub-folder objects
+    folderUrl:
+      type: string
+      example: /workspaces/fdr_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific template
+    folderDescription:
+      type: string
+      description: A description of the workspace/folder
+      example: Description of Folder
+    APIError:
+      type: object
+      description: possible errors from the api
+      properties:
+        code:
+          type: string
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          - prohibited_action
+          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
+        message:
+          type: string
+          description: Human readable error message
+        parameter:
+          type: string
+          description: The invalid parameter, if 'code' is invalid_parameter
+    folderId:
+      type: string
+      description: A workspace/folder ID
+      example: fdr_01g0z4d5aw
+    cursor:
+      type: object
+      description: Information about paginated results
+      properties:
+        next:
+          type: string
+          description: A cursor to fetch the next page of results
+        hasMore:
+          type: boolean
+          description: Whether there is a next page of results
+    folderName:
+      type: string
+      description: The name of a workspace/folder
+      example: Name of Folder
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    WorkspacesRead:
+      type: object
+      description: list of workspaces
+      properties:
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolderRead'
+          description: A list of workspace objects
+    FolderRead:
+      type: object
+      description: list of template metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/folderId'
+        name:
+          $ref: '#/components/schemas/folderName'
+        description:
+          $ref: '#/components/schemas/folderDescription'
+        url:
+          $ref: '#/components/schemas/folderUrl'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+  responses:
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InternalError:
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthenticated:
+      description: Unauthenticated
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    folderId:
+      name: folderId
+      in: path
+      description: A workspace/folder ID
+      required: true
+      schema:
+        type: string
+    cursor:
+      name: cursor
+      in: query
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: 'Set Bearer followed by your API key as the Authorization header in your
+
+        API requests.
+
+
+        ```shell
+
+        Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678
+
+        ```
+
+
+        Below is an example curl request with an API key in the Authorization header.
+
+
+        ```shell
+
+        curl --request GET \
+
+        --url https://api.dyspatch.io/templates \
+
+        --header ''Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678'' \
+
+        --header ''Accept: application/vnd.dyspatch.2026.06+json''
+
+        ```
+
+        '
+x-tagGroups:
+- name: Email
+  tags:
+  - Templates
+  - Drafts
+  - Localizations
+- name: Platform
+  tags:
+  - Workspaces
+  - Blocks
+  - Tags
+  - Customer Profiles
+  - Themes
+- name: Other Communication Channels
+  tags:
+  - SMS Templates
+  - SMS Drafts
+  - SMS Localizations
+  - Push Templates
+  - Push Drafts
+  - Push Localizations
+  - Live Activity Templates
+  - Live Activity Drafts
+  - Live Activity Localizations
+  - Voice Templates
+  - Voice Drafts
+  - Voice Localizations

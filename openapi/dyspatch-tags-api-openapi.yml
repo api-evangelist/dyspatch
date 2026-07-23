@@ -1,0 +1,510 @@
+openapi: 3.0.0
+info:
+  version: '2026.06'
+  title: Dyspatch Blocks Tags API
+  description: '# Introduction
+
+
+    The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
+
+    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
+
+    See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
+
+    how to implement Dyspatch.
+
+
+    ## Generating API Clients
+
+    Dyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.
+
+    '
+  contact:
+    name: Dyspatch Support
+    url: https://docs.dyspatch.io
+    email: support@dyspatch.io
+  termsOfService: https://www.dyspatch.io/legal/terms-of-service/
+servers:
+- url: https://api.dyspatch.io
+tags:
+- name: Tags
+  description: 'Tags are a way of categorizing your resources (template and drafts) with helpful identifying information.
+
+    You can decide what tags are useful for you, managing a master list of available tags and assigning or removing tags from each resource as part of your workflow.
+
+    '
+paths:
+  /tags/assign/{resourceId}:
+    put:
+      operationId: assignTagsToResource
+      security:
+      - Bearer: []
+      summary: Add Tags to a Resource
+      description: Add a set of tags to a specified resource (template or draft)
+      tags:
+      - Tags
+      parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tagIds:
+                  type: array
+                  description: Array of tag ids to add to the resource
+                  items:
+                    type: string
+                  example:
+                  - tag_id_1, tag_id_2
+        required: true
+      responses:
+        '200':
+          description: Successful assigned tags
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tags/unassign/{resourceId}:
+    post:
+      operationId: unassignTagsFromResource
+      security:
+      - Bearer: []
+      summary: Unassign Tags from a Resource
+      description: Unassign a set of tags from a specified resource (template or draft)
+      tags:
+      - Tags
+      parameters:
+      - $ref: '#/components/parameters/resourceId'
+      - $ref: '#/components/parameters/version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tagIds:
+                  type: array
+                  description: Array of tag ids to unassign from the resource
+                  items:
+                    type: string
+                  example:
+                  - tag_id_1, tag_id_2
+        required: true
+      responses:
+        '200':
+          description: Successfully unassigned tags
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tags:
+    get:
+      operationId: getTags
+      security:
+      - Bearer: []
+      summary: Get Tags
+      description: Returns a list of all tags in the organization
+      tags:
+      - Tags
+      parameters:
+      - $ref: '#/components/parameters/version'
+      - $ref: '#/components/parameters/tagType'
+      - $ref: '#/components/parameters/workspaceId'
+      responses:
+        '200':
+          description: A list of tags
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TagRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tags/{tagId}:
+    get:
+      operationId: getTagById
+      security:
+      - Bearer: []
+      summary: Get Tag by ID
+      description: Returns a tag object with the matching ID
+      tags:
+      - Tags
+      parameters:
+      - $ref: '#/components/parameters/tagId'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: A tag object with the requested ID
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the current time window
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/TagRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tags/create:
+    post:
+      operationId: createTag
+      security:
+      - Bearer: []
+      summary: Create a Tag
+      description: Creates a new tag
+      tags:
+      - Tags
+      parameters:
+      - $ref: '#/components/parameters/version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the tag to create
+                  example: New Tag
+                types:
+                  type: array
+                  description: The types of resources this tag can be assigned to
+                  items:
+                    type: string
+                    enum:
+                    - template
+                    - draft
+                    - block
+                workspaceIds:
+                  type: array
+                  description: The workspace IDs this tag can be assigned to
+                  items:
+                    type: string
+                  example:
+                  - workspace_id_1
+                  - workspace_id_2
+        required: true
+      responses:
+        '200':
+          description: Successfully created tag
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/TagRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tags/update/{tagId}:
+    patch:
+      operationId: updateTag
+      security:
+      - Bearer: []
+      summary: Update a Tag
+      description: Updates an existing tag
+      tags:
+      - Tags
+      parameters:
+      - $ref: '#/components/parameters/tagId'
+      - $ref: '#/components/parameters/version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The new name of the tag to create
+                  example: Updated Tag
+                types:
+                  type: array
+                  description: The types of resources this tag can be assigned to
+                  items:
+                    type: string
+                    enum:
+                    - template
+                    - draft
+                    - block
+                workspaceIds:
+                  type: array
+                  description: The workspace IDs this tag can be assigned to
+                  items:
+                    type: string
+                  example:
+                  - workspace_id_1
+                  - workspace_id_2
+                status:
+                  type: string
+                  description: The status of the tag
+                  enum:
+                  - active
+                  - inactive
+                  example: active
+        required: true
+      responses:
+        '200':
+          description: Successfully updated tag
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tags/delete/{tagId}:
+    delete:
+      operationId: deleteTag
+      security:
+      - Bearer: []
+      summary: Delete a Tag
+      description: Deletes a tag with the matching ID
+      tags:
+      - Tags
+      parameters:
+      - $ref: '#/components/parameters/tagId'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: Successfully deleted tag
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    tagId:
+      name: tagId
+      in: path
+      description: A tag ID
+      required: true
+      schema:
+        type: string
+    workspaceId:
+      name: workspaceId
+      in: query
+      description: An ID of a workspace
+      required: false
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    resourceId:
+      name: resourceId
+      in: path
+      description: A template or draft ID
+      required: true
+      schema:
+        type: string
+    tagType:
+      name: type
+      in: query
+      description: A tag type
+      required: false
+      schema:
+        type: string
+        enum:
+        - template
+        - draft
+        - block
+  schemas:
+    workspaceIds:
+      type: array
+      items:
+        type: string
+        example: fdr_01gb8vd6pz
+      description: A list of workspace IDs
+    tagName:
+      type: string
+      example: My Tag
+      description: The user-specified name of a tag
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    tagId:
+      type: string
+      example: /An opaque, unique identifier for a tag
+      description: tag_01gpe172x7p6aa1c9grr48efq8
+    tagTypes:
+      type: array
+      items:
+        type: string
+        example: template, draft
+      description: A list of tag types
+    TagRead:
+      type: object
+      description: tag metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/tagId'
+        name:
+          $ref: '#/components/schemas/tagName'
+        types:
+          $ref: '#/components/schemas/tagTypes'
+        workspaceIds:
+          $ref: '#/components/schemas/workspaceIds'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        status:
+          $ref: '#/components/schemas/tagStatus'
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    tagStatus:
+      type: string
+      example: active
+      description: 'The status of the current tag. States include: "active", "inactive"
+
+        '
+    APIError:
+      type: object
+      description: possible errors from the api
+      properties:
+        code:
+          type: string
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          - prohibited_action
+          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
+        message:
+          type: string
+          description: Human readable error message
+        parameter:
+          type: string
+          description: The invalid parameter, if 'code' is invalid_parameter
+  responses:
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    NotFound:
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: 'Set Bearer followed by your API key as the Authorization header in your
+
+        API requests.
+
+
+        ```shell
+
+        Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678
+
+        ```
+
+
+        Below is an example curl request with an API key in the Authorization header.
+
+
+        ```shell
+
+        curl --request GET \
+
+        --url https://api.dyspatch.io/templates \
+
+        --header ''Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678'' \
+
+        --header ''Accept: application/vnd.dyspatch.2026.06+json''
+
+        ```
+
+        '
+x-tagGroups:
+- name: Email
+  tags:
+  - Templates
+  - Drafts
+  - Localizations
+- name: Platform
+  tags:
+  - Workspaces
+  - Blocks
+  - Tags
+  - Customer Profiles
+  - Themes
+- name: Other Communication Channels
+  tags:
+  - SMS Templates
+  - SMS Drafts
+  - SMS Localizations
+  - Push Templates
+  - Push Drafts
+  - Push Localizations
+  - Live Activity Templates
+  - Live Activity Drafts
+  - Live Activity Localizations
+  - Voice Templates
+  - Voice Drafts
+  - Voice Localizations

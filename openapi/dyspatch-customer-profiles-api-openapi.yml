@@ -1,0 +1,352 @@
+openapi: 3.0.0
+info:
+  version: '2026.06'
+  title: Dyspatch Blocks Customer Profiles API
+  description: '# Introduction
+
+
+    The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
+
+    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
+
+    See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
+
+    how to implement Dyspatch.
+
+
+    ## Generating API Clients
+
+    Dyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.
+
+    '
+  contact:
+    name: Dyspatch Support
+    url: https://docs.dyspatch.io
+    email: support@dyspatch.io
+  termsOfService: https://www.dyspatch.io/legal/terms-of-service/
+servers:
+- url: https://api.dyspatch.io
+tags:
+- name: Customer Profiles
+  description: 'Customer Profiles contain JSON data that can be used for template personalization. Each profile can be associated with one or more workspaces, or none, and contains structured data content.
+
+    '
+paths:
+  /customerprofiles:
+    get:
+      operationId: listCustomerProfiles
+      security:
+      - Bearer: []
+      summary: List Customer Profiles
+      description: Returns a list of customer profiles for the organization. Results can be filtered by workspace ID. The list may include an unnamed customer profile (name is empty string) which represents global variables available to all templates.
+      tags:
+      - Customer Profiles
+      parameters:
+      - $ref: '#/components/parameters/version'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/workspaceId'
+      responses:
+        '200':
+          description: A list of customer profiles
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/CustomerProfilesRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+  /customerprofiles/{customerProfileId}:
+    get:
+      operationId: getCustomerProfileById
+      security:
+      - Bearer: []
+      summary: Get Customer Profile by ID
+      description: Returns a customer profile object with the matching ID, including its JSON data content and workspace association.
+      tags:
+      - Customer Profiles
+      parameters:
+      - $ref: '#/components/parameters/customerProfileId'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: A customer profile object with the requested ID
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the current time window
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/CustomerProfileRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+components:
+  responses:
+    InternalError:
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    NotFound:
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+  schemas:
+    CustomerProfilesRead:
+      type: object
+      description: A list of customer profiles with pagination cursor
+      properties:
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerProfileRead'
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    cursor:
+      type: object
+      description: Information about paginated results
+      properties:
+        next:
+          type: string
+          description: A cursor to fetch the next page of results
+        hasMore:
+          type: boolean
+          description: Whether there is a next page of results
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    CustomerProfileRead:
+      type: object
+      description: Customer profile data including JSON content
+      properties:
+        id:
+          type: string
+          description: An opaque, unique identifier for the customer profile
+          example: dat_01ks35r7g34s21r81wvy79rmjg
+        name:
+          type: string
+          description: The name of the customer profile
+          example: Default Profile
+        description:
+          type: string
+          description: A description of the customer profile
+          example: Profile for default customer data
+        dataContent:
+          type: object
+          description: The JSON data content of the customer profile
+          example:
+            first_name: Jane
+            last_name: Doe
+            email: jane.doe@example.com
+        workspaceIds:
+          type: array
+          description: The workspace IDs directly assigned to this customer profile
+          items:
+            type: string
+          example:
+          - fdr_01ks35jxgpeay4h0cmnw06za7y
+          - fdr_01ks35jxgpeay4h0cmnw06za7z
+        effectiveWorkspaceIds:
+          type: array
+          description: The effective workspace IDs this customer profile is available to, including workspaces inherited from its parent folder
+          items:
+            type: string
+          example:
+          - fdr_01ks35jxgpeay4h0cmnw06za7y
+          - fdr_01ks35jxgpeay4h0cmnw06za7z
+        url:
+          type: string
+          description: The API url for this customer profile
+          example: /customerprofiles/dat_01ks35r7g34s21r81wvy79rmjg
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+    APIError:
+      type: object
+      description: possible errors from the api
+      properties:
+        code:
+          type: string
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          - prohibited_action
+          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
+        message:
+          type: string
+          description: Human readable error message
+        parameter:
+          type: string
+          description: The invalid parameter, if 'code' is invalid_parameter
+  parameters:
+    workspaceId:
+      name: workspaceId
+      in: query
+      description: An ID of a workspace
+      required: false
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    cursor:
+      name: cursor
+      in: query
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      required: false
+      schema:
+        type: string
+    customerProfileId:
+      name: customerProfileId
+      in: path
+      description: A customer profile ID
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: 'Set Bearer followed by your API key as the Authorization header in your
+
+        API requests.
+
+
+        ```shell
+
+        Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678
+
+        ```
+
+
+        Below is an example curl request with an API key in the Authorization header.
+
+
+        ```shell
+
+        curl --request GET \
+
+        --url https://api.dyspatch.io/templates \
+
+        --header ''Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678'' \
+
+        --header ''Accept: application/vnd.dyspatch.2026.06+json''
+
+        ```
+
+        '
+x-tagGroups:
+- name: Email
+  tags:
+  - Templates
+  - Drafts
+  - Localizations
+- name: Platform
+  tags:
+  - Workspaces
+  - Blocks
+  - Tags
+  - Customer Profiles
+  - Themes
+- name: Other Communication Channels
+  tags:
+  - SMS Templates
+  - SMS Drafts
+  - SMS Localizations
+  - Push Templates
+  - Push Drafts
+  - Push Localizations
+  - Live Activity Templates
+  - Live Activity Drafts
+  - Live Activity Localizations
+  - Voice Templates
+  - Voice Drafts
+  - Voice Localizations

@@ -1,0 +1,403 @@
+openapi: 3.0.0
+info:
+  version: '2026.06'
+  title: Dyspatch Blocks Localizations API
+  description: '# Introduction
+
+
+    The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
+
+    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
+
+    See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
+
+    how to implement Dyspatch.
+
+
+    ## Generating API Clients
+
+    Dyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.
+
+    '
+  contact:
+    name: Dyspatch Support
+    url: https://docs.dyspatch.io
+    email: support@dyspatch.io
+  termsOfService: https://www.dyspatch.io/legal/terms-of-service/
+servers:
+- url: https://api.dyspatch.io
+tags:
+- name: Localizations
+  description: 'Localization objects are the same as Template objects except they contain
+
+    localized content.
+
+
+    If your account is using localizations then use this instead of the compiled Template object.
+
+    '
+paths:
+  /localizations/{localizationId}:
+    get:
+      operationId: getPublishedLocalizationById
+      security:
+      - Bearer: []
+      summary: Get Localization Object by ID
+      description: Returns the published content associated with the localization of the matching ID
+      tags:
+      - Localizations
+      parameters:
+      - $ref: '#/components/parameters/localizationId'
+      - $ref: '#/components/parameters/targetLanguage'
+      - $ref: '#/components/parameters/renderThemeId'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: A localization object with the requested ID
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the current time window
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/LocalizationRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+  /localizations/{localizationId}/drafts/{draftId}:
+    get:
+      operationId: getDraftLocalizationById
+      security:
+      - Bearer: []
+      summary: Get Draft Localization Object by ID
+      description: Returns a specific localization object of the matching draft with a matching localization ID
+      tags:
+      - Localizations
+      parameters:
+      - $ref: '#/components/parameters/draftId'
+      - $ref: '#/components/parameters/localizationId'
+      - $ref: '#/components/parameters/targetLanguage'
+      - $ref: '#/components/parameters/renderThemeId'
+      - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: A localization object from the matching draft ID with the requested ID
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the current time window
+              schema:
+                type: integer
+          content:
+            application/vnd.dyspatch.2026.06+json:
+              schema:
+                $ref: '#/components/schemas/LocalizationRead'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        default:
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    localizationName:
+      type: string
+      example: English (US)
+      description: The user-specified name of a localization
+    languages:
+      type: array
+      items:
+        type: string
+        example: fr-FR
+      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
+
+        '
+    localizationUrl:
+      type: string
+      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific localization
+    APIError:
+      type: object
+      description: possible errors from the api
+      properties:
+        code:
+          type: string
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          - prohibited_action
+          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
+        message:
+          type: string
+          description: Human readable error message
+        parameter:
+          type: string
+          description: The invalid parameter, if 'code' is invalid_parameter
+    LocalizationRead:
+      type: object
+      description: localization metadata and latest revision for associated template
+      properties:
+        id:
+          $ref: '#/components/schemas/localizationId'
+        languages:
+          $ref: '#/components/schemas/languages'
+        url:
+          $ref: '#/components/schemas/localizationUrl'
+        template:
+          $ref: '#/components/schemas/templateId'
+        compiled:
+          $ref: '#/components/schemas/CompiledRead'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        name:
+          $ref: '#/components/schemas/localizationName'
+        localeGroup:
+          $ref: '#/components/schemas/localeGroupId'
+    variables:
+      type: array
+      items:
+        type: string
+        example: myVar
+      description: 'a list of variables used in the template
+
+        '
+    localizationId:
+      type: string
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
+    templateId:
+      type: string
+      description: An opaque, unique identifier for a template
+      example: tem_g3L7Cw6Hp5wU
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      type: string
+      example: lgr_alka38ajla301
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    CompiledRead:
+      type: object
+      description: revision data
+      properties:
+        sender:
+          type: string
+          example: example@example.com
+          description: Sender address
+        replyTo:
+          type: string
+          example: example@example.com
+          description: Reply-To address
+        subject:
+          type: string
+          format: byte
+          example: PGh0bWw+PC9odG1sPgo=
+          description: Base64 encoded template subject line
+        html:
+          type: string
+          format: byte
+          example: PGh0bWw+PC9odG1sPgo=
+          description: Base64 encoded template HTML body
+        ampHtml:
+          type: string
+          format: byte
+          example: PGh0bWwg4pqhNGVtYWlsPjwvaHRtbD4=
+          description: Base64 encoded template AMP body
+        text:
+          type: string
+          format: byte
+          example: dGV4dCBjb250ZW50
+          description: Base64 encoded template text body
+        variables:
+          $ref: '#/components/schemas/variables'
+  responses:
+    NotFound:
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InternalError:
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    renderThemeId:
+      name: themeId
+      in: query
+      description: A theme ID to use when rendering
+      required: false
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    localizationId:
+      name: localizationId
+      in: path
+      description: A localization ID
+      required: true
+      schema:
+        type: string
+    draftId:
+      name: draftId
+      in: path
+      description: A draft ID
+      required: true
+      schema:
+        type: string
+    targetLanguage:
+      name: targetLanguage
+      in: query
+      description: The type of templating language to use when compiling the content.
+      required: true
+      schema:
+        type: string
+        enum:
+        - html
+        - handlebars
+        - ampscript
+        - freemarker
+        - cheetah
+        - jinja
+        - liquid
+        - mandrillhandlebars
+        - handlebarsjava
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: 'Set Bearer followed by your API key as the Authorization header in your
+
+        API requests.
+
+
+        ```shell
+
+        Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678
+
+        ```
+
+
+        Below is an example curl request with an API key in the Authorization header.
+
+
+        ```shell
+
+        curl --request GET \
+
+        --url https://api.dyspatch.io/templates \
+
+        --header ''Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678'' \
+
+        --header ''Accept: application/vnd.dyspatch.2026.06+json''
+
+        ```
+
+        '
+x-tagGroups:
+- name: Email
+  tags:
+  - Templates
+  - Drafts
+  - Localizations
+- name: Platform
+  tags:
+  - Workspaces
+  - Blocks
+  - Tags
+  - Customer Profiles
+  - Themes
+- name: Other Communication Channels
+  tags:
+  - SMS Templates
+  - SMS Drafts
+  - SMS Localizations
+  - Push Templates
+  - Push Drafts
+  - Push Localizations
+  - Live Activity Templates
+  - Live Activity Drafts
+  - Live Activity Localizations
+  - Voice Templates
+  - Voice Drafts
+  - Voice Localizations
