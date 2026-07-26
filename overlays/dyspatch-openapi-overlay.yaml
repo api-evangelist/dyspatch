@@ -1,0 +1,34 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Dyspatch API
+  version: 1.0.0
+extends: openapi/dyspatch-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-18'
+    x-apievangelist-provider: dyspatch
+    x-apievangelist-artifacts:
+      authentication: authentication/dyspatch-authentication.yml
+      conventions: conventions/dyspatch-conventions.yml
+      errors: errors/dyspatch-problem-types.yml
+      lifecycle: lifecycle/dyspatch-lifecycle.yml
+      changelog: changelog/dyspatch-changelog.yml
+      data_model: data-model/dyspatch-data-model.yml
+      webhooks: asyncapi/dyspatch-webhooks.yml
+      mcp: mcp/dyspatch-mcp.yml
+      packages: packages/dyspatch-packages.yml
+      skills: skills/_index.yml
+      agentic_access: agentic-access/dyspatch-agentic-access.yml
+- target: $.info
+  update:
+    x-apievangelist-notes: >-
+      Bearer API-key auth (Authorization header). Date-based versioning via the
+      Accept header (application/vnd.dyspatch.YYYY.MM+json). Cursor pagination.
+      Rate-limit signal via X-RateLimit-Remaining. Custom APIError envelope
+      (code/message/parameter), not RFC 9457. Webhooks are HMAC-signed
+      (X-Signature). Official SDKs in C#, Ruby, JavaScript, Go, Python, and Java.
+- target: $.servers
+  update:
+  - url: https://api.dyspatch.io
+    description: Production

@@ -1,0 +1,33 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/dyspatch-openapi-original.json
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: Published OpenAPI 3.0.0 document (Dyspatch API 2026.06).
+- id: rest
+  conforms: true
+  evidence: Resource-based URLs, standard HTTP verbs and status codes, JSON responses.
+- id: oauth2
+  conforms: false
+  evidence: Authentication is a static Bearer API key (securityScheme type apiKey), not OAuth 2.0.
+- id: oidc
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use a custom APIError object (code/message/parameter), not application/problem+json.
+- id: cursor-pagination
+  conforms: true
+  evidence: List endpoints paginate via an opaque `cursor` query parameter.
+- id: rate-limit-headers
+  conforms: true
+  evidence: All responses carry X-RateLimit-Remaining; 429 returned on limit exceed.
+- id: webhooks-hmac-signing
+  conforms: true
+  evidence: Webhooks are signed with an HMAC X-Signature header and per-endpoint secret.
+- id: rfc8594-sunset
+  conforms: false
+  evidence: No Sunset/Deprecation header policy published; versioning is date-based via Accept header.
+- id: idempotency
+  conforms: false
+  evidence: No Idempotency-Key support documented.

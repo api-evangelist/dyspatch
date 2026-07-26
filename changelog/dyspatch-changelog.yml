@@ -1,0 +1,61 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.dyspatch.io/api/changelog.html
+scheme: date-based
+scheme_detail: >-
+  API versions use a dated format (YYYY.MM, occasionally with a vN suffix) and
+  are selected per request via the Accept header, e.g.
+  application/vnd.dyspatch.2026.06+json. Omitting the version pins to the account
+  default. Older versions remain retrievable via the changelog version selector.
+current_version: '2026.06'
+entries:
+- version: '2026.06'
+  breaking: false
+  highlights:
+  - Added query filters (name, folderId, workspaceId) to template endpoints.
+  - Added templateId filter to draft endpoints.
+  - Introduced translation endpoints for all template types.
+  - New Customer Profiles and Themes endpoints.
+  - Renamed draft status awaitingTranslation to LOCKED_FOR_TRANSLATION.
+- version: '2026.01'
+  breaking: false
+  highlights:
+  - Draft duplicate, archive, and lock/unlock-for-translation endpoints added
+    across Email, SMS, Push, Voice, and Live Activity.
+- version: '2025.09'
+  breaking: true
+  highlights:
+  - Responses now include a variables key in compiled data for template and
+    draft endpoints.
+- version: '2025.06'
+  breaking: false
+  highlights:
+  - New Tag management endpoints; tag data included in block, draft, and template
+    responses.
+- version: '2025.05v2'
+  breaking: false
+  highlights:
+  - Live Activity template and draft endpoints introduced with localization
+    support.
+- version: '2025.05'
+  breaking: false
+  highlights:
+  - Optional themeId parameter added to template rendering and retrieval
+    endpoints.
+- version: '2024.12'
+  breaking: false
+  highlights:
+  - Draft approval/rejection endpoints added for Email, SMS, Push, and Voice.
+- version: '2024.11'
+  breaking: false
+  highlights:
+  - Push and Voice template/draft endpoints launched with full localization
+    support.
+- version: '2024.07'
+  breaking: false
+  highlights:
+  - SMS template/draft endpoints introduced; localized template rendering added.
+- version: '2019.03'
+  breaking: false
+  highlights:
+  - Initial public release of the Dyspatch API.

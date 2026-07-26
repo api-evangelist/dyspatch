@@ -1,0 +1,28 @@
+generated: '2026-07-18'
+method: generated
+skills:
+- file: dyspatch-email-campaign-brief.md
+  name: Email Campaign Brief (Dyspatch)
+  method: searched
+  source: https://github.com/getdyspatch/email-campaign-brief
+  description: >-
+    Provider-published Agent Skill (getdyspatch/email-campaign-brief, v2.1.2).
+    Guides a marketer through producing a tight email campaign brief tailored to
+    Dyspatch as the production path; grounds the sample layout in the account's
+    real Dyspatch modules/blocks via the Dyspatch MCP server or API. Saved
+    verbatim.
+- file: dyspatch-render-published-template.md
+  name: Render a published Dyspatch template
+  method: generated
+  api: openapi/dyspatch-openapi-original.json
+  operations: [getTemplates, getTemplateById, renderTemplate, renderTemplateByLCID]
+- file: dyspatch-approve-and-publish-draft.md
+  name: Move a Dyspatch draft through approval
+  method: generated
+  api: openapi/dyspatch-openapi-original.json
+  operations: [getDrafts, getDraftById, submitDraftForApproval, approveDraft, approveDraftForAll, rejectDraft, duplicateDraft, archiveDraft]
+- file: dyspatch-localize-draft.md
+  name: Localize a Dyspatch draft
+  method: generated
+  api: openapi/dyspatch-openapi-original.json
+  operations: [lockDraftForTranslation, getDraftLocalizationKeys, getLocalizationForDraft, saveLocalization, getTranslations, setTranslation, deleteLocalization, unlockDraftForTranslation]

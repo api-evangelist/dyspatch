@@ -1,0 +1,47 @@
+generated: '2026-07-18'
+method: searched
+source:
+- https://docs.dyspatch.io/api/
+- openapi/dyspatch-openapi-original.json
+authentication:
+  style: bearer-api-key
+  header: Authorization
+  format: 'Bearer <api-key>'
+  ref: authentication/dyspatch-authentication.yml
+versioning:
+  style: accept-header-date
+  header: Accept
+  format: application/vnd.dyspatch.YYYY.MM+json
+  current: '2026.06'
+  ref: lifecycle/dyspatch-lifecycle.yml
+pagination:
+  style: cursor
+  request_param: cursor
+  detail: >-
+    List endpoints accept an optional `cursor` query parameter to retrieve a
+    specific page of a paginated result set; the response supplies the cursor for
+    the next page.
+idempotency:
+  supported: false
+  detail: >-
+    No Idempotency-Key header or idempotency parameter is documented in the
+    OpenAPI or developer docs. Write operations (draft create/duplicate, approve,
+    tag assign) are not advertised as idempotent.
+rate_limiting:
+  signal_header: X-RateLimit-Remaining
+  detail: >-
+    Every response (including errors) carries an X-RateLimit-Remaining header
+    indicating remaining quota. A 429 RateLimited error is returned when the
+    limit is exceeded. No numeric limit ceilings are published.
+error_envelope:
+  schema: APIError
+  fields: [code, message, parameter]
+  ref: errors/dyspatch-problem-types.yml
+content_negotiation:
+  request: JSON bodies; gettext PO files accepted/returned on translation endpoints
+  response: application/vnd.dyspatch.<version>+json
+identifiers:
+  detail: >-
+    Resources are addressed by opaque string ids (templateId, draftId,
+    localizationId, blockId, tagId, workspaceId, customerProfileId, localeGroupId).
+    See data-model/dyspatch-data-model.yml for the entity graph.

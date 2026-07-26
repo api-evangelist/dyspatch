@@ -1,0 +1,62 @@
+generated: '2026-07-18'
+method: searched
+spec_type: Webhooks
+source: https://docs.dyspatch.io/integrations/setting_up_webhooks/
+summary: >-
+  Dyspatch delivers HTTP webhooks for template/draft lifecycle events (comments,
+  translation locks, approval workflow, publishing, rollback, two-step design
+  review, and tag changes). Webhooks are configured in the Admin Dashboard under
+  Developer Tools > Webhooks (URL + description). No AsyncAPI document is
+  published; this is the captured event catalog.
+delivery:
+  transport: http-post
+  configuration: admin-dashboard
+  configuration_path: Developer Tools > Webhooks > Add Webhook
+security:
+  signature_header: X-Signature
+  signature_scheme: HMAC
+  signing_secret: per-endpoint, retrievable from the Webhooks settings actions menu
+payload:
+  fields:
+  - {name: event, description: Event type identifier}
+  - {name: template, description: Template metadata (id, name, type, description, folder, tags, timestamps)}
+  - {name: draft, description: Draft metadata (id, name, createdAt, updatedAt, url, tags)}
+  - {name: comment, description: Optional HTML-formatted comment text}
+  - {name: user, description: Triggering user (email, firstName, lastName); omitted on some events}
+  - {name: text, description: Additional text describing the event}
+  notes: >-
+    template_published and template_design_approved do not include user metadata.
+events:
+  comment:
+  - {name: comment_created, description: A comment is created or replied to}
+  - {name: comment_resolved, description: A comment is resolved}
+  translation:
+  - {name: template_locked_for_translation}
+  - {name: template_unlocked_for_translation}
+  approval:
+  - {name: template_submitted}
+  - {name: template_rejected}
+  - {name: template_approved}
+  - {name: template_approved_for_group}
+  - {name: template_approved_for_all}
+  - {name: template_unsubmitted}
+  publishing:
+  - {name: template_published, description: All approvals have been approved}
+  - {name: template_published_without_approval, description: User skips approval}
+  - {name: template_exported, description: A draft is exported to an ESP}
+  rollback:
+  - {name: template_unpublished}
+  - {name: template_republished}
+  - {name: template_rollback_publish}
+  design_review:
+  - {name: template_submitted_design_review}
+  - {name: template_approved_design_review}
+  - {name: template_design_approved}
+  - {name: template_rejected_design_review}
+  - {name: template_design_approved_without_approval}
+  tags:
+  - {name: template_add_tags}
+  - {name: template_remove_tags}
+  - {name: draft_add_tags}
+  - {name: draft_remove_tags}
+  - {name: batch_update_tags}

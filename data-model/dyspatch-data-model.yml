@@ -1,0 +1,70 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/dyspatch-openapi-original.json
+description: >-
+  Entity-relationship graph derived from the Dyspatch OpenAPI paths and schemas
+  (82 component schemas across 131 operations). Ids are opaque strings. A Draft is
+  the editable/unpublished form of content; a Template is its published form. The
+  same shape repeats across channels (Email, SMS, Push, Voice, Live Activity).
+entities:
+- name: Workspace
+  id: workspaceId
+  operations: [listWorkspaces]
+  relationships:
+  - {type: has_many, target: Template, via: workspaceId}
+  - {type: has_many, target: Draft, via: workspaceId}
+- name: Template
+  id: templateId
+  description: Published, renderable message (Email/SMS/Push/Voice/Live Activity).
+  operations: [getTemplates, getTemplateById, renderTemplate, renderTemplateByLCID]
+  relationships:
+  - {type: belongs_to, target: Workspace, via: workspaceId}
+  - {type: has_many, target: Localization, via: templateId}
+  - {type: has_many, target: Tag, via: tags}
+  - {type: has_one, target: Theme, via: themeId}
+- name: Draft
+  id: draftId
+  description: Editable, pre-publish version of a template moving through approval.
+  operations: [getDrafts, getDraftById, submitDraftForApproval, approveDraft, approveDraftForAll, rejectDraft, duplicateDraft, archiveDraft, lockDraftForTranslation, unlockDraftForTranslation]
+  relationships:
+  - {type: belongs_to, target: Workspace, via: workspaceId}
+  - {type: belongs_to, target: Template, via: templateId}
+  - {type: has_many, target: Localization, via: draftId}
+  - {type: has_many, target: Tag, via: tags}
+- name: Localization
+  id: localizationId
+  description: A language variant of a draft or published template.
+  operations: [getPublishedLocalizationById, getDraftLocalizationById, getLocalizationForDraft, saveLocalization, deleteLocalization, getDraftLocalizationKeys]
+  relationships:
+  - {type: belongs_to, target: Draft, via: draftId}
+  - {type: belongs_to, target: LocaleGroup, via: localeGroupId}
+  - {type: has_many, target: Translation, via: languageId}
+- name: Translation
+  description: Per-language key/value translations within a localization.
+  operations: [getTranslations, setTranslation]
+  relationships:
+  - {type: belongs_to, target: Localization, via: languageId}
+- name: LocaleGroup
+  id: localeGroupId
+  relationships:
+  - {type: has_many, target: Localization, via: localeGroupId}
+- name: Block
+  id: blockId
+  description: Reusable DML content component.
+  relationships:
+  - {type: has_many, target: Tag, via: tags}
+- name: Theme
+  id: themeId
+  description: Design system applied when rendering/retrieving templates.
+  relationships:
+  - {type: has_many, target: Template, via: themeId}
+- name: Tag
+  id: tagId
+  operations: [getTags, getTagById, createTag, updateTag, deleteTag, assignTagsToResource, unassignTagsFromResource]
+  relationships:
+  - {type: belongs_to, target: Template, via: resourceId}
+  - {type: belongs_to, target: Draft, via: resourceId}
+- name: CustomerProfile
+  id: customerProfileId
+  description: Named data set used to supply variables when rendering templates.
+  operations: [listCustomerProfiles, getCustomerProfileById]

@@ -1,0 +1,41 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/dyspatch-openapi-original.json
+format: dyspatch-apierror
+envelope:
+  schema: APIError
+  fields:
+  - {name: code, description: Machine-readable error code}
+  - {name: message, description: Human-readable error message}
+  - {name: parameter, description: The request parameter that caused the error, when applicable}
+  content_type: '*/*'
+  note: >-
+    Errors are not RFC 9457 problem+json; Dyspatch uses a custom APIError object
+    (code/message/parameter). Every error response also carries an
+    X-RateLimit-Remaining header. Response codes below are derived from the named
+    response components referenced across all 131 operations.
+problems:
+- status: 400
+  component: InvalidRequest
+  title: Invalid request
+  remediation: Validate request body/query parameters against the schema; the parameter field names the offending input.
+- status: 401
+  component: Unauthorized
+  title: Unauthenticated
+  remediation: 'Provide a valid API key as `Authorization: Bearer <key>`.'
+- status: 403
+  component: Forbidden
+  title: Forbidden
+  remediation: The API key lacks permission for this resource or action (e.g. read-only key attempting a write).
+- status: 404
+  component: NotFound
+  title: Resource not found
+  remediation: Verify the resource id (templateId, draftId, localizationId, etc.) exists and is accessible to the key's workspace.
+- status: 429
+  component: RateLimited
+  title: Rate limited
+  remediation: Back off and retry; inspect the X-RateLimit-Remaining response header to pace requests.
+- status: 500
+  component: InternalError
+  title: Internal server error
+  remediation: Transient server error; retry with backoff and contact support@dyspatch.io if it persists.

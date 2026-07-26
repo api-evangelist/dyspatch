@@ -1,0 +1,43 @@
+generated: '2026-07-18'
+method: searched
+hosts:
+- host: https://www.dyspatch.io
+  documents:
+  - path: /security.txt
+    status: 200
+    file: dyspatch-security.txt
+    note: >-
+      Served at the site root rather than the RFC 9116 canonical
+      /.well-known/security.txt location (which returns 404). Contact
+      security@dyspatch.io. The published Expires date (2024-11-16) is in the
+      past, so the file is stale but still advertises a working security contact.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://api.dyspatch.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://docs.dyspatch.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404

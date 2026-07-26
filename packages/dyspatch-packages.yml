@@ -1,0 +1,65 @@
+generated: '2026-07-18'
+method: searched
+source: https://github.com/getdyspatch
+description: >-
+  Official Dyspatch API client libraries are OpenAPI-generated and published
+  under the getdyspatch GitHub organization. Registry availability is recorded
+  per package; where a public-registry release was verified it is listed, and
+  the GitHub source repository is always given.
+packages:
+- language: csharp
+  registry: nuget
+  name: Dyspatch
+  url: https://www.nuget.org/packages/Dyspatch
+  version: 5.0.0
+  install: dotnet add package Dyspatch
+  source_repo: https://github.com/getdyspatch/dyspatch-dotnet
+  official: true
+- language: ruby
+  registry: rubygems
+  name: dyspatch_client
+  url: https://rubygems.org/gems/dyspatch_client
+  version: 6.0.0
+  install: gem install dyspatch_client
+  source_repo: https://github.com/getdyspatch/dyspatch-ruby
+  official: true
+- language: javascript
+  registry: npm
+  name: dyspatch-client
+  url: https://www.npmjs.com/package/dyspatch-client
+  version: 6.0.0
+  install: npm install dyspatch-client
+  source_repo: https://github.com/getdyspatch/dyspatch-javascript
+  official: true
+- language: go
+  registry: go-modules
+  name: github.com/getdyspatch/dyspatch-golang
+  url: https://pkg.go.dev/github.com/getdyspatch/dyspatch-golang
+  install: go get github.com/getdyspatch/dyspatch-golang
+  source_repo: https://github.com/getdyspatch/dyspatch-golang
+  official: true
+- language: python
+  registry: github
+  name: dyspatch_client
+  url: https://github.com/getdyspatch/dyspatch-python
+  install: pip install git+https://github.com/getdyspatch/dyspatch-python.git
+  source_repo: https://github.com/getdyspatch/dyspatch-python
+  official: true
+  note: OpenAPI-generated; import as dyspatch_client. No verified PyPI release.
+- language: java
+  registry: github
+  name: io.dyspatch:dyspatch-java
+  url: https://github.com/getdyspatch/dyspatch-java
+  install: mvn install (see getdyspatch/dyspatch-java-mvn repository)
+  source_repo: https://github.com/getdyspatch/dyspatch-java
+  official: true
+  note: Distributed via the getdyspatch/dyspatch-java-mvn repository, not Maven Central.
+- language: typescript
+  registry: npm
+  name: dyspatch-mcp
+  url: https://www.npmjs.com/package/dyspatch-mcp
+  version: 0.0.10
+  install: npx dyspatch-mcp
+  source_repo: https://github.com/getdyspatch/dyspatch-mcp
+  official: true
+  note: MCP server (see mcp/dyspatch-mcp.yml), not a REST client library.

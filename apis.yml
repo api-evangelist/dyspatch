@@ -1,22 +1,609 @@
 aid: dyspatch
 name: Dyspatch
-description: Dyspatch is a company surfaced as a portfolio company of y-combinator and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Dyspatch is an email template management and production platform that lets
+  marketing, design, and engineering teams build, collaborate on, approve,
+  localize, and publish transactional and marketing messages without hand-coding
+  HTML. Content is authored in DML (Dyspatch Markup Language) using a modular,
+  no-code drag-and-drop builder with reusable blocks and themes, then published
+  to any ESP (Salesforce, HubSpot, Braze, Marketo, and others). Dyspatch also
+  covers SMS, push, voice, and Live Activity messages, AMP for Email, and
+  large-scale localization across hundreds of languages. The public REST API at
+  api.dyspatch.io exposes published templates, drafts with an approval workflow,
+  localizations and translations, customer profiles, themes, blocks, and tags,
+  and is versioned by date through the Accept header. Dyspatch ships official
+  OpenAPI-generated SDKs for six languages, a published MCP server, webhooks, and
+  Agent Skills. Dyspatch is backed by Y Combinator.
 url: https://raw.githubusercontent.com/api-evangelist/dyspatch/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - y-combinator
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enriched-from-public-developer-surface
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
+image: https://www.dyspatch.io/wp-content/uploads/2025/04/fb-share-1.png
 tags:
 - Company
-apis: []
+- Email
+- Email Templates
+- Marketing
+- Messaging
+- SMS
+- Push Notifications
+- Localization
+- Content Management
+- Developer Tools
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: dyspatch:dyspatch-blocks-api
+  name: Dyspatch Blocks API
+  description: The Blocks API from Dyspatch — 6 operation(s) for blocks.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Blocks
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-blocks-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-customer-profiles-api
+  name: Dyspatch Customer Profiles API
+  description: >-
+    Customer Profiles contain JSON data that can be used for template personalization. Each profile can
+    be associated with one or more workspaces, or none, and contains structured data content.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Customer Profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-customer-profiles-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-drafts-api
+  name: Dyspatch Drafts API
+  description: >-
+    Drafts represent unpublished versions of templates that are still mutable. There could be many in
+    progress drafts for a template.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Drafts
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-drafts-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-live-activity-drafts-api
+  name: Dyspatch Live Activity Drafts API
+  description: >-
+    Live Activity Drafts represent unpublished versions of templates that are still mutable. There could
+    be many in progress drafts for a template.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Live Activity Drafts
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-live-activity-drafts-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-live-activity-localizations-api
+  name: Dyspatch Live Activity Localizations API
+  description: >-
+    Live Activity Localization objects are the same as Template objects except they contain
+
+    localized content.
+
+
+    If your account is using localizations then use this instead of the compiled Template object.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Live Activity Localizations
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-live-activity-localizations-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-live-activity-templates-api
+  name: Dyspatch Live Activity Templates API
+  description: >-
+    Live Activity Templates are the Live Activity templates found in your Dyspatch account. Only the
+
+    published Template Draft is returned.
+
+
+    A typical integration will start with using the Templates list endpoint to iterate through and sync
+    Templates.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Live Activity Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-live-activity-templates-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-localizations-api
+  name: Dyspatch Localizations API
+  description: >-
+    Localization objects are the same as Template objects except they contain
+
+    localized content.
+
+
+    If your account is using localizations then use this instead of the compiled Template object.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Localizations
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-localizations-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-push-drafts-api
+  name: Dyspatch Push Drafts API
+  description: >-
+    Push Drafts represent unpublished versions of templates that are still mutable. There could be many
+    in progress drafts for a template.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Push Drafts
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-push-drafts-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-push-localizations-api
+  name: Dyspatch Push Localizations API
+  description: >-
+    Push Localization objects are the same as Template objects except they contain
+
+    localized content.
+
+
+    If your account is using localizations then use this instead of the compiled Template object.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Push Localizations
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-push-localizations-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-push-templates-api
+  name: Dyspatch Push Templates API
+  description: >-
+    Push Templates are the Push templates found in your Dyspatch account. Only the
+
+    published Template Draft is returned.
+
+
+    A typical integration will start with using the Templates list endpoint to iterate through and sync
+    Templates.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Push Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-push-templates-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-sms-drafts-api
+  name: Dyspatch SMS Drafts API
+  description: >-
+    SMS Drafts represent unpublished versions of templates that are still mutable. There could be many
+    in progress drafts for a template.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - SMS Drafts
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-sms-drafts-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-sms-localizations-api
+  name: Dyspatch SMS Localizations API
+  description: >-
+    SMS Localization objects are the same as Template objects except they contain
+
+    localized content.
+
+
+    If your account is using localizations then use this instead of the compiled Template object.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - SMS Localizations
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-sms-localizations-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-sms-templates-api
+  name: Dyspatch SMS Templates API
+  description: >-
+    SMS Templates are the SMS templates found in your Dyspatch account. Only the
+
+    published Template Draft is returned.
+
+
+    A typical integration will start with using the Templates list endpoint to iterate through and sync
+    Templates.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - SMS Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-sms-templates-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-tags-api
+  name: Dyspatch Tags API
+  description: >-
+    Tags are a way of categorizing your resources (template and drafts) with helpful identifying information.
+
+    You can decide what tags are useful for you, managing a master list of available tags and assigning
+    or removing tags from each resource as part of your workflow.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-tags-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-templates-api
+  name: Dyspatch Templates API
+  description: >-
+    Templates are the email templates found in your Dyspatch account. Only the
+
+    published Template Draft is returned.
+
+
+    A typical integration will start with using the Templates list endpoint to iterate through and sync
+    Templates.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-templates-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-themes-api
+  name: Dyspatch Themes API
+  description: The Themes API from Dyspatch — 2 operation(s) for themes.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Themes
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-themes-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-voice-drafts-api
+  name: Dyspatch Voice Drafts API
+  description: >-
+    Voice Drafts represent unpublished versions of templates that are still mutable. There could be many
+    in progress drafts for a template.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Voice Drafts
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-voice-drafts-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-voice-localizations-api
+  name: Dyspatch Voice Localizations API
+  description: >-
+    Voice Localization objects are the same as Template objects except they contain
+
+    localized content.
+
+
+    If your account is using localizations then use this instead of the compiled Template object.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Voice Localizations
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-voice-localizations-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-voice-templates-api
+  name: Dyspatch Voice Templates API
+  description: >-
+    Voice Templates are the Voice templates found in your Dyspatch account. Only the
+
+    published Template Draft is returned.
+
+
+    A typical integration will start with using the Templates list endpoint to iterate through and sync
+    Templates.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Voice Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-voice-templates-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+- aid: dyspatch:dyspatch-workspaces-api
+  name: Dyspatch Workspaces API
+  description: The Workspaces API from Dyspatch — 2 operation(s) for workspaces.
+  humanURL: https://docs.dyspatch.io/api/
+  baseURL: https://api.dyspatch.io
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/dyspatch-workspaces-api-openapi.yml
+  - type: APIReference
+    url: https://docs.dyspatch.io/api/
+  - type: Authentication
+    url: authentication/dyspatch-authentication.yml
+  - type: Webhooks
+    url: asyncapi/dyspatch-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/dyspatch-problem-types.yml
+  - type: DataModel
+    url: data-model/dyspatch-data-model.yml
+common:
+- type: DeveloperPortal
+  url: https://docs.dyspatch.io
+- type: Documentation
+  url: https://docs.dyspatch.io
+- type: APIReference
+  url: https://docs.dyspatch.io/api/
+- type: GettingStarted
+  url: https://docs.dyspatch.io/administration/creating_api_keys/
+- type: Blog
+  url: https://www.dyspatch.io/blog/
+- type: Pricing
+  url: https://www.dyspatch.io/pricing/
+- type: SignUp
+  url: https://app.dyspatch.io/
+- type: Login
+  url: https://app.dyspatch.io/
+- type: Support
+  url: https://docs.dyspatch.io
+- type: TermsOfService
+  url: https://www.dyspatch.io/terms-of-service/
+- type: PrivacyPolicy
+  url: https://www.dyspatch.io/privacy-policy/
+- type: GitHubOrganization
+  url: https://github.com/getdyspatch
+- type: StatusPage
+  url: https://status.dyspatch.io
+- type: ChangeLog
+  url: changelog/dyspatch-changelog.yml
+- type: Lifecycle
+  url: lifecycle/dyspatch-lifecycle.yml
+- type: Authentication
+  url: authentication/dyspatch-authentication.yml
+- type: Conventions
+  url: conventions/dyspatch-conventions.yml
+- type: ErrorCatalog
+  url: errors/dyspatch-problem-types.yml
+- type: DataModel
+  url: data-model/dyspatch-data-model.yml
+- type: Conformance
+  url: conformance/dyspatch-conformance.yml
+- type: Overlay
+  url: overlays/dyspatch-openapi-overlay.yaml
+- type: Packages
+  url: packages/dyspatch-packages.yml
+- type: SDKs
+  url: packages/dyspatch-packages.yml
+- type: MCPServer
+  url: mcp/dyspatch-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/dyspatch-llms.txt
+- type: Webhooks
+  url: asyncapi/dyspatch-webhooks.yml
+- type: SecurityTxt
+  url: well-known/dyspatch-security.txt
+- type: WellKnown
+  url: well-known/dyspatch-well-known.yml
+- type: VulnerabilityDisclosure
+  url: security/dyspatch-vulnerability-disclosure.yml
+- type: Security
+  url: security/dyspatch-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/dyspatch-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/dyspatch-agentic-access.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

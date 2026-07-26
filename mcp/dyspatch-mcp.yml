@@ -1,0 +1,67 @@
+generated: '2026-07-18'
+method: searched
+status: published
+source: https://docs.dyspatch.io/integrations/mcp-server/
+server:
+  name: dyspatch
+  transport: stdio
+  package: dyspatch-mcp
+  registry: npm
+  npm: https://www.npmjs.com/package/dyspatch-mcp
+  repository: https://github.com/getdyspatch/dyspatch-mcp
+  version: 0.0.10
+  license: Apache-2.0
+install:
+  claude_code: claude mcp add dyspatch -e DYSPATCH_API_KEY=your_key -- npx dyspatch-mcp
+  claude_desktop_config:
+    command: npx
+    args:
+    - dyspatch-mcp
+    env:
+      DYSPATCH_API_KEY: your_key
+authentication:
+  type: api-key
+  env: DYSPATCH_API_KEY
+  permission_levels:
+  - read-only
+  - read-write
+notes: >-
+  Local (stdio) MCP server run via npx. Authenticates with a Dyspatch API key.
+  Two key permission levels are supported: read-only (view content) and
+  read & write (create/update content through the Dyspatch approval workflow).
+  Tool families below reflect the documented surface; each maps to Dyspatch API
+  resources (see openapi/dyspatch-openapi-original.json).
+tools:
+- name: templates
+  description: List, search, retrieve, and render templates with variable substitution.
+  source_operations:
+  - openapi/dyspatch-openapi-original.json#getTemplates
+  - openapi/dyspatch-openapi-original.json#getTemplateById
+  - openapi/dyspatch-openapi-original.json#renderTemplate
+  - openapi/dyspatch-openapi-original.json#renderTemplateByLCID
+- name: drafts
+  description: Create, edit, submit, approve/reject, and duplicate drafts.
+  source_operations:
+  - openapi/dyspatch-openapi-original.json#getDrafts
+  - openapi/dyspatch-openapi-original.json#getDraftById
+  - openapi/dyspatch-openapi-original.json#submitDraftForApproval
+  - openapi/dyspatch-openapi-original.json#approveDraft
+  - openapi/dyspatch-openapi-original.json#rejectDraft
+  - openapi/dyspatch-openapi-original.json#duplicateDraft
+- name: localizations
+  description: Create language variants and update translations.
+  source_operations:
+  - openapi/dyspatch-openapi-original.json#getLocalizationForDraft
+  - openapi/dyspatch-openapi-original.json#saveLocalization
+  - openapi/dyspatch-openapi-original.json#getTranslations
+  - openapi/dyspatch-openapi-original.json#setTranslation
+- name: customer_profiles
+  description: Access customer data profiles used for template rendering.
+  source_operations:
+  - openapi/dyspatch-openapi-original.json#listCustomerProfiles
+  - openapi/dyspatch-openapi-original.json#getCustomerProfileById
+- name: tags
+  description: Organize and categorize templates and drafts with tags.
+  source_operations:
+  - openapi/dyspatch-openapi-original.json#getTags
+  - openapi/dyspatch-openapi-original.json#assignTagsToResource

@@ -1,0 +1,28 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.dyspatch.io/api/changelog.html
+versioning:
+  scheme: date-header
+  detail: >-
+    Dated versions (YYYY.MM, sometimes with a vN suffix) selected per request via
+    the Accept header, e.g. application/vnd.dyspatch.2026.06+json. Prior versions
+    remain accessible through the changelog version selector; this gives callers
+    an explicit opt-in upgrade path rather than silent breaking changes.
+  current: '2026.06'
+  docs: https://docs.dyspatch.io/api/changelog.html
+changelog: changelog/dyspatch-changelog.yml
+status_page: https://status.dyspatch.io
+status_page_alt: https://dyspatch.statuspage.io
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No formal deprecation/Sunset (RFC 8594) policy is published. Version lifecycle
+    is managed implicitly through the dated Accept-header versioning scheme: new
+    dated versions supersede old ones and breaking changes are called out in the
+    changelog (e.g. 2025.09 added a variables key), while older dated versions
+    stay retrievable.
+sla:
+  url: null
+  uptime_target: null
+deprecated_operations: []
