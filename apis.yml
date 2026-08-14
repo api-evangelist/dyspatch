@@ -35,7 +35,7 @@ accessModel:
   method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-08-13'
 image: https://www.dyspatch.io/wp-content/uploads/2025/04/fb-share-1.png
 tags:
 - Company
@@ -584,16 +584,20 @@ common:
   url: packages/dyspatch-packages.yml
 - type: MCPServer
   url: mcp/dyspatch-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/dyspatch-tool-crosswalk.yml
 - type: AgentSkill
   url: skills/_index.yml
 - type: LLMsTxt
   url: llms/dyspatch-llms.txt
+- type: Plans
+  url: plans/dyspatch-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/dyspatch-rate-limits.yml
 - type: Webhooks
   url: asyncapi/dyspatch-webhooks.yml
 - type: SecurityTxt
   url: well-known/dyspatch-security.txt
-- type: WellKnown
-  url: well-known/dyspatch-well-known.yml
 - type: VulnerabilityDisclosure
   url: security/dyspatch-vulnerability-disclosure.yml
 - type: Security
@@ -603,7 +607,16 @@ common:
 - type: AgenticAccess
   url: agentic-access/dyspatch-agentic-access.yml
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 5
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    Round 2. Added plans (3 published tiers), rate-limits, the MCP tool
+    crosswalk (35 tools bound to 116 of 131 operationIds, verified) and an
+    llms.txt manifest; upgraded the MCP manifest to the provider's real
+    published tool table with the required deployment block (local-stdio, no
+    remote endpoint); gave every package a structured version+published date.
+    REMOVED the WellKnown pointer — every /.well-known/ path 404s and the
+    probe file documents an absence. No agent card exists (app.dyspatch.io
+    answers 200 with an SPA shell on every /.well-known/ path — rejected).
