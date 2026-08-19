@@ -1,0 +1,290 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dyspatch Blocks API",
+    "version": "2026.06"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Blocks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/blocks",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets a list of Blocks"
+        },
+        {
+          "info": {
+            "name": "Get Block by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/blocks/:blockId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "path",
+                "description": "A block ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets a block with the matching ID."
+        },
+        {
+          "info": {
+            "name": "Get localizations on a block",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/blocks/:blockId/localizations",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "path",
+                "description": "A block ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns localization metadata for the block"
+        },
+        {
+          "info": {
+            "name": "Get localization keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/blocks/:blockId/localizationKeys",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "path",
+                "description": "A block ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the list of values that need to be translated for the block."
+        },
+        {
+          "info": {
+            "name": "Create or update a block localization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dyspatch.io/blocks/:blockId/localizations/:languageId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "path",
+                "description": "A block ID"
+              },
+              {
+                "name": "languageId",
+                "value": "",
+                "type": "path",
+                "description": "A language ID (eg: en-US)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Inserts a localization or sets the name on an existing localization that already uses the languageId"
+        },
+        {
+          "info": {
+            "name": "Remove a localization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dyspatch.io/blocks/:blockId/localizations/:languageId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "path",
+                "description": "A block ID"
+              },
+              {
+                "name": "languageId",
+                "value": "",
+                "type": "path",
+                "description": "A language ID (eg: en-US)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes the localization with the given language ID if it exists"
+        },
+        {
+          "info": {
+            "name": "Get Block Translations for Language",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/blocks/:blockId/localizations/:languageId/translations",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "path",
+                "description": "A block ID"
+              },
+              {
+                "name": "languageId",
+                "value": "",
+                "type": "path",
+                "description": "A language ID (eg: en-US)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the translations for the given language in key/value pairs."
+        },
+        {
+          "info": {
+            "name": "Set translations for language",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dyspatch.io/blocks/:blockId/localizations/:languageId/translations",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "path",
+                "description": "A block ID"
+              },
+              {
+                "name": "languageId",
+                "value": "",
+                "type": "path",
+                "description": "A language ID (eg: en-US)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Completely replaces any existing translations for the given language with those provided in request body. Variables embedded in keys or values are expected to be in the format `%(my_variable)s` and will automatically convert to the correct Dyspatch format depending on the type of template. Accepts key/value pairs in JSON format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

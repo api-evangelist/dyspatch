@@ -1,0 +1,313 @@
+generated: '2026-08-13'
+method: derived
+source:
+- mcp/dyspatch-mcp.yml
+- https://github.com/getdyspatch/dyspatch-mcp/blob/main/README.md
+- openapi/_original/dyspatch-openapi-original.json
+description: >-
+  Binds every tool published by the Dyspatch MCP server (v0.0.10) to the
+  OpenAPI operationId(s) that back it, so each tool inherits a real input
+  contract instead of a guessed one. Dyspatch's MCP surface collapses the
+  channel dimension: one tool takes a `type` parameter (email | sms | push |
+  voice | liveactivity) where REST publishes five parallel tag families. That is
+  why almost every row fans out 1 -> 5. Confidence is high on those rows because
+  the fan-out is mechanical and the operation names are one-to-one by channel.
+surfaces:
+  openapi:
+    file: openapi/_original/dyspatch-openapi-original.json
+    version: 2026.06
+    server: https://api.dyspatch.io
+    paths: 109
+    operations: 131
+    gated: false
+    note: >-
+      A newer dated version (2026.07) is published at
+      https://docs.dyspatch.io/api/specs/2026.07.yml; it adds an additive
+      `channel` field to template responses and does not change the operation
+      set, so the crosswalk holds for both.
+  graphql:
+    endpoint: null
+    note: Dyspatch publishes no GraphQL surface.
+  mcp:
+    name: dyspatch
+    mode: local-stdio
+    endpoint: null
+    package: https://www.npmjs.com/package/dyspatch-mcp
+    version: 0.0.10
+    gated: true
+    gated_reason: >-
+      No remote endpoint exists, so tools/list cannot be POSTed anonymously. Tool
+      names and descriptions are the provider's own published table; input
+      schemas are inherited from the bound REST operations below rather than
+      machine-introspected.
+channel_fanout:
+  parameter: type
+  values: [email, sms, push, voice, liveactivity]
+  detail: >-
+    A row marked binding "rest-fanout" resolves to exactly one of its listed
+    operationIds at call time, selected by the `type` argument. The order of the
+    rest[] list is always email, sms, push, voice, liveactivity.
+coverage:
+  tools_published: 35
+  tools_bound: 35
+  tools_unbound: 0
+  mcp_only: 0
+  rest_operations_total: 131
+  rest_operations_with_a_tool: 116
+  rest_operations_without_a_tool: 15
+  rest_coverage_pct: 88.5
+crosswalk:
+- tool: list_templates
+  category: templates
+  rest: [getTemplates, getSMSTemplates, getPushTemplates, getVoiceTemplates, getLiveActivityTemplates]
+  binding: rest-fanout
+  confidence: high
+- tool: get_template
+  category: templates
+  rest: [getTemplateById, getSMSTemplateById, getPushTemplateById, getVoiceTemplateById, getLiveActivityTemplateById]
+  binding: rest-fanout
+  confidence: high
+  note: >-
+    Returned subject/html/ampHtml/text are base64-encoded; use render_template
+    for decoded output.
+- tool: render_template
+  category: templates
+  rest: [renderTemplate, renderTemplateByLCID, renderSMSTemplate, renderSMSTemplateByLCID,
+    renderPushTemplate, renderPushTemplateByLCID, renderVoiceTemplate, renderVoiceTemplateByLCID,
+    renderLiveActivityTemplate, renderLiveActivityTemplateByLCID]
+  binding: rest-fanout
+  confidence: high
+  note: >-
+    Fans out 1 -> 10: five channels x two variants. The optional `language`
+    argument selects the ...ByLCID operation
+    (POST /render/template/{templateId}/{languageId}); omitting it selects the
+    base render operation.
+- tool: list_drafts
+  category: drafts
+  rest: [getDrafts, getSMSDrafts, getPushDrafts, getVoiceDrafts, getLiveActivityDrafts]
+  binding: rest-fanout
+  confidence: high
+- tool: get_draft
+  category: drafts
+  rest: [getDraftById, getSMSDraftById, getPushDraftById, getVoiceDraftById, getLiveActivityDraftById]
+  binding: rest-fanout
+  confidence: high
+- tool: submit_draft
+  category: drafts
+  rest: [submitDraftForApproval, submitSMSDraftForApproval, submitPushDraftForApproval,
+    submitVoiceDraftForApproval, submitLiveActivityDraftForApproval]
+  binding: rest-fanout
+  confidence: high
+- tool: approve_draft
+  category: drafts
+  rest: [approveDraft, approveSMSDraft, approvePushDraft, approveVoiceDraft, approveLiveActivityDraft]
+  binding: rest-fanout
+  confidence: high
+- tool: approve_all_localizations
+  category: drafts
+  rest: [approveDraftForAll, approveSMSDraftForAll, approvePushDraftForAll, approveVoiceDraftForAll,
+    approveLiveActivityDraftForAll]
+  binding: rest-fanout
+  confidence: high
+- tool: reject_draft
+  category: drafts
+  rest: [rejectDraft, rejectSMSDraft, rejectPushDraft, rejectVoiceDraft, rejectLiveActivityDraft]
+  binding: rest-fanout
+  confidence: high
+- tool: duplicate_draft
+  category: drafts
+  rest: [duplicateDraft, duplicateSMSDraft, duplicatePushDraft, duplicateVoiceDraft,
+    duplicateLiveActivityDraft]
+  binding: rest-fanout
+  confidence: high
+- tool: archive_draft
+  category: drafts
+  rest: [archiveDraft, archiveSMSDraft, archivePushDraft, archiveVoiceDraft, archiveLiveActivityDraft]
+  binding: rest-fanout
+  confidence: high
+  note: DELETE /drafts/{draftId} — described by the provider as a soft delete.
+- tool: lock_draft_for_translation
+  category: localization
+  rest: [lockDraftForTranslation, lockSMSDraftForTranslation, lockPushDraftForTranslation,
+    lockVoiceDraftForTranslation, lockLiveActivityDraftForTranslation]
+  binding: rest-fanout
+  confidence: high
+- tool: unlock_draft_for_translation
+  category: localization
+  rest: [unlockDraftForTranslation, unlockSMSDraftForTranslation, unlockPushDraftForTranslation,
+    unlockVoiceDraftForTranslation, unlockLiveActivityDraftForTranslation]
+  binding: rest-fanout
+  confidence: high
+- tool: get_draft_localization_keys
+  category: localization
+  rest: [getDraftLocalizationKeys, getSMSDraftLocalizationKeys, getPushDraftLocalizationKeys,
+    getVoiceDraftLocalizationKeys, getLiveActivityDraftLocalizationKeys]
+  binding: rest-fanout
+  confidence: high
+- tool: list_draft_localizations
+  category: localization
+  rest: [getLocalizationForDraft, getSMSLocalizationForDraft, getPushLocalizationForDraft,
+    getVoiceLocalizationForDraft, getLiveActivityLocalizationForDraft]
+  binding: rest-fanout
+  confidence: high
+- tool: get_localization
+  category: localization
+  rest: [getPublishedLocalizationById, getSMSPublishedLocalizationById, getPushPublishedLocalizationById,
+    getVoicePublishedLocalizationById, getLiveActivityPublishedLocalizationById]
+  binding: rest-fanout
+  confidence: medium
+  note: >-
+    The tool description says "Get a published localization and its compiled
+    content", which matches GET /localizations/{localizationId}. The parallel
+    draft-scoped operations (getDraftLocalizationById and its four channel
+    siblings, GET /localizations/{localizationId}/drafts/{draftId}) may also be
+    reachable through this tool if it accepts a draft id; the published README
+    does not say, so those five are listed under rest_only rather than claimed
+    here.
+- tool: upsert_localization
+  category: localization
+  rest: [saveLocalization, saveSMSLocalization, savePushLocalization, saveVoiceLocalization,
+    saveLiveActivityLocalization]
+  binding: rest-fanout
+  confidence: high
+  note: PUT semantics — create-or-update on {draftId}/localizations/{languageId}.
+- tool: delete_localization
+  category: localization
+  rest: [deleteLocalization, deleteSMSLocalization, deletePushLocalization, deleteVoiceLocalization,
+    deleteLiveActivityLocalization]
+  binding: rest-fanout
+  confidence: high
+- tool: set_translations
+  category: localization
+  rest: [setTranslation, setSMSTranslation, setPushTranslation, setVoiceTranslation,
+    setLiveActivityTranslation]
+  binding: rest-fanout
+  confidence: high
+  note: >-
+    Full replacement (PUT .../translations). The read side of the same path
+    (getTranslations and its four siblings) has no tool — see rest_only.
+- tool: list_blocks
+  category: blocks
+  rest: [getBlocks]
+  binding: rest
+  confidence: high
+- tool: get_block
+  category: blocks
+  rest: [getBlock]
+  binding: rest
+  confidence: high
+- tool: list_block_localizations
+  category: blocks
+  rest: [getLocalizationsForBlock]
+  binding: rest
+  confidence: high
+- tool: get_block_localization_keys
+  category: blocks
+  rest: [getBlockLocalizationKeys]
+  binding: rest
+  confidence: high
+- tool: upsert_block_localization
+  category: blocks
+  rest: [saveBlockLocalization]
+  binding: rest
+  confidence: high
+- tool: delete_block_localization
+  category: blocks
+  rest: [deleteBlockLocalization]
+  binding: rest
+  confidence: high
+- tool: set_block_translations
+  category: blocks
+  rest: [setBlockTranslations]
+  binding: rest
+  confidence: high
+- tool: list_workspaces
+  category: organization
+  rest: [listWorkspaces]
+  binding: rest
+  confidence: high
+- tool: get_folder
+  category: organization
+  rest: [listFolder]
+  binding: rest
+  confidence: high
+  note: >-
+    Name mismatch is real and worth knowing: the tool is get_folder, the
+    operation is listFolder (GET /workspaces/{folderId}).
+- tool: list_tags
+  category: tags
+  rest: [getTags]
+  binding: rest
+  confidence: high
+- tool: get_tag
+  category: tags
+  rest: [getTagById]
+  binding: rest
+  confidence: high
+- tool: create_tag
+  category: tags
+  rest: [createTag]
+  binding: rest
+  confidence: high
+- tool: update_tag
+  category: tags
+  rest: [updateTag]
+  binding: rest
+  confidence: high
+- tool: delete_tag
+  category: tags
+  rest: [deleteTag]
+  binding: rest
+  confidence: high
+- tool: assign_tag
+  category: tags
+  rest: [assignTagsToResource]
+  binding: rest
+  confidence: high
+- tool: unassign_tag
+  category: tags
+  rest: [unassignTagsFromResource]
+  binding: rest
+  confidence: high
+mcp_only: []
+mcp_only_note: >-
+  None. Every published Dyspatch MCP tool resolves to at least one public REST
+  operation — the MCP server is a strict projection of the REST API, with no
+  server-side composites and no capability that exists only through the agent
+  surface.
+rest_only:
+- capability: Read translations
+  reason: >-
+    The MCP server ships set_translations (write) but no read counterpart, so an
+    agent can overwrite a localization's translations without first being able to
+    read them through a tool. It must go to the REST API for that.
+  operations: [getTranslations, getSMSTranslations, getPushTranslations, getVoiceTranslations,
+    getLiveActivityTranslations]
+- capability: Read block translations
+  reason: Same asymmetry on the block side — set_block_translations exists, the read does not.
+  operations: [getBlockTranslations]
+- capability: Draft-scoped localization retrieval
+  reason: >-
+    GET /localizations/{localizationId}/drafts/{draftId} retrieves a
+    localization in the context of a specific draft. get_localization is
+    documented against the published-localization path only.
+  operations: [getDraftLocalizationById, getSMSDraftLocalizationById, getPushDraftLocalizationById,
+    getVoiceDraftLocalizationById, getLiveActivityDraftLocalizationById]
+- capability: Customer Profiles
+  reason: >-
+    Advertised on the MCP docs page but absent from the v0.0.10 README tool
+    table. See divergences in mcp/dyspatch-mcp.yml.
+  operations: [listCustomerProfiles, getCustomerProfileById]
+- capability: Themes
+  reason: >-
+    Advertised on the MCP docs page but absent from the v0.0.10 README tool
+    table. render_template does take an optional theme argument, so themes are
+    usable indirectly but not enumerable through a tool.
+  operations: [listThemes, getThemeById]
+x-evidence:
+- url: https://raw.githubusercontent.com/getdyspatch/dyspatch-mcp/main/README.md
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://docs.dyspatch.io/integrations/mcp-server/
+  http_status: 200
+  fetched: '2026-08-13'

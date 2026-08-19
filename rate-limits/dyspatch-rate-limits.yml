@@ -1,0 +1,74 @@
+generated: '2026-08-13'
+method: searched
+source:
+- https://docs.dyspatch.io/api/
+- openapi/_original/dyspatch-openapi-original.json
+docs: https://docs.dyspatch.io/api/
+limit_count: 0
+note: >-
+  Dyspatch publishes NO numeric rate limit — not a requests-per-second ceiling,
+  not a per-plan quota, not a burst allowance. What it does publish is the
+  runtime signal, and it publishes it well: every single response definition in
+  the OpenAPI (success and error alike) declares an X-RateLimit-Remaining
+  response header, and a dedicated 429 "Rate limit exceeded" response is wired
+  onto every operation in the spec. An agent can therefore always see how much
+  budget is left and can always detect exhaustion; it just cannot know the
+  ceiling in advance. limit_count is an honest 0: the headers are documented, the
+  numbers are not.
+headers:
+- name: X-RateLimit-Remaining
+  description: The number of requests left for the time window.
+  type: integer
+  scope: unknown
+  present_on: all responses
+  evidence: >-
+    Declared in components.responses on every shared response object
+    (InternalError, InvalidRequest, RateLimited, Unauthenticated, Unauthorized,
+    NotFound, Forbidden) in the published OpenAPI 3.0.0 document.
+missing_headers:
+- X-RateLimit-Limit
+- X-RateLimit-Reset
+- RateLimit
+- RateLimit-Policy
+- Retry-After
+missing_headers_note: >-
+  Neither the RFC 9910 (RateLimit / RateLimit-Policy) family nor the legacy
+  X-RateLimit-Limit / X-RateLimit-Reset pair is documented, and no Retry-After is
+  declared on the 429. A client that trips the limit is told that it tripped but
+  not when it may retry, so back-off has to be guessed.
+exhaustion:
+  status: 429
+  response_name: RateLimited
+  description: Rate limit exceeded
+  body_schema: APIError
+  body_fields: [code, message, parameter]
+  retry_after_header: false
+  applies_to: every operation in the spec (109 paths, 131 operations)
+limits: []
+limits_note: >-
+  No published limits. Searched the API reference (docs.dyspatch.io/api/), the
+  API changelog, the implementation guide, the API key documentation, the
+  knowledge-base llms.txt index, and the pricing page — none states a request
+  ceiling, a window, a burst allowance, or a per-plan quota.
+scopes_checked:
+- scope: per-api-key
+  documented: false
+- scope: per-account
+  documented: false
+- scope: per-endpoint
+  documented: false
+window: unknown
+window_note: >-
+  The X-RateLimit-Remaining description says "for the time window" but the
+  window length is never stated.
+related:
+  conventions: conventions/dyspatch-conventions.yml
+  errors: errors/dyspatch-problem-types.yml
+  plans: plans/dyspatch-plans-pricing.yml
+x-evidence:
+- url: https://docs.dyspatch.io/api/
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://www.dyspatch.io/pricing/
+  http_status: 200
+  fetched: '2026-08-13'

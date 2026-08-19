@@ -1,16 +1,37 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
 status: published
-source: https://docs.dyspatch.io/integrations/mcp-server/
+source:
+- https://docs.dyspatch.io/integrations/mcp-server/
+- https://github.com/getdyspatch/dyspatch-mcp/blob/main/README.md
+- https://registry.npmjs.org/dyspatch-mcp
+deployment:
+  mode: local-stdio
+  endpoint: null
+  install: claude mcp add dyspatch -e DYSPATCH_API_KEY=your_key -- npx dyspatch-mcp
+  package: https://www.npmjs.com/package/dyspatch-mcp
+  auth: api-key
+  verified: searched
+  note: >-
+    There is NO hosted/remote Dyspatch MCP endpoint. The package ships an
+    optional HTTP transport (`npx dyspatch-mcp --http`), but it binds to
+    http://localhost:3000/mcp on the operator's own machine — it is a second way
+    to run the same local server, not an agent-reachable URL Dyspatch operates.
+    A human must install Node.js 20+, mint a Dyspatch API key, and start the
+    process before any agent can reach this surface.
 server:
   name: dyspatch
   transport: stdio
+  transport_alt: http (localhost only, via --http; default port 3000, path /mcp)
   package: dyspatch-mcp
   registry: npm
   npm: https://www.npmjs.com/package/dyspatch-mcp
   repository: https://github.com/getdyspatch/dyspatch-mcp
   version: 0.0.10
+  published: '2026-06-02'
+  first_published: '2026-03-31'
   license: Apache-2.0
+  runtime: Node.js 20+
 install:
   claude_code: claude mcp add dyspatch -e DYSPATCH_API_KEY=your_key -- npx dyspatch-mcp
   claude_desktop_config:
@@ -19,49 +40,166 @@ install:
     - dyspatch-mcp
     env:
       DYSPATCH_API_KEY: your_key
+  http_local: DYSPATCH_API_KEY=your_key npx dyspatch-mcp --http
 authentication:
   type: api-key
   env: DYSPATCH_API_KEY
+  transport_to_api: "Sends 'Authorization: Bearer <api-key>' to https://api.dyspatch.io"
   permission_levels:
   - read-only
   - read-write
+  guidance: >-
+    Dyspatch documents least-privilege explicitly — use a read-only key unless
+    the agent genuinely needs to write. Read-write keys let an agent create
+    drafts, edit content, manage localizations and move templates through the
+    approval workflow.
+tools_introspection:
+  live_tools_list: not-applicable
+  note: >-
+    No remote endpoint exists to POST tools/list against. The tool inventory
+    below is the provider-published table from the dyspatch-mcp README at
+    version 0.0.10, captured verbatim — names and descriptions are the
+    provider's own. Input schemas were not machine-introspected; the backing
+    REST parameters are bound in mcp/dyspatch-tool-crosswalk.yml.
+channel_types:
+  parameter: type
+  values: [email, sms, push, voice, liveactivity]
+  detail: >-
+    Tools that operate on templates, drafts or localizations take a `type`
+    parameter. One MCP tool therefore fans out across the five per-channel REST
+    tag families in the OpenAPI (Templates / SMS Templates / Push Templates /
+    Voice Templates / Live Activity Templates, and the same for drafts).
+tool_count: 35
+tool_groups:
+- group: Templates
+  tools:
+  - name: list_templates
+    description: List published templates for a channel type
+  - name: get_template
+    description: Get a single template including compiled content
+  - name: render_template
+    description: Render a template with variables (and optional language/theme)
+- group: Drafts
+  tools:
+  - name: list_drafts
+    description: List all drafts for a channel type
+  - name: get_draft
+    description: Get a draft including compiled content
+  - name: submit_draft
+    description: Submit a draft for approval
+  - name: approve_draft
+    description: Approve a draft for publishing
+  - name: approve_all_localizations
+    description: Approve all localizations of a draft
+  - name: reject_draft
+    description: Reject a draft submitted for approval
+  - name: duplicate_draft
+    description: Create a copy of a draft
+  - name: archive_draft
+    description: Soft-delete a draft
+  - name: lock_draft_for_translation
+    description: Lock a draft so it can be sent for translation
+  - name: unlock_draft_for_translation
+    description: Unlock a previously locked draft
+  - name: get_draft_localization_keys
+    description: Get all translatable string keys defined in a draft
+- group: Localizations
+  tools:
+  - name: list_draft_localizations
+    description: List all localizations attached to a draft
+  - name: get_localization
+    description: Get a published localization and its compiled content
+  - name: upsert_localization
+    description: Create or update a localization for a language
+  - name: delete_localization
+    description: Remove a localization from a draft
+  - name: set_translations
+    description: Replace all translations for a localization
+- group: Blocks
+  tools:
+  - name: list_blocks
+    description: List reusable content blocks
+  - name: get_block
+    description: Get a single block
+  - name: list_block_localizations
+    description: List all localizations for a block
+  - name: get_block_localization_keys
+    description: Get translatable string keys for a block
+  - name: upsert_block_localization
+    description: Create or update a localization for a block
+  - name: delete_block_localization
+    description: Remove a localization from a block
+  - name: set_block_translations
+    description: Replace all translations for a block localization
+- group: Workspaces
+  tools:
+  - name: list_workspaces
+    description: List top-level workspace folders
+  - name: get_folder
+    description: Get a folder and its immediate subfolders
+- group: Tags
+  tools:
+  - name: list_tags
+    description: List tags (optionally filtered by type or workspace)
+  - name: get_tag
+    description: Get a single tag by ID
+  - name: create_tag
+    description: Create a new tag
+  - name: update_tag
+    description: Update a tag's name
+  - name: delete_tag
+    description: Delete a tag
+  - name: assign_tag
+    description: Assign a tag to a resource
+  - name: unassign_tag
+    description: Remove a tag from a resource
+published_use_cases:
+- name: Audit your template library
+  tools: [list_templates, get_template]
+- name: Preview a template before sending
+  tools: [list_templates, render_template]
+- name: Manage the approval workflow
+  tools: [list_drafts, get_draft, approve_draft, reject_draft]
+- name: Set up localization for a new market
+  tools: [list_drafts, upsert_localization, set_translations, lock_draft_for_translation]
+- name: Organize templates with tags
+  tools: [create_tag, list_templates, assign_tag]
+- name: Duplicate a draft and submit it for approval
+  tools: [duplicate_draft, get_draft, submit_draft]
+divergences:
+  docs_claims_not_in_tool_table:
+  - capability: Customer Profiles
+    detail: >-
+      The docs page (docs.dyspatch.io/integrations/mcp-server/) says the server
+      exposes Customer Profiles ("Access stored Customer Profile data sets to
+      render templates against different data scenarios"), but the v0.0.10
+      README tool table lists no customer-profile tool. The REST operations
+      listCustomerProfiles and getCustomerProfileById exist and are unbound.
+  - capability: Themes
+    detail: >-
+      The docs page says the server exposes Themes ("Query and retrieve themes"),
+      but the v0.0.10 README tool table lists no theme tool. The REST operations
+      listThemes and getThemeById exist and are unbound. render_template does
+      accept an optional theme argument.
+  note: >-
+    Recorded as a divergence rather than resolved in either direction — the
+    marketing page and the shipped package disagree, and only an authenticated
+    tools/list against a running instance settles it.
 notes: >-
-  Local (stdio) MCP server run via npx. Authenticates with a Dyspatch API key.
-  Two key permission levels are supported: read-only (view content) and
-  read & write (create/update content through the Dyspatch approval workflow).
-  Tool families below reflect the documented surface; each maps to Dyspatch API
-  resources (see openapi/dyspatch-openapi-original.json).
-tools:
-- name: templates
-  description: List, search, retrieve, and render templates with variable substitution.
-  source_operations:
-  - openapi/dyspatch-openapi-original.json#getTemplates
-  - openapi/dyspatch-openapi-original.json#getTemplateById
-  - openapi/dyspatch-openapi-original.json#renderTemplate
-  - openapi/dyspatch-openapi-original.json#renderTemplateByLCID
-- name: drafts
-  description: Create, edit, submit, approve/reject, and duplicate drafts.
-  source_operations:
-  - openapi/dyspatch-openapi-original.json#getDrafts
-  - openapi/dyspatch-openapi-original.json#getDraftById
-  - openapi/dyspatch-openapi-original.json#submitDraftForApproval
-  - openapi/dyspatch-openapi-original.json#approveDraft
-  - openapi/dyspatch-openapi-original.json#rejectDraft
-  - openapi/dyspatch-openapi-original.json#duplicateDraft
-- name: localizations
-  description: Create language variants and update translations.
-  source_operations:
-  - openapi/dyspatch-openapi-original.json#getLocalizationForDraft
-  - openapi/dyspatch-openapi-original.json#saveLocalization
-  - openapi/dyspatch-openapi-original.json#getTranslations
-  - openapi/dyspatch-openapi-original.json#setTranslation
-- name: customer_profiles
-  description: Access customer data profiles used for template rendering.
-  source_operations:
-  - openapi/dyspatch-openapi-original.json#listCustomerProfiles
-  - openapi/dyspatch-openapi-original.json#getCustomerProfileById
-- name: tags
-  description: Organize and categorize templates and drafts with tags.
-  source_operations:
-  - openapi/dyspatch-openapi-original.json#getTags
-  - openapi/dyspatch-openapi-original.json#assignTagsToResource
+  Local (stdio) MCP server run via npx, authenticating with a Dyspatch API key.
+  Base-64 caveat worth carrying into any agent flow: the subject/html/ampHtml/text
+  fields returned by get_template and get_draft are base64-encoded; render_template
+  returns decoded output with variables substituted. Draft states are
+  IN_PROGRESS -> PENDING_APPROVAL -> Published, and drafts are only editable while
+  IN_PROGRESS.
+crosswalk: mcp/dyspatch-tool-crosswalk.yml
+x-evidence:
+- url: https://docs.dyspatch.io/integrations/mcp-server/
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://raw.githubusercontent.com/getdyspatch/dyspatch-mcp/main/README.md
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://registry.npmjs.org/dyspatch-mcp
+  http_status: 200
+  fetched: '2026-08-13'

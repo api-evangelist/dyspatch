@@ -1,0 +1,180 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dyspatch Blocks SMS Templates API",
+    "version": "2026.06"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SMS Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List SMS Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/sms/templates",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor value used to retrieve a specific page from a paginated result set."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter templates by name (case-insensitive partial match)"
+              },
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "query",
+                "description": "Filter templates by folder ID (immediate children only)"
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "Filter templates by workspace ID (includes all nested folders)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets a list of SMS Template Metadata objects for all published templates. Up to 25 results returned before results are paginated."
+        },
+        {
+          "info": {
+            "name": "Get SMS Template by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/sms/templates/:templateId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "A template ID"
+              },
+              {
+                "name": "targetLanguage",
+                "value": "",
+                "type": "query",
+                "description": "The type of templating language to use when compiling the content."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets an SMS template object with the matching ID. Templates without a published draft will result in an error."
+        },
+        {
+          "info": {
+            "name": "Render SMS Template by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dyspatch.io/sms/render/template/:templateId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "A template ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Renders an SMS template using the provided data."
+        },
+        {
+          "info": {
+            "name": "Render Localized SMS Template by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dyspatch.io/sms/render/template/:templateId/:languageId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "A template ID"
+              },
+              {
+                "name": "languageId",
+                "value": "",
+                "type": "path",
+                "description": "A language ID (eg: en-US)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Renders an SMS template for the selected language using the provided data."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

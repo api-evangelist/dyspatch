@@ -1,16 +1,33 @@
-generated: '2026-07-18'
-method: searched
+generated: '2026-08-13'
+method: probed
+last_probed: '2026-08-13'
+verdict: no-well-known-surface
+verdict_detail: >-
+  Every /.well-known/ path probed on every Dyspatch host returns 404. There is no
+  RFC 8615 discovery surface here — no security.txt at the canonical location, no
+  OIDC discovery, no OAuth authorization-server metadata, no api-catalog, no
+  ai-plugin. The one real document Dyspatch does serve, a security.txt, sits at
+  the SITE ROOT (https://www.dyspatch.io/security.txt) instead, where no
+  RFC 9116 client will look for it. Because of that, this round deliberately does
+  NOT carry a `WellKnown` pointer in apis.yml: a file that documents an absence
+  must not be scored as a presence. The `SecurityTxt` pointer is retained,
+  because a genuine security.txt document is served — just at the wrong path.
 hosts:
 - host: https://www.dyspatch.io
   documents:
   - path: /security.txt
     status: 200
     file: dyspatch-security.txt
+    canonical: false
+    expired: true
     note: >-
-      Served at the site root rather than the RFC 9116 canonical
-      /.well-known/security.txt location (which returns 404). Contact
-      security@dyspatch.io. The published Expires date (2024-11-16) is in the
-      past, so the file is stale but still advertises a working security contact.
+      Real RFC 9116-shaped document (Contact + Expires), but served at the site
+      root rather than /.well-known/security.txt, and its own Expires value
+      (2024-11-16T19:16:00.000Z) passed 21 months ago. Per RFC 9116 an expired
+      security.txt SHOULD NOT be relied upon. The security@dyspatch.io contact
+      it advertises is still the only published disclosure channel Dyspatch has,
+      so it is recorded as the disclosure evidence in
+      security/dyspatch-vulnerability-disclosure.yml with the staleness flagged.
   - path: /.well-known/security.txt
     status: 404
   - path: /.well-known/openid-configuration
@@ -20,6 +37,10 @@ hosts:
   - path: /.well-known/api-catalog
     status: 404
   - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
     status: 404
 - host: https://api.dyspatch.io
   documents:
@@ -33,6 +54,13 @@ hosts:
     status: 404
   - path: /.well-known/ai-plugin.json
     status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  note: >-
+    api.dyspatch.io answers every unknown path with a well-formed JSON 404
+    ({"code":"not_found",...}), so these are true negatives, not an SPA catch-all.
 - host: https://docs.dyspatch.io
   documents:
   - path: /.well-known/security.txt
@@ -41,3 +69,48 @@ hosts:
     status: 404
   - path: /.well-known/api-catalog
     status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://app.dyspatch.io
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    accepted: false
+    rejected_reason: soft-200-html-shell
+    note: >-
+      IMPORTANT FALSE POSITIVE. The Dyspatch web app answers 200 with its
+      single-page-app HTML shell for EVERY /.well-known/* path, including paths
+      that plainly do not exist. The body is `<!DOCTYPE html>`, not JSON, so it
+      carries no AgentCard shape and was rejected. No agent card artifact was
+      written for Dyspatch.
+  - path: /.well-known/agent.json
+    status: 200
+    accepted: false
+    rejected_reason: soft-200-html-shell
+oauth_discovery:
+  present: false
+  reason: >-
+    Dyspatch authenticates with a static Bearer API key (OpenAPI securityScheme
+    type apiKey), not OAuth 2.0, so there is nothing for
+    /.well-known/oauth-authorization-server or
+    /.well-known/oauth-protected-resource to describe. The 404s here are correct
+    behaviour, not a gap. See authentication/dyspatch-authentication.yml.
+provider_fix:
+  - Move security.txt to https://www.dyspatch.io/.well-known/security.txt (RFC 9116 requires it there).
+  - Refresh the Expires field; the published document expired 2024-11-16.
+  - "Add the Policy and Preferred-Languages fields — only Contact and Expires are present."
+x-evidence:
+- url: https://www.dyspatch.io/security.txt
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://www.dyspatch.io/.well-known/security.txt
+  http_status: 404
+  fetched: '2026-08-13'
+- url: https://api.dyspatch.io/.well-known/oauth-authorization-server
+  http_status: 404
+  fetched: '2026-08-13'
+- url: https://app.dyspatch.io/.well-known/agent-card.json
+  http_status: 200
+  fetched: '2026-08-13'

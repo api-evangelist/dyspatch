@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dyspatch Blocks Themes API",
+    "version": "2026.06"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Themes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Themes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/themes",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor value used to retrieve a specific page from a paginated result set."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a paginated list of themes for the organization."
+        },
+        {
+          "info": {
+            "name": "Get Theme by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/themes/:themeId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "themeId",
+                "value": "",
+                "type": "path",
+                "description": "A theme ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a theme object with the matching ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

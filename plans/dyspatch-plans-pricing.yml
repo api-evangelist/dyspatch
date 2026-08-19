@@ -1,0 +1,131 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.dyspatch.io/pricing/
+docs: https://www.dyspatch.io/pricing/
+currency: USD
+billing_period: month
+plan_count: 3
+note: >-
+  Dyspatch publishes a three-tier plan table on its public pricing page with a
+  feature-comparison matrix. Two tiers carry a list price; the top tier is quoted
+  ("Custom"). Pricing is per-account/seat-band and is not expressed as an API
+  call quota — API Access is a feature flag included on every tier rather than a
+  metered allowance, and no per-tier API request quota, overage rate, or numeric
+  API limit is published anywhere on the pricing page or in the developer docs.
+  See rate-limits/dyspatch-rate-limits.yml for what the API does signal at
+  runtime. Payment methods accepted: Visa, Mastercard, American Express.
+plans:
+- name: Starter
+  price: 149
+  currency: USD
+  billing_period: month
+  price_display: $149/mo
+  quoted: false
+  api_access: true
+  included_quota: null
+  overage: null
+  limits:
+    api_export: false
+    localizations: false
+    translation_smartling: false
+    user_management: false
+    workspaces: false
+    custom_themes: false
+    sla: false
+    saml_sso: false
+    account_manager: false
+    premium_support: false
+  features:
+  - Universal styling
+  - Drag and drop email builder
+  - Custom code editor
+  - Custom fonts
+  - Device specific elements
+  - Version history
+  - Social media link settings
+  - Commenting
+  - Live previews
+  - Dark mode previews
+  - Litmus testing
+  - Custom merge fields
+  - Image hosting
+  - Brand & legal compliance guardrails
+  - User role permissions
+  - ESP logic
+  - Code Export
+  - AMP Email Support
+  - Approval Workflows
+  - API Access
+- name: Teams
+  price: 499
+  currency: USD
+  billing_period: month
+  price_display: $499/mo
+  quoted: false
+  api_access: true
+  included_quota: null
+  overage: null
+  limits:
+    api_export: false
+    localizations: false
+    translation_smartling: false
+    user_management: true
+    workspaces: false
+    custom_themes: false
+    sla: false
+    saml_sso: false
+    account_manager: false
+    premium_support: false
+  features_added_over_previous:
+  - User Management
+- name: Teams+
+  price: null
+  currency: USD
+  billing_period: month
+  price_display: Custom
+  quoted: true
+  api_access: true
+  included_quota: null
+  overage: null
+  limits:
+    api_export: true
+    localizations: true
+    translation_smartling: true
+    user_management: true
+    workspaces: true
+    custom_themes: true
+    sla: true
+    saml_sso: true
+    account_manager: true
+    premium_support: true
+  features_added_over_previous:
+  - Translation (via Smartling)
+  - Export via API
+  - Localizations
+  - Account Manager
+  - Premium Support
+  - SLA
+  - Premium SAML SSO
+  - Custom Themes
+  - Workspaces
+  - Design / AMP Services
+api_relevant_gating:
+  detail: >-
+    API Access is available on all three tiers, but "Export via API" and
+    "Localizations" are Teams+ only. The Localizations, SMS/Push/Voice/Live
+    Activity localization and translation endpoints documented in
+    openapi/ are therefore only usable on the Teams+ tier for most accounts.
+  api_access_all_tiers: true
+  export_via_api_tier: Teams+
+  localizations_tier: Teams+
+  sla_tier: Teams+
+sla:
+  published_document: false
+  note: >-
+    An SLA is listed as a Teams+ entitlement on the pricing matrix but no public
+    SLA document or uptime target is published. See
+    lifecycle/dyspatch-lifecycle.yml.
+x-evidence:
+- url: https://www.dyspatch.io/pricing/
+  http_status: 200
+  fetched: '2026-08-13'

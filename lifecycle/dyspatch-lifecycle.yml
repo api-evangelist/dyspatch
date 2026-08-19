@@ -1,14 +1,24 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
 source: https://docs.dyspatch.io/api/changelog.html
 versioning:
   scheme: date-header
   detail: >-
     Dated versions (YYYY.MM, sometimes with a vN suffix) selected per request via
-    the Accept header, e.g. application/vnd.dyspatch.2026.06+json. Prior versions
+    the Accept header, e.g. application/vnd.dyspatch.2026.07+json. Prior versions
     remain accessible through the changelog version selector; this gives callers
     an explicit opt-in upgrade path rather than silent breaking changes.
-  current: '2026.06'
+  current: '2026.07'
+  version_count: 19
+  oldest_available: '2019.03'
+  spec_per_version: https://docs.dyspatch.io/api/specs/2026.07.yml
+  spec_per_version_note: >-
+    Every one of the nineteen dated versions back to 2019.03 still has a
+    downloadable OpenAPI document at /api/specs/<version>.yml and a rendered
+    reference at /api/<version>.html. Old versions are not merely "still
+    accepted" — they remain fully documented and machine-readable, which is a
+    stronger retention posture than the absence of a written deprecation policy
+    would suggest.
   docs: https://docs.dyspatch.io/api/changelog.html
 changelog: changelog/dyspatch-changelog.yml
 status_page: https://status.dyspatch.io

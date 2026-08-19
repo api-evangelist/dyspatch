@@ -1,65 +1,177 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
-source: https://github.com/getdyspatch
+source:
+- https://github.com/getdyspatch
+- https://registry.npmjs.org/
+- https://rubygems.org/api/v1/gems/dyspatch_client.json
+- https://api.nuget.org/v3/registration5-semver1/dyspatch/index.json
+- https://proxy.golang.org/github.com/getdyspatch/dyspatch-golang/@latest
 description: >-
   Official Dyspatch API client libraries are OpenAPI-generated and published
-  under the getdyspatch GitHub organization. Registry availability is recorded
-  per package; where a public-registry release was verified it is listed, and
-  the GitHub source repository is always given.
+  under the getdyspatch GitHub organization. Every entry below carries a
+  structured `version` and `published` date read from the registry metadata
+  endpoint on 2026-08-13, or an explicit null where the registry has no release.
+currency_finding:
+  headline: >-
+    Dyspatch's REST SDKs are abandoned; its agent surface is not.
+  detail: >-
+    The newest release of ANY first-party REST client library is 2020-11-13 —
+    five years and nine months before this check. The Go module has not been
+    released since 2019-06-11 and is still a v2.0.0+incompatible pseudo-module.
+    Meanwhile the API itself has shipped nine dated versions since those SDKs
+    were cut (2023.01 through 2026.07), adding Customer Profiles, Themes, Tags,
+    draft duplicate/archive/lock, translation endpoints and a `channel` field —
+    none of which any published SDK knows about. The one package under active
+    maintenance is dyspatch-mcp (0.0.10, 2026-06-02), the MCP server. Dyspatch
+    is investing in the agent path and letting the language SDKs decay.
+  newest_rest_sdk_release: '2020-11-13'
+  newest_api_version: '2026.07'
+  checked: '2026-08-13'
 packages:
-- language: csharp
-  registry: nuget
-  name: Dyspatch
-  url: https://www.nuget.org/packages/Dyspatch
-  version: 5.0.0
-  install: dotnet add package Dyspatch
-  source_repo: https://github.com/getdyspatch/dyspatch-dotnet
-  official: true
-- language: ruby
-  registry: rubygems
-  name: dyspatch_client
-  url: https://rubygems.org/gems/dyspatch_client
-  version: 6.0.0
-  install: gem install dyspatch_client
-  source_repo: https://github.com/getdyspatch/dyspatch-ruby
-  official: true
 - language: javascript
   registry: npm
   name: dyspatch-client
   url: https://www.npmjs.com/package/dyspatch-client
   version: 6.0.0
+  published: '2020-11-13'
   install: npm install dyspatch-client
   source_repo: https://github.com/getdyspatch/dyspatch-javascript
   official: true
+  note: >-
+    OpenAPI-generated. Repository last pushed 2023-01-23; no npm release since
+    2020-11-13.
+- language: ruby
+  registry: rubygems
+  name: dyspatch_client
+  url: https://rubygems.org/gems/dyspatch_client
+  version: 6.0.0
+  published: '2020-11-13'
+  install: gem install dyspatch_client
+  source_repo: https://github.com/getdyspatch/dyspatch-ruby
+  official: true
+- language: csharp
+  registry: nuget
+  name: Dyspatch
+  url: https://www.nuget.org/packages/Dyspatch
+  version: 5.0.0
+  published: '2020-04-21'
+  install: dotnet add package Dyspatch
+  source_repo: https://github.com/getdyspatch/dyspatch-dotnet
+  official: true
+  note: >-
+    Five NuGet releases total (3.0.0 in 2019-11 through 5.0.0 in 2020-04).
+    Repository last pushed 2022-12-08 with no corresponding release.
 - language: go
   registry: go-modules
   name: github.com/getdyspatch/dyspatch-golang
   url: https://pkg.go.dev/github.com/getdyspatch/dyspatch-golang
+  version: v2.0.0+incompatible
+  published: '2019-06-11'
   install: go get github.com/getdyspatch/dyspatch-golang
   source_repo: https://github.com/getdyspatch/dyspatch-golang
   official: true
+  note: >-
+    Read from proxy.golang.org/@latest. The +incompatible suffix means the module
+    was never migrated to a /v2 module path. Oldest release of any Dyspatch SDK.
 - language: python
   registry: github
   name: dyspatch_client
   url: https://github.com/getdyspatch/dyspatch-python
+  version: null
+  published: null
   install: pip install git+https://github.com/getdyspatch/dyspatch-python.git
   source_repo: https://github.com/getdyspatch/dyspatch-python
   official: true
-  note: OpenAPI-generated; import as dyspatch_client. No verified PyPI release.
+  note: >-
+    Checked pypi.org/pypi/dyspatch-client/json (404) and pypi.org/pypi/dyspatch_client/json
+    (404) — there is NO PyPI release. version/published are null because the
+    registry has nothing to report, not because the check was skipped. Install is
+    git-only. Repository last pushed 2021-09-29. Do not confuse with the PyPI
+    project literally named `dyspatch` (0.0.1, 2021-10-31), which is an unrelated
+    third-party events-handler library by a different author.
 - language: java
   registry: github
   name: io.dyspatch:dyspatch-java
   url: https://github.com/getdyspatch/dyspatch-java
-  install: mvn install (see getdyspatch/dyspatch-java-mvn repository)
+  version: null
+  published: null
+  install: see the getdyspatch/dyspatch-java-mvn repository
   source_repo: https://github.com/getdyspatch/dyspatch-java
   official: true
-  note: Distributed via the getdyspatch/dyspatch-java-mvn repository, not Maven Central.
+  note: >-
+    Checked Maven Central at repo1.maven.org/maven2/io/dyspatch/ (404) — the
+    groupId is not published to Central. Distribution is a self-hosted Maven
+    repository at getdyspatch/dyspatch-java-mvn, so there is no registry
+    metadata endpoint to date. The source repository is the most recently
+    touched SDK repo (pushed 2025-11-13), but that activity produced no
+    published artifact a consumer can resolve.
 - language: typescript
   registry: npm
   name: dyspatch-mcp
   url: https://www.npmjs.com/package/dyspatch-mcp
   version: 0.0.10
+  published: '2026-06-02'
+  first_published: '2026-03-31'
   install: npx dyspatch-mcp
   source_repo: https://github.com/getdyspatch/dyspatch-mcp
   official: true
-  note: MCP server (see mcp/dyspatch-mcp.yml), not a REST client library.
+  kind: mcp-server
+  note: >-
+    MCP server, not a REST client library — see mcp/dyspatch-mcp.yml. The only
+    Dyspatch package under active maintenance.
+- language: javascript
+  registry: npm
+  name: dyspatch
+  url: https://www.npmjs.com/package/dyspatch
+  version: 1.0.1
+  published: '2026-03-30'
+  install: null
+  source_repo: null
+  official: true
+  usable: false
+  note: >-
+    Name reservation, not a library. The package description is literally
+    "Coming soon" and it declares no repository. Listed because the npm
+    maintainer account is `sendwithus` (login@sendwithus.com) — Sendwithus is
+    Dyspatch's own sibling product, so this is a first-party placeholder rather
+    than a squat by an unrelated party. Nothing to install; recorded so a future
+    round can tell a real release from a reserved name.
+registries_checked:
+- registry: npm
+  result: found (dyspatch-client, dyspatch-mcp, dyspatch placeholder)
+- registry: pypi
+  result: absent — no first-party package
+- registry: rubygems
+  result: found (dyspatch_client)
+- registry: nuget
+  result: found (Dyspatch)
+- registry: go-modules
+  result: found (github.com/getdyspatch/dyspatch-golang)
+- registry: maven-central
+  result: absent — io.dyspatch not on Central (repo1.maven.org 404)
+- registry: packagist
+  result: absent — no first-party PHP client
+- registry: crates.io
+  result: absent — no first-party Rust client
+x-evidence:
+- url: https://registry.npmjs.org/dyspatch-client
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://registry.npmjs.org/dyspatch-mcp
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://rubygems.org/api/v1/gems/dyspatch_client.json
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://api.nuget.org/v3/registration5-semver1/dyspatch/index.json
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://proxy.golang.org/github.com/getdyspatch/dyspatch-golang/@latest
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://pypi.org/pypi/dyspatch-client/json
+  http_status: 404
+  fetched: '2026-08-13'
+- url: https://repo1.maven.org/maven2/io/dyspatch/
+  http_status: 404
+  fetched: '2026-08-13'

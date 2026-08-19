@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dyspatch Blocks Live Activity Localizations API",
+    "version": "2026.06"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Live Activity Localizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Live Activity Localization Object by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/liveactivity/localizations/:localizationId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "localizationId",
+                "value": "",
+                "type": "path",
+                "description": "A localization ID"
+              },
+              {
+                "name": "targetLanguage",
+                "value": "",
+                "type": "query",
+                "description": "The type of templating language to use when compiling the content."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the published Live Activity content associated with the localization of the matching ID"
+        },
+        {
+          "info": {
+            "name": "Get Live Activity Draft Localization Object by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/liveactivity/localizations/:localizationId/drafts/:draftId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              },
+              {
+                "name": "localizationId",
+                "value": "",
+                "type": "path",
+                "description": "A localization ID"
+              },
+              {
+                "name": "targetLanguage",
+                "value": "",
+                "type": "query",
+                "description": "The type of templating language to use when compiling the content."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a specific localization object of the matching Live Activity draft with a matching localization ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

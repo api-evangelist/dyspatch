@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dyspatch Blocks Customer Profiles API",
+    "version": "2026.06"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customer Profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Customer Profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/customerprofiles",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor value used to retrieve a specific page from a paginated result set."
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "An ID of a workspace"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of customer profiles for the organization. Results can be filtered by workspace ID. The list may include an unnamed customer profile (name is empty string) which represents global variables available to all templates."
+        },
+        {
+          "info": {
+            "name": "Get Customer Profile by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/customerprofiles/:customerProfileId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "customerProfileId",
+                "value": "",
+                "type": "path",
+                "description": "A customer profile ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a customer profile object with the matching ID, including its JSON data content and workspace association."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

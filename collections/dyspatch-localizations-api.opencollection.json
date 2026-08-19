@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dyspatch Blocks Localizations API",
+    "version": "2026.06"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Localizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Localization Object by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/localizations/:localizationId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "localizationId",
+                "value": "",
+                "type": "path",
+                "description": "A localization ID"
+              },
+              {
+                "name": "targetLanguage",
+                "value": "",
+                "type": "query",
+                "description": "The type of templating language to use when compiling the content."
+              },
+              {
+                "name": "themeId",
+                "value": "",
+                "type": "query",
+                "description": "A theme ID to use when rendering"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the published content associated with the localization of the matching ID"
+        },
+        {
+          "info": {
+            "name": "Get Draft Localization Object by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/localizations/:localizationId/drafts/:draftId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              },
+              {
+                "name": "localizationId",
+                "value": "",
+                "type": "path",
+                "description": "A localization ID"
+              },
+              {
+                "name": "targetLanguage",
+                "value": "",
+                "type": "query",
+                "description": "The type of templating language to use when compiling the content."
+              },
+              {
+                "name": "themeId",
+                "value": "",
+                "type": "query",
+                "description": "A theme ID to use when rendering"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a specific localization object of the matching draft with a matching localization ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

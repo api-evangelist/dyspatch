@@ -1,0 +1,568 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dyspatch Blocks Voice Drafts API",
+    "version": "2026.06"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Voice Drafts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Voice Drafts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/voice/drafts",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor value used to retrieve a specific page from a paginated result set."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter the list of drafts by a particular status"
+              },
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "query",
+                "description": "Filter drafts by template ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns all Voice drafts for your organization."
+        },
+        {
+          "info": {
+            "name": "Submit Voice Draft for Approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/publishRequest",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Moves the Voice draft into submitted state."
+        },
+        {
+          "info": {
+            "name": "Approve Voice Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/publish/approve",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Approves a Voice draft that is in Design or Publish review."
+        },
+        {
+          "info": {
+            "name": "Approve Voice Draft For All Reviewers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/publish/approveAll",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Approves a Voice draft that is in Design or Publish review for all reviewers."
+        },
+        {
+          "info": {
+            "name": "Reject Voice Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/publish/reject",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Rejects a Voice draft that is in Design or Publish review."
+        },
+        {
+          "info": {
+            "name": "Duplicate Voice Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/duplicate",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a copy of a Voice draft with a new name."
+        },
+        {
+          "info": {
+            "name": "Lock Voice Draft for Translation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/lockForTranslation",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Locks a Voice draft to prevent edits while translations are being completed."
+        },
+        {
+          "info": {
+            "name": "Unlock Voice Draft for Translation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/lockForTranslation",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Unlocks a Voice draft to allow edits after translations are completed."
+        },
+        {
+          "info": {
+            "name": "Get Voice Draft by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              },
+              {
+                "name": "targetLanguage",
+                "value": "",
+                "type": "query",
+                "description": "The type of templating language to use when compiling the content."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets an Voice draft object with the matching ID. The \"compiled\" field will contain the template in the default, unlocalized form."
+        },
+        {
+          "info": {
+            "name": "Archive Voice Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Archives a Voice draft by marking it as deleted."
+        },
+        {
+          "info": {
+            "name": "Get Localizations on an Voice Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/localizations",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns localization metadata for the Voice draft"
+        },
+        {
+          "info": {
+            "name": "Create or Update an Voice Localization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/localizations/:languageId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              },
+              {
+                "name": "languageId",
+                "value": "",
+                "type": "path",
+                "description": "A language ID (eg: en-US)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Inserts a localization or sets the name on an existing localization that already uses the languageId"
+        },
+        {
+          "info": {
+            "name": "Remove a Localization from Voice Draft",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/localizations/:languageId",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              },
+              {
+                "name": "languageId",
+                "value": "",
+                "type": "path",
+                "description": "A language ID (eg: en-US)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes the localization with the given language ID if it exists"
+        },
+        {
+          "info": {
+            "name": "Get Voice Draft Translations for Language",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/localizations/:languageId/translations",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              },
+              {
+                "name": "languageId",
+                "value": "",
+                "type": "path",
+                "description": "A language ID (eg: en-US)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the translations for the given language in key/value pairs."
+        },
+        {
+          "info": {
+            "name": "Set Voice Draft Translations for Language",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/localizations/:languageId/translations",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              },
+              {
+                "name": "languageId",
+                "value": "",
+                "type": "path",
+                "description": "A language ID (eg: en-US)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Completely replaces any existing translations for the given language with those provided in request body. Variables embedded in keys or values are expected to be in the format `%(my_variable)s` and will automatically convert to the correct Dyspatch format depending on the type of template. Accepts key/value pairs in JSON format or in gettext PO file format. For JSON set `Content-Type` header to `application/json`. For gettext PO format set `Content-Type` header to `text/x-gettext-translation`."
+        },
+        {
+          "info": {
+            "name": "Get Voice Draft Localization Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dyspatch.io/voice/drafts/:draftId/localizationKeys",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "draftId",
+                "value": "",
+                "type": "path",
+                "description": "A draft ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the list of values that need to be translated for the draft. Set the `Accept` header to `application/vnd.dyspatch.2026.06+json` to get a JSON object, or `text/vnd.dyspatch.2026.06+x-gettext-translation` to get the POT file."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
