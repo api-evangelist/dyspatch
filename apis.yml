@@ -551,6 +551,8 @@ apis:
   - type: DataModel
     url: data-model/dyspatch-data-model.yml
 common:
+- type: Website
+  url: https://www.dyspatch.io/
 - type: DeveloperPortal
   url: https://docs.dyspatch.io
 - type: Documentation
