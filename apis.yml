@@ -536,6 +536,8 @@ apis:
   humanURL: https://docs.dyspatch.io/api/
   baseURL: https://api.dyspatch.io
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI
