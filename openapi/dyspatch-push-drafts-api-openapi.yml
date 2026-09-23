@@ -1,24 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: '2026.06'
-  title: Dyspatch Blocks Push Drafts API
+  title: Dyspatch Push Drafts API
   description: '# Introduction
 
 
     The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
 
-    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
-
-    See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
-
-    how to implement Dyspatch.
-
-
-    ## Generating API Clients
-
-    Dyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.
-
-    '
+    codes to indicate errors.'
   contact:
     name: Dyspatch Support
     url: https://docs.dyspatch.io
@@ -28,9 +17,7 @@ servers:
 - url: https://api.dyspatch.io
 tags:
 - name: Push Drafts
-  description: 'Push Drafts represent unpublished versions of templates that are still mutable. There could be many in progress drafts for a template.
-
-    '
+  description: Push Drafts represent unpublished versions of templates that are still mutable. There could be many in progress drafts for a template.
 paths:
   /push/drafts:
     get:
@@ -532,41 +519,6 @@ paths:
           $ref: '#/components/responses/InvalidRequest'
 components:
   schemas:
-    LocalizationMetaRead:
-      type: object
-      description: localization metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/localizationId'
-        name:
-          $ref: '#/components/schemas/localizationName'
-        url:
-          $ref: '#/components/schemas/localizationUrl'
-        localeGroup:
-          $ref: '#/components/schemas/localeGroupId'
-        languages:
-          $ref: '#/components/schemas/languages'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-    tagId:
-      type: string
-      example: /An opaque, unique identifier for a tag
-      description: tag_01gpe172x7p6aa1c9grr48efq8
-    localizationName:
-      type: string
-      example: English (US)
-      description: The user-specified name of a localization
-    DraftsRead:
-      type: object
-      description: list of draft metadata
-      properties:
-        cursor:
-          $ref: '#/components/schemas/cursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/DraftMetaRead'
-          description: A list of draft metadata objects
     languages:
       type: array
       items:
@@ -575,116 +527,6 @@ components:
       description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
 
         '
-    localizationUrl:
-      type: string
-      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
-      description: The API url for a specific localization
-    APIError:
-      type: object
-      description: possible errors from the api
-      properties:
-        code:
-          type: string
-          enum:
-          - server_error
-          - invalid_parameter
-          - invalid_body
-          - invalid_request
-          - unauthorized
-          - unauthenticated
-          - not_found
-          - rate_limited
-          - prohibited_action
-          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
-        message:
-          type: string
-          description: Human readable error message
-        parameter:
-          type: string
-          description: The invalid parameter, if 'code' is invalid_parameter
-    status:
-      type: string
-      example: LOCKED_FOR_TRANSLATION
-      enum:
-      - IN_PROGRESS
-      - PENDING_APPROVAL
-      - LOCKED_FOR_TRANSLATION
-      - UNKNOWN
-      description: 'The status of the current draft:
-
-        - `IN_PROGRESS`: Draft is actively being edited
-
-        - `PENDING_APPROVAL`: Draft is awaiting approval
-
-        - `LOCKED_FOR_TRANSLATION`: Draft is locked pending translation
-
-        - `UNKNOWN`: Status cannot be determined at this time
-
-        '
-    draftName:
-      type: string
-      description: The name of a draft
-      example: Draft Name
-    tagName:
-      type: string
-      example: My Tag
-      description: The user-specified name of a tag
-    cursor:
-      type: object
-      description: Information about paginated results
-      properties:
-        next:
-          type: string
-          description: A cursor to fetch the next page of results
-        hasMore:
-          type: boolean
-          description: Whether there is a next page of results
-    variables:
-      type: array
-      items:
-        type: string
-        example: myVar
-      description: 'a list of variables used in the template
-
-        '
-    draftUrl:
-      type: string
-      example: /drafts/tdft_g3L7Cw6Hp5wUaf395LehwK/dft_g3L7Cw6Hp5wU
-      description: The API url for a specific draft
-    templateName:
-      type: string
-      description: The name of a template
-      example: Template Name
-    AssignedTagsMetaRead:
-      type: object
-      description: assigned tags metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/tagId'
-        name:
-          $ref: '#/components/schemas/tagName'
-    draftId:
-      type: string
-      description: An opaque, unique identifier for a draft
-      example: tdft_g3L7Cw6Hp5wU
-    designApprovedDate:
-      type: string
-      format: date-time
-      description: 'If using the design approval workflow this is the date the template draft design was approved, otherwise it will be empty.
-
-        '
-    LocalizationKeyRead:
-      type: object
-      description: localization key
-      properties:
-        key:
-          type: string
-        comment:
-          type: string
-    localizationId:
-      type: string
-      description: An opaque, unique identifier for a localization
-      example: loc_g3L7Cw6Hp5wUaf395LehwK
     PushDraftRead:
       type: object
       description: template draft metadata included latest draft revision
@@ -723,42 +565,161 @@ components:
           items:
             $ref: '#/components/schemas/AssignedTagsMetaRead'
           description: A list of Tags assigned to the Draft
-    templateId:
+    localizationName:
       type: string
-      description: An opaque, unique identifier for a template
-      example: tem_g3L7Cw6Hp5wU
-    path:
-      type: string
-      description: The folder path location for this object
-      example: fdr_01gb8vd6pz/fdr_01gqjmdbq/fdr_01gqjmg1
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-    PushContent:
+      example: English (US)
+      description: The user-specified name of a localization
+    cursor:
       type: object
-      description: push draft content
+      description: Information about paginated results
       properties:
-        type:
+        next:
           type: string
-          example: Title
-          description: What type of content this contains (Title, Body)
-        value:
-          type: string
-          example: This is some text
-          description: The value of the content
-    localeGroupId:
-      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+          description: A cursor to fetch the next page of results
+        hasMore:
+          type: boolean
+          description: Whether there is a next page of results
+    localizationUrl:
       type: string
-      example: lgr_alka38ajla301
-    createdAt:
+      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific localization
+    templateName:
       type: string
-      format: date-time
-      description: The time of initial creation
+      description: The name of a template
+      example: Template Name
+    AssignedTagsMetaRead:
+      type: object
+      description: assigned tags metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/tagId'
+        name:
+          $ref: '#/components/schemas/tagName'
+    draftUrl:
+      type: string
+      example: /drafts/tdft_g3L7Cw6Hp5wUaf395LehwK/dft_g3L7Cw6Hp5wU
+      description: The API url for a specific draft
     workspaceId:
       type: string
       description: The workspace this object belongs to
       example: fdr_01gb8vd6pz
+    variables:
+      type: array
+      items:
+        type: string
+        example: myVar
+      description: 'a list of variables used in the template
+
+        '
+    PushCompiledRead:
+      type: object
+      description: revision data
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/PushContent'
+        variables:
+          $ref: '#/components/schemas/variables'
+    templateId:
+      type: string
+      description: An opaque, unique identifier for a template
+      example: tem_g3L7Cw6Hp5wU
+    draftName:
+      type: string
+      description: The name of a draft
+      example: Draft Name
+    LocalizationMetaRead:
+      type: object
+      description: localization metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/localizationId'
+        name:
+          $ref: '#/components/schemas/localizationName'
+        url:
+          $ref: '#/components/schemas/localizationUrl'
+        localeGroup:
+          $ref: '#/components/schemas/localeGroupId'
+        languages:
+          $ref: '#/components/schemas/languages'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+    status:
+      type: string
+      example: LOCKED_FOR_TRANSLATION
+      enum:
+      - IN_PROGRESS
+      - PENDING_APPROVAL
+      - LOCKED_FOR_TRANSLATION
+      - UNKNOWN
+      description: 'The status of the current draft:
+
+        - `IN_PROGRESS`: Draft is actively being edited
+
+        - `PENDING_APPROVAL`: Draft is awaiting approval
+
+        - `LOCKED_FOR_TRANSLATION`: Draft is locked pending translation
+
+        - `UNKNOWN`: Status cannot be determined at this time
+
+        '
+    tagName:
+      type: string
+      example: My Tag
+      description: The user-specified name of a tag
+    DraftsRead:
+      type: object
+      description: list of draft metadata
+      properties:
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DraftMetaRead'
+          description: A list of draft metadata objects
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      type: string
+      example: lgr_alka38ajla301
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    designApprovedDate:
+      type: string
+      format: date-time
+      description: 'If using the design approval workflow this is the date the template draft design was approved, otherwise it will be empty.
+
+        '
+    tagId:
+      type: string
+      example: /An opaque, unique identifier for a tag
+      description: tag_01gpe172x7p6aa1c9grr48efq8
+    APIError:
+      type: object
+      description: possible errors from the api
+      properties:
+        code:
+          type: string
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          - prohibited_action
+          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
+        message:
+          type: string
+          description: Human readable error message
+        parameter:
+          type: string
+          description: The invalid parameter, if 'code' is invalid_parameter
     DraftMetaRead:
       type: object
       description: draft metadata
@@ -790,39 +751,102 @@ components:
           items:
             $ref: '#/components/schemas/AssignedTagsMetaRead'
           description: A list of Tags assigned to the Draft
-    PushCompiledRead:
+    LocalizationKeyRead:
       type: object
-      description: revision data
+      description: localization key
       properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/PushContent'
-        variables:
-          $ref: '#/components/schemas/variables'
+        key:
+          type: string
+        comment:
+          type: string
+    draftId:
+      type: string
+      description: An opaque, unique identifier for a draft
+      example: tdft_g3L7Cw6Hp5wU
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    path:
+      type: string
+      description: The folder path location for this object
+      example: fdr_01gb8vd6pz/fdr_01gqjmdbq/fdr_01gqjmg1
+    PushContent:
+      type: object
+      description: push draft content
+      properties:
+        type:
+          type: string
+          example: Title
+          description: What type of content this contains (Title, Body)
+        value:
+          type: string
+          example: This is some text
+          description: The value of the content
+    localizationId:
+      type: string
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
+  parameters:
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    draftId:
+      name: draftId
+      in: path
+      description: A draft ID
+      required: true
+      schema:
+        type: string
+    cursor:
+      name: cursor
+      in: query
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      required: false
+      schema:
+        type: string
+    languageId:
+      name: languageId
+      in: path
+      description: 'A language ID (eg: en-US)'
+      required: true
+      schema:
+        type: string
+    status:
+      name: status
+      in: query
+      description: Filter the list of drafts by a particular status
+      required: false
+      schema:
+        type: string
+        enum:
+        - LOCKED_FOR_TRANSLATION
+    pushTargetLanguage:
+      name: targetLanguage
+      in: query
+      description: The type of templating language to use when compiling the content.
+      required: false
+      schema:
+        type: string
+        enum:
+        - push
+        - handlebars
+        - liquid
+        - django
+        - jinja
+        - handlebarsjava
+    draftTemplateFilter:
+      name: templateId
+      in: query
+      description: Filter drafts by template ID
+      required: false
+      schema:
+        type: string
   responses:
-    NotFound:
-      description: Resource not found
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InvalidRequest:
-      description: Invalid request
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
     InternalError:
       description: Server error
       headers:
@@ -836,6 +860,17 @@ components:
             $ref: '#/components/schemas/APIError'
     Unauthorized:
       description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -867,65 +902,17 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-  parameters:
-    languageId:
-      name: languageId
-      in: path
-      description: 'A language ID (eg: en-US)'
-      required: true
-      schema:
-        type: string
-    status:
-      name: status
-      in: query
-      description: Filter the list of drafts by a particular status
-      required: false
-      schema:
-        type: string
-        enum:
-        - LOCKED_FOR_TRANSLATION
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
-    draftId:
-      name: draftId
-      in: path
-      description: A draft ID
-      required: true
-      schema:
-        type: string
-    draftTemplateFilter:
-      name: templateId
-      in: query
-      description: Filter drafts by template ID
-      required: false
-      schema:
-        type: string
-    pushTargetLanguage:
-      name: targetLanguage
-      in: query
-      description: The type of templating language to use when compiling the content.
-      required: false
-      schema:
-        type: string
-        enum:
-        - push
-        - handlebars
-        - liquid
-        - django
-        - jinja
-        - handlebarsjava
-    cursor:
-      name: cursor
-      in: query
-      description: A cursor value used to retrieve a specific page from a paginated result set.
-      required: false
-      schema:
-        type: string
+    NotFound:
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
   securitySchemes:
     Bearer:
       type: apiKey

@@ -1,24 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: '2026.06'
-  title: Dyspatch Blocks Localizations API
+  title: Dyspatch Localizations API
   description: '# Introduction
 
 
     The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
 
-    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
-
-    See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
-
-    how to implement Dyspatch.
-
-
-    ## Generating API Clients
-
-    Dyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.
-
-    '
+    codes to indicate errors.'
   contact:
     name: Dyspatch Support
     url: https://docs.dyspatch.io
@@ -33,9 +22,7 @@ tags:
     localized content.
 
 
-    If your account is using localizations then use this instead of the compiled Template object.
-
-    '
+    If your account is using localizations then use this instead of the compiled Template object.'
 paths:
   /localizations/{localizationId}:
     get:
@@ -116,10 +103,6 @@ paths:
           $ref: '#/components/responses/InternalError'
 components:
   schemas:
-    localizationName:
-      type: string
-      example: English (US)
-      description: The user-specified name of a localization
     languages:
       type: array
       items:
@@ -128,33 +111,22 @@ components:
       description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
 
         '
+    localizationName:
+      type: string
+      example: English (US)
+      description: The user-specified name of a localization
     localizationUrl:
       type: string
       example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
       description: The API url for a specific localization
-    APIError:
-      type: object
-      description: possible errors from the api
-      properties:
-        code:
-          type: string
-          enum:
-          - server_error
-          - invalid_parameter
-          - invalid_body
-          - invalid_request
-          - unauthorized
-          - unauthenticated
-          - not_found
-          - rate_limited
-          - prohibited_action
-          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
-        message:
-          type: string
-          description: Human readable error message
-        parameter:
-          type: string
-          description: The invalid parameter, if 'code' is invalid_parameter
+    variables:
+      type: array
+      items:
+        type: string
+        example: myVar
+      description: 'a list of variables used in the template
+
+        '
     LocalizationRead:
       type: object
       description: localization metadata and latest revision for associated template
@@ -177,34 +149,10 @@ components:
           $ref: '#/components/schemas/localizationName'
         localeGroup:
           $ref: '#/components/schemas/localeGroupId'
-    variables:
-      type: array
-      items:
-        type: string
-        example: myVar
-      description: 'a list of variables used in the template
-
-        '
-    localizationId:
-      type: string
-      description: An opaque, unique identifier for a localization
-      example: loc_g3L7Cw6Hp5wUaf395LehwK
     templateId:
       type: string
       description: An opaque, unique identifier for a template
       example: tem_g3L7Cw6Hp5wU
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-    localeGroupId:
-      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
-      type: string
-      example: lgr_alka38ajla301
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
     CompiledRead:
       type: object
       description: revision data
@@ -239,70 +187,46 @@ components:
           description: Base64 encoded template text body
         variables:
           $ref: '#/components/schemas/variables'
-  responses:
-    NotFound:
-      description: Resource not found
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InvalidRequest:
-      description: Invalid request
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InternalError:
-      description: Server error
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Unauthorized
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    RateLimited:
-      description: Rate limit exceeded
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      type: string
+      example: lgr_alka38ajla301
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    APIError:
+      type: object
+      description: possible errors from the api
+      properties:
+        code:
+          type: string
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          - prohibited_action
+          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
+        message:
+          type: string
+          description: Human readable error message
+        parameter:
+          type: string
+          description: The invalid parameter, if 'code' is invalid_parameter
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    localizationId:
+      type: string
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
   parameters:
-    renderThemeId:
-      name: themeId
-      in: query
-      description: A theme ID to use when rendering
-      required: false
-      schema:
-        type: string
     version:
       in: header
       name: Accept
@@ -310,11 +234,11 @@ components:
       description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
       schema:
         type: string
-    localizationId:
-      name: localizationId
-      in: path
-      description: A localization ID
-      required: true
+    renderThemeId:
+      name: themeId
+      in: query
+      description: A theme ID to use when rendering
+      required: false
       schema:
         type: string
     draftId:
@@ -341,6 +265,69 @@ components:
         - liquid
         - mandrillhandlebars
         - handlebarsjava
+    localizationId:
+      name: localizationId
+      in: path
+      description: A localization ID
+      required: true
+      schema:
+        type: string
+  responses:
+    InternalError:
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    NotFound:
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
   securitySchemes:
     Bearer:
       type: apiKey

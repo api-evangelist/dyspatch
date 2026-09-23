@@ -7,18 +7,10 @@ source:
 - https://registry.npmjs.org/dyspatch-mcp
 deployment:
   mode: local-stdio
-  endpoint: null
-  install: claude mcp add dyspatch -e DYSPATCH_API_KEY=your_key -- npx dyspatch-mcp
-  package: https://www.npmjs.com/package/dyspatch-mcp
-  auth: api-key
   verified: searched
-  note: >-
-    There is NO hosted/remote Dyspatch MCP endpoint. The package ships an
-    optional HTTP transport (`npx dyspatch-mcp --http`), but it binds to
-    http://localhost:3000/mcp on the operator's own machine — it is a second way
-    to run the same local server, not an agent-reachable URL Dyspatch operates.
-    A human must install Node.js 20+, mint a Dyspatch API key, and start the
-    process before any agent can reach this surface.
+  tools: 5
+  checked: '2026-08-12'
+  source: catalog MCP census
 server:
   name: dyspatch
   transport: stdio
@@ -44,31 +36,30 @@ install:
 authentication:
   type: api-key
   env: DYSPATCH_API_KEY
-  transport_to_api: "Sends 'Authorization: Bearer <api-key>' to https://api.dyspatch.io"
+  transport_to_api: 'Sends ''Authorization: Bearer <api-key>'' to https://api.dyspatch.io'
   permission_levels:
   - read-only
   - read-write
-  guidance: >-
-    Dyspatch documents least-privilege explicitly — use a read-only key unless
-    the agent genuinely needs to write. Read-write keys let an agent create
-    drafts, edit content, manage localizations and move templates through the
-    approval workflow.
+  guidance: Dyspatch documents least-privilege explicitly — use a read-only key unless the agent genuinely
+    needs to write. Read-write keys let an agent create drafts, edit content, manage localizations and
+    move templates through the approval workflow.
 tools_introspection:
   live_tools_list: not-applicable
-  note: >-
-    No remote endpoint exists to POST tools/list against. The tool inventory
-    below is the provider-published table from the dyspatch-mcp README at
-    version 0.0.10, captured verbatim — names and descriptions are the
-    provider's own. Input schemas were not machine-introspected; the backing
-    REST parameters are bound in mcp/dyspatch-tool-crosswalk.yml.
+  note: No remote endpoint exists to POST tools/list against. The tool inventory below is the provider-published
+    table from the dyspatch-mcp README at version 0.0.10, captured verbatim — names and descriptions are
+    the provider's own. Input schemas were not machine-introspected; the backing REST parameters are bound
+    in mcp/dyspatch-tool-crosswalk.yml.
 channel_types:
   parameter: type
-  values: [email, sms, push, voice, liveactivity]
-  detail: >-
-    Tools that operate on templates, drafts or localizations take a `type`
-    parameter. One MCP tool therefore fans out across the five per-channel REST
-    tag families in the OpenAPI (Templates / SMS Templates / Push Templates /
-    Voice Templates / Live Activity Templates, and the same for drafts).
+  values:
+  - email
+  - sms
+  - push
+  - voice
+  - liveactivity
+  detail: Tools that operate on templates, drafts or localizations take a `type` parameter. One MCP tool
+    therefore fans out across the five per-channel REST tag families in the OpenAPI (Templates / SMS Templates
+    / Push Templates / Voice Templates / Live Activity Templates, and the same for drafts).
 tool_count: 35
 tool_groups:
 - group: Templates
@@ -155,43 +146,53 @@ tool_groups:
     description: Remove a tag from a resource
 published_use_cases:
 - name: Audit your template library
-  tools: [list_templates, get_template]
+  tools:
+  - list_templates
+  - get_template
 - name: Preview a template before sending
-  tools: [list_templates, render_template]
+  tools:
+  - list_templates
+  - render_template
 - name: Manage the approval workflow
-  tools: [list_drafts, get_draft, approve_draft, reject_draft]
+  tools:
+  - list_drafts
+  - get_draft
+  - approve_draft
+  - reject_draft
 - name: Set up localization for a new market
-  tools: [list_drafts, upsert_localization, set_translations, lock_draft_for_translation]
+  tools:
+  - list_drafts
+  - upsert_localization
+  - set_translations
+  - lock_draft_for_translation
 - name: Organize templates with tags
-  tools: [create_tag, list_templates, assign_tag]
+  tools:
+  - create_tag
+  - list_templates
+  - assign_tag
 - name: Duplicate a draft and submit it for approval
-  tools: [duplicate_draft, get_draft, submit_draft]
+  tools:
+  - duplicate_draft
+  - get_draft
+  - submit_draft
 divergences:
   docs_claims_not_in_tool_table:
   - capability: Customer Profiles
-    detail: >-
-      The docs page (docs.dyspatch.io/integrations/mcp-server/) says the server
-      exposes Customer Profiles ("Access stored Customer Profile data sets to
-      render templates against different data scenarios"), but the v0.0.10
-      README tool table lists no customer-profile tool. The REST operations
-      listCustomerProfiles and getCustomerProfileById exist and are unbound.
+    detail: The docs page (docs.dyspatch.io/integrations/mcp-server/) says the server exposes Customer
+      Profiles ("Access stored Customer Profile data sets to render templates against different data scenarios"),
+      but the v0.0.10 README tool table lists no customer-profile tool. The REST operations listCustomerProfiles
+      and getCustomerProfileById exist and are unbound.
   - capability: Themes
-    detail: >-
-      The docs page says the server exposes Themes ("Query and retrieve themes"),
-      but the v0.0.10 README tool table lists no theme tool. The REST operations
-      listThemes and getThemeById exist and are unbound. render_template does
-      accept an optional theme argument.
-  note: >-
-    Recorded as a divergence rather than resolved in either direction — the
-    marketing page and the shipped package disagree, and only an authenticated
-    tools/list against a running instance settles it.
-notes: >-
-  Local (stdio) MCP server run via npx, authenticating with a Dyspatch API key.
-  Base-64 caveat worth carrying into any agent flow: the subject/html/ampHtml/text
-  fields returned by get_template and get_draft are base64-encoded; render_template
-  returns decoded output with variables substituted. Draft states are
-  IN_PROGRESS -> PENDING_APPROVAL -> Published, and drafts are only editable while
-  IN_PROGRESS.
+    detail: The docs page says the server exposes Themes ("Query and retrieve themes"), but the v0.0.10
+      README tool table lists no theme tool. The REST operations listThemes and getThemeById exist and
+      are unbound. render_template does accept an optional theme argument.
+  note: Recorded as a divergence rather than resolved in either direction — the marketing page and the
+    shipped package disagree, and only an authenticated tools/list against a running instance settles
+    it.
+notes: 'Local (stdio) MCP server run via npx, authenticating with a Dyspatch API key. Base-64 caveat worth
+  carrying into any agent flow: the subject/html/ampHtml/text fields returned by get_template and get_draft
+  are base64-encoded; render_template returns decoded output with variables substituted. Draft states
+  are IN_PROGRESS -> PENDING_APPROVAL -> Published, and drafts are only editable while IN_PROGRESS.'
 crosswalk: mcp/dyspatch-tool-crosswalk.yml
 x-evidence:
 - url: https://docs.dyspatch.io/integrations/mcp-server/

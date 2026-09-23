@@ -1,24 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: '2026.06'
-  title: Dyspatch Blocks SMS Localizations API
+  title: Dyspatch SMS Localizations API
   description: '# Introduction
 
 
     The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
 
-    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
-
-    See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
-
-    how to implement Dyspatch.
-
-
-    ## Generating API Clients
-
-    Dyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.
-
-    '
+    codes to indicate errors.'
   contact:
     name: Dyspatch Support
     url: https://docs.dyspatch.io
@@ -33,9 +22,7 @@ tags:
     localized content.
 
 
-    If your account is using localizations then use this instead of the compiled Template object.
-
-    '
+    If your account is using localizations then use this instead of the compiled Template object.'
 paths:
   /sms/localizations/{localizationId}:
     get:
@@ -114,10 +101,6 @@ paths:
           $ref: '#/components/responses/InternalError'
 components:
   schemas:
-    localizationName:
-      type: string
-      example: English (US)
-      description: The user-specified name of a localization
     languages:
       type: array
       items:
@@ -126,10 +109,68 @@ components:
       description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
 
         '
+    SMSCompiledRead:
+      type: object
+      description: revision data
+      properties:
+        sender:
+          type: string
+          example: John Doe
+          description: Sender name
+        phone:
+          type: string
+          example: 123-456-7890
+          description: Sender phone number
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/SMSContent'
+        variables:
+          $ref: '#/components/schemas/variables'
+    localizationName:
+      type: string
+      example: English (US)
+      description: The user-specified name of a localization
+    SMSContent:
+      type: object
+      description: sms draft content
+      properties:
+        type:
+          type: string
+          example: Text
+          description: What type of content this contains (text or image)
+        value:
+          type: string
+          example: This is some text
+          description: The value of the content
     localizationUrl:
       type: string
       example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
       description: The API url for a specific localization
+    variables:
+      type: array
+      items:
+        type: string
+        example: myVar
+      description: 'a list of variables used in the template
+
+        '
+    localizationId:
+      type: string
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
+    templateId:
+      type: string
+      description: An opaque, unique identifier for a template
+      example: tem_g3L7Cw6Hp5wU
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      type: string
+      example: lgr_alka38ajla301
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
     APIError:
       type: object
       description: possible errors from the api
@@ -153,56 +194,10 @@ components:
         parameter:
           type: string
           description: The invalid parameter, if 'code' is invalid_parameter
-    SMSContent:
-      type: object
-      description: sms draft content
-      properties:
-        type:
-          type: string
-          example: Text
-          description: What type of content this contains (text or image)
-        value:
-          type: string
-          example: This is some text
-          description: The value of the content
-    variables:
-      type: array
-      items:
-        type: string
-        example: myVar
-      description: 'a list of variables used in the template
-
-        '
-    localizationId:
-      type: string
-      description: An opaque, unique identifier for a localization
-      example: loc_g3L7Cw6Hp5wUaf395LehwK
-    SMSCompiledRead:
-      type: object
-      description: revision data
-      properties:
-        sender:
-          type: string
-          example: John Doe
-          description: Sender name
-        phone:
-          type: string
-          example: 123-456-7890
-          description: Sender phone number
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/SMSContent'
-        variables:
-          $ref: '#/components/schemas/variables'
-    templateId:
-      type: string
-      description: An opaque, unique identifier for a template
-      example: tem_g3L7Cw6Hp5wU
-    updatedAt:
+    createdAt:
       type: string
       format: date-time
-      description: The time of last update
+      description: The time of initial creation
     SMSLocalizationRead:
       type: object
       description: localization metadata and latest revision for associated template
@@ -225,70 +220,6 @@ components:
           $ref: '#/components/schemas/localizationName'
         localeGroup:
           $ref: '#/components/schemas/localeGroupId'
-    localeGroupId:
-      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
-      type: string
-      example: lgr_alka38ajla301
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
-  responses:
-    NotFound:
-      description: Resource not found
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InvalidRequest:
-      description: Invalid request
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InternalError:
-      description: Server error
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Unauthorized
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    RateLimited:
-      description: Rate limit exceeded
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
   parameters:
     version:
       in: header
@@ -297,17 +228,17 @@ components:
       description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
       schema:
         type: string
-    localizationId:
-      name: localizationId
-      in: path
-      description: A localization ID
-      required: true
-      schema:
-        type: string
     draftId:
       name: draftId
       in: path
       description: A draft ID
+      required: true
+      schema:
+        type: string
+    localizationId:
+      name: localizationId
+      in: path
+      description: A localization ID
       required: true
       schema:
         type: string
@@ -330,6 +261,62 @@ components:
         - sendpulse
         - iterablehandlebars
         - dotdigitalliquid
+  responses:
+    InternalError:
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    NotFound:
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
   securitySchemes:
     Bearer:
       type: apiKey

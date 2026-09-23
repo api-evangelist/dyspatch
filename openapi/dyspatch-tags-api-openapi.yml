@@ -1,24 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: '2026.06'
-  title: Dyspatch Blocks Tags API
+  title: Dyspatch Tags API
   description: '# Introduction
 
 
     The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
 
-    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
-
-    See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
-
-    how to implement Dyspatch.
-
-
-    ## Generating API Clients
-
-    Dyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.
-
-    '
+    codes to indicate errors.'
   contact:
     name: Dyspatch Support
     url: https://docs.dyspatch.io
@@ -30,9 +19,7 @@ tags:
 - name: Tags
   description: 'Tags are a way of categorizing your resources (template and drafts) with helpful identifying information.
 
-    You can decide what tags are useful for you, managing a master list of available tags and assigning or removing tags from each resource as part of your workflow.
-
-    '
+    You can decide what tags are useful for you, managing a master list of available tags and assigning or removing tags from each resource as part of your workflow.'
 paths:
   /tags/assign/{resourceId}:
     put:
@@ -298,21 +285,83 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
+  schemas:
+    TagRead:
+      type: object
+      description: tag metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/tagId'
+        name:
+          $ref: '#/components/schemas/tagName'
+        types:
+          $ref: '#/components/schemas/tagTypes'
+        workspaceIds:
+          $ref: '#/components/schemas/workspaceIds'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        status:
+          $ref: '#/components/schemas/tagStatus'
+    tagName:
+      type: string
+      example: My Tag
+      description: The user-specified name of a tag
+    tagTypes:
+      type: array
+      items:
+        type: string
+        example: template, draft
+      description: A list of tag types
+    workspaceIds:
+      type: array
+      items:
+        type: string
+        example: fdr_01gb8vd6pz
+      description: A list of workspace IDs
     tagId:
-      name: tagId
-      in: path
-      description: A tag ID
-      required: true
-      schema:
-        type: string
-    workspaceId:
-      name: workspaceId
-      in: query
-      description: An ID of a workspace
-      required: false
-      schema:
-        type: string
+      type: string
+      example: /An opaque, unique identifier for a tag
+      description: tag_01gpe172x7p6aa1c9grr48efq8
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    APIError:
+      type: object
+      description: possible errors from the api
+      properties:
+        code:
+          type: string
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          - prohibited_action
+          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
+        message:
+          type: string
+          description: Human readable error message
+        parameter:
+          type: string
+          description: The invalid parameter, if 'code' is invalid_parameter
+    tagStatus:
+      type: string
+      example: active
+      description: 'The status of the current tag. States include: "active", "inactive"
+
+        '
+  parameters:
     version:
       in: header
       name: Accept
@@ -338,82 +387,20 @@ components:
         - template
         - draft
         - block
-  schemas:
-    workspaceIds:
-      type: array
-      items:
+    workspaceId:
+      name: workspaceId
+      in: query
+      description: An ID of a workspace
+      required: false
+      schema:
         type: string
-        example: fdr_01gb8vd6pz
-      description: A list of workspace IDs
-    tagName:
-      type: string
-      example: My Tag
-      description: The user-specified name of a tag
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
     tagId:
-      type: string
-      example: /An opaque, unique identifier for a tag
-      description: tag_01gpe172x7p6aa1c9grr48efq8
-    tagTypes:
-      type: array
-      items:
+      name: tagId
+      in: path
+      description: A tag ID
+      required: true
+      schema:
         type: string
-        example: template, draft
-      description: A list of tag types
-    TagRead:
-      type: object
-      description: tag metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/tagId'
-        name:
-          $ref: '#/components/schemas/tagName'
-        types:
-          $ref: '#/components/schemas/tagTypes'
-        workspaceIds:
-          $ref: '#/components/schemas/workspaceIds'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        status:
-          $ref: '#/components/schemas/tagStatus'
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-    tagStatus:
-      type: string
-      example: active
-      description: 'The status of the current tag. States include: "active", "inactive"
-
-        '
-    APIError:
-      type: object
-      description: possible errors from the api
-      properties:
-        code:
-          type: string
-          enum:
-          - server_error
-          - invalid_parameter
-          - invalid_body
-          - invalid_request
-          - unauthorized
-          - unauthenticated
-          - not_found
-          - rate_limited
-          - prohibited_action
-          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
-        message:
-          type: string
-          description: Human readable error message
-        parameter:
-          type: string
-          description: The invalid parameter, if 'code' is invalid_parameter
   responses:
     InvalidRequest:
       description: Invalid request
@@ -426,8 +413,8 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Unauthorized
+    NotFound:
+      description: Resource not found
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -437,8 +424,8 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-    NotFound:
-      description: Resource not found
+    Unauthorized:
+      description: Unauthorized
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
