@@ -114,10 +114,26 @@ components:
       type: string
       description: A description of the workspace/folder
       example: Description of Folder
-    folderUrl:
+    folderId:
       type: string
-      example: /workspaces/fdr_g3L7Cw6Hp5wUaf395LehwK
-      description: The API url for a specific template
+      description: A workspace/folder ID
+      example: fdr_01g0z4d5aw
+    FolderRead:
+      type: object
+      description: list of template metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/folderId'
+        name:
+          $ref: '#/components/schemas/folderName'
+        description:
+          $ref: '#/components/schemas/folderDescription'
+        url:
+          $ref: '#/components/schemas/folderUrl'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
     cursor:
       type: object
       description: Information about paginated results
@@ -128,6 +144,31 @@ components:
         hasMore:
           type: boolean
           description: Whether there is a next page of results
+    FolderList:
+      type: object
+      description: folder with a list of its sub-folders
+      properties:
+        id:
+          $ref: '#/components/schemas/folderId'
+        name:
+          $ref: '#/components/schemas/folderName'
+        description:
+          $ref: '#/components/schemas/folderDescription'
+        url:
+          $ref: '#/components/schemas/folderUrl'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        subfolders:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolderRead'
+          description: A list of sub-folder objects
+    folderUrl:
+      type: string
+      example: /workspaces/fdr_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific template
     folderName:
       type: string
       description: The name of a workspace/folder
@@ -143,14 +184,14 @@ components:
           items:
             $ref: '#/components/schemas/FolderRead'
           description: A list of workspace objects
-    folderId:
-      type: string
-      description: A workspace/folder ID
-      example: fdr_01g0z4d5aw
     updatedAt:
       type: string
       format: date-time
       description: The time of last update
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
     APIError:
       type: object
       description: possible errors from the api
@@ -174,59 +215,7 @@ components:
         parameter:
           type: string
           description: The invalid parameter, if 'code' is invalid_parameter
-    FolderRead:
-      type: object
-      description: list of template metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/folderId'
-        name:
-          $ref: '#/components/schemas/folderName'
-        description:
-          $ref: '#/components/schemas/folderDescription'
-        url:
-          $ref: '#/components/schemas/folderUrl'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
-    FolderList:
-      type: object
-      description: folder with a list of its sub-folders
-      properties:
-        id:
-          $ref: '#/components/schemas/folderId'
-        name:
-          $ref: '#/components/schemas/folderName'
-        description:
-          $ref: '#/components/schemas/folderDescription'
-        url:
-          $ref: '#/components/schemas/folderUrl'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        subfolders:
-          type: array
-          items:
-            $ref: '#/components/schemas/FolderRead'
-          description: A list of sub-folder objects
   responses:
-    InternalError:
-      description: Server error
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
     Unauthorized:
       description: Unauthorized
       headers:
@@ -251,6 +240,17 @@ components:
             $ref: '#/components/schemas/APIError'
     InvalidRequest:
       description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InternalError:
+      description: Server error
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.

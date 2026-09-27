@@ -194,15 +194,127 @@ paths:
         default:
           $ref: '#/components/responses/InternalError'
 components:
-  schemas:
-    languages:
-      type: array
-      items:
+  parameters:
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
         type: string
-        example: fr-FR
-      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
-
-        '
+    languageId:
+      name: languageId
+      in: path
+      description: 'A language ID (eg: en-US)'
+      required: true
+      schema:
+        type: string
+    templateId:
+      name: templateId
+      in: path
+      description: A template ID
+      required: true
+      schema:
+        type: string
+    templateFolderFilter:
+      name: folderId
+      in: query
+      description: Filter templates by folder ID (immediate children only)
+      required: false
+      schema:
+        type: string
+    liveActivityTargetLanguage:
+      name: targetLanguage
+      in: query
+      description: The type of templating language to use when compiling the content.
+      required: false
+      schema:
+        type: string
+        enum:
+        - liveactivity
+        - handlebars
+        - liquid
+        - django
+        - jinja
+        - handlebarsjava
+    cursor:
+      name: cursor
+      in: query
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      required: false
+      schema:
+        type: string
+    templateNameFilter:
+      name: name
+      in: query
+      description: Filter templates by name (case-insensitive partial match)
+      required: false
+      schema:
+        type: string
+    templateWorkspaceFilter:
+      name: workspaceId
+      in: query
+      description: Filter templates by workspace ID (includes all nested folders)
+      required: false
+      schema:
+        type: string
+  schemas:
+    localizationId:
+      type: string
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
+    tagName:
+      type: string
+      example: My Tag
+      description: The user-specified name of a tag
+    localizationUrl:
+      type: string
+      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific localization
+    templateDescription:
+      type: string
+      description: A description of the template
+      example: Description of Template
+    localizationName:
+      type: string
+      example: English (US)
+      description: The user-specified name of a localization
+    draftId:
+      type: string
+      description: An opaque, unique identifier for a draft
+      example: tdft_g3L7Cw6Hp5wU
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      type: string
+      example: lgr_alka38ajla301
+    LiveActivityCompiledRead:
+      type: object
+      description: revision data
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/LiveActivityContent'
+        variables:
+          $ref: '#/components/schemas/variables'
+    LiveActivityTemplateRender:
+      type: object
+      description: rendered template with data
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/LiveActivityContent'
+    cursor:
+      type: object
+      description: Information about paginated results
+      properties:
+        next:
+          type: string
+          description: A cursor to fetch the next page of results
+        hasMore:
+          type: boolean
+          description: Whether there is a next page of results
     LiveActivityContent:
       type: object
       description: live activity draft content
@@ -215,120 +327,6 @@ components:
           type: string
           example: This is some text
           description: The value of the content
-    localizationName:
-      type: string
-      example: English (US)
-      description: The user-specified name of a localization
-    cursor:
-      type: object
-      description: Information about paginated results
-      properties:
-        next:
-          type: string
-          description: A cursor to fetch the next page of results
-        hasMore:
-          type: boolean
-          description: Whether there is a next page of results
-    LiveActivityTemplateRender:
-      type: object
-      description: rendered template with data
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/LiveActivityContent'
-    localizationUrl:
-      type: string
-      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
-      description: The API url for a specific localization
-    AssignedTagsMetaRead:
-      type: object
-      description: assigned tags metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/tagId'
-        name:
-          $ref: '#/components/schemas/tagName'
-    templateName:
-      type: string
-      description: The name of a template
-      example: Template Name
-    workspaceId:
-      type: string
-      description: The workspace this object belongs to
-      example: fdr_01gb8vd6pz
-    RenderBody:
-      type: object
-      properties:
-        variable name:
-          description: string, number, boolean, array, object or null
-      example:
-        var1: value 1
-        var2: value 2
-    TemplateMetaRead:
-      type: object
-      description: the template metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/templateId'
-        name:
-          $ref: '#/components/schemas/templateName'
-        description:
-          $ref: '#/components/schemas/templateDescription'
-        url:
-          $ref: '#/components/schemas/templateUrl'
-        path:
-          $ref: '#/components/schemas/path'
-        workspaceId:
-          $ref: '#/components/schemas/workspaceId'
-        localizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/LocalizationMetaRead'
-          description: A list of the template's available localization objects
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        publishedDraftId:
-          $ref: '#/components/schemas/draftId'
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssignedTagsMetaRead'
-          description: A list of Tags assigned to the Template
-    variables:
-      type: array
-      items:
-        type: string
-        example: myVar
-      description: 'a list of variables used in the template
-
-        '
-    templateId:
-      type: string
-      description: An opaque, unique identifier for a template
-      example: tem_g3L7Cw6Hp5wU
-    templateUrl:
-      type: string
-      example: /templates/tem_g3L7Cw6Hp5wUaf395LehwK
-      description: The API url for a specific template
-    LocalizationMetaRead:
-      type: object
-      description: localization metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/localizationId'
-        name:
-          $ref: '#/components/schemas/localizationName'
-        url:
-          $ref: '#/components/schemas/localizationUrl'
-        localeGroup:
-          $ref: '#/components/schemas/localeGroupId'
-        languages:
-          $ref: '#/components/schemas/languages'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
     LiveActivityTemplateRead:
       type: object
       description: list of template metadata
@@ -363,18 +361,30 @@ components:
           items:
             $ref: '#/components/schemas/AssignedTagsMetaRead'
           description: A list of Tags assigned to the Template
-    tagName:
+    variables:
+      type: array
+      items:
+        type: string
+        example: myVar
+      description: 'a list of variables used in the template
+
+        '
+    templateId:
       type: string
-      example: My Tag
-      description: The user-specified name of a tag
-    localeGroupId:
-      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      description: An opaque, unique identifier for a template
+      example: tem_g3L7Cw6Hp5wU
+    templateName:
       type: string
-      example: lgr_alka38ajla301
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
+      description: The name of a template
+      example: Template Name
+    AssignedTagsMetaRead:
+      type: object
+      description: assigned tags metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/tagId'
+        name:
+          $ref: '#/components/schemas/tagName'
     TemplatesRead:
       type: object
       description: list of template metadata
@@ -386,14 +396,94 @@ components:
           items:
             $ref: '#/components/schemas/TemplateMetaRead'
           description: A list of template metadata objects
+    path:
+      type: string
+      description: The folder path location for this object
+      example: fdr_01gb8vd6pz/fdr_01gqjmdbq/fdr_01gqjmg1
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
     tagId:
       type: string
       example: /An opaque, unique identifier for a tag
       description: tag_01gpe172x7p6aa1c9grr48efq8
-    templateDescription:
+    RenderBody:
+      type: object
+      properties:
+        variable name:
+          description: string, number, boolean, array, object or null
+      example:
+        var1: value 1
+        var2: value 2
+    createdAt:
       type: string
-      description: A description of the template
-      example: Description of Template
+      format: date-time
+      description: The time of initial creation
+    TemplateMetaRead:
+      type: object
+      description: the template metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/templateId'
+        name:
+          $ref: '#/components/schemas/templateName'
+        description:
+          $ref: '#/components/schemas/templateDescription'
+        url:
+          $ref: '#/components/schemas/templateUrl'
+        path:
+          $ref: '#/components/schemas/path'
+        workspaceId:
+          $ref: '#/components/schemas/workspaceId'
+        localizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalizationMetaRead'
+          description: A list of the template's available localization objects
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        publishedDraftId:
+          $ref: '#/components/schemas/draftId'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedTagsMetaRead'
+          description: A list of Tags assigned to the Template
+    languages:
+      type: array
+      items:
+        type: string
+        example: fr-FR
+      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
+
+        '
+    LocalizationMetaRead:
+      type: object
+      description: localization metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/localizationId'
+        name:
+          $ref: '#/components/schemas/localizationName'
+        url:
+          $ref: '#/components/schemas/localizationUrl'
+        localeGroup:
+          $ref: '#/components/schemas/localeGroupId'
+        languages:
+          $ref: '#/components/schemas/languages'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+    workspaceId:
+      type: string
+      description: The workspace this object belongs to
+      example: fdr_01gb8vd6pz
+    templateUrl:
+      type: string
+      example: /templates/tem_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific template
     APIError:
       type: object
       description: possible errors from the api
@@ -417,99 +507,9 @@ components:
         parameter:
           type: string
           description: The invalid parameter, if 'code' is invalid_parameter
-    LiveActivityCompiledRead:
-      type: object
-      description: revision data
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/LiveActivityContent'
-        variables:
-          $ref: '#/components/schemas/variables'
-    draftId:
-      type: string
-      description: An opaque, unique identifier for a draft
-      example: tdft_g3L7Cw6Hp5wU
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
-    path:
-      type: string
-      description: The folder path location for this object
-      example: fdr_01gb8vd6pz/fdr_01gqjmdbq/fdr_01gqjmg1
-    localizationId:
-      type: string
-      description: An opaque, unique identifier for a localization
-      example: loc_g3L7Cw6Hp5wUaf395LehwK
-  parameters:
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
-    cursor:
-      name: cursor
-      in: query
-      description: A cursor value used to retrieve a specific page from a paginated result set.
-      required: false
-      schema:
-        type: string
-    languageId:
-      name: languageId
-      in: path
-      description: 'A language ID (eg: en-US)'
-      required: true
-      schema:
-        type: string
-    templateId:
-      name: templateId
-      in: path
-      description: A template ID
-      required: true
-      schema:
-        type: string
-    templateNameFilter:
-      name: name
-      in: query
-      description: Filter templates by name (case-insensitive partial match)
-      required: false
-      schema:
-        type: string
-    templateWorkspaceFilter:
-      name: workspaceId
-      in: query
-      description: Filter templates by workspace ID (includes all nested folders)
-      required: false
-      schema:
-        type: string
-    liveActivityTargetLanguage:
-      name: targetLanguage
-      in: query
-      description: The type of templating language to use when compiling the content.
-      required: false
-      schema:
-        type: string
-        enum:
-        - liveactivity
-        - handlebars
-        - liquid
-        - django
-        - jinja
-        - handlebarsjava
-    templateFolderFilter:
-      name: folderId
-      in: query
-      description: Filter templates by folder ID (immediate children only)
-      required: false
-      schema:
-        type: string
   responses:
-    InternalError:
-      description: Server error
+    Unauthorized:
+      description: Unauthorized
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -519,8 +519,8 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Unauthorized
+    NotFound:
+      description: Resource not found
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -552,8 +552,8 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-    RateLimited:
-      description: Rate limit exceeded
+    InternalError:
+      description: Server error
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -563,8 +563,8 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-    NotFound:
-      description: Resource not found
+    RateLimited:
+      description: Rate limit exceeded
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.

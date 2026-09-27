@@ -286,6 +286,20 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    tagId:
+      type: string
+      example: /An opaque, unique identifier for a tag
+      description: tag_01gpe172x7p6aa1c9grr48efq8
+    tagStatus:
+      type: string
+      example: active
+      description: 'The status of the current tag. States include: "active", "inactive"
+
+        '
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
     TagRead:
       type: object
       description: tag metadata
@@ -320,18 +334,6 @@ components:
         type: string
         example: fdr_01gb8vd6pz
       description: A list of workspace IDs
-    tagId:
-      type: string
-      example: /An opaque, unique identifier for a tag
-      description: tag_01gpe172x7p6aa1c9grr48efq8
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
     APIError:
       type: object
       description: possible errors from the api
@@ -355,64 +357,11 @@ components:
         parameter:
           type: string
           description: The invalid parameter, if 'code' is invalid_parameter
-    tagStatus:
+    updatedAt:
       type: string
-      example: active
-      description: 'The status of the current tag. States include: "active", "inactive"
-
-        '
-  parameters:
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
-    resourceId:
-      name: resourceId
-      in: path
-      description: A template or draft ID
-      required: true
-      schema:
-        type: string
-    tagType:
-      name: type
-      in: query
-      description: A tag type
-      required: false
-      schema:
-        type: string
-        enum:
-        - template
-        - draft
-        - block
-    workspaceId:
-      name: workspaceId
-      in: query
-      description: An ID of a workspace
-      required: false
-      schema:
-        type: string
-    tagId:
-      name: tagId
-      in: path
-      description: A tag ID
-      required: true
-      schema:
-        type: string
+      format: date-time
+      description: The time of last update
   responses:
-    InvalidRequest:
-      description: Invalid request
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
     NotFound:
       description: Resource not found
       headers:
@@ -435,6 +384,57 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    workspaceId:
+      name: workspaceId
+      in: query
+      description: An ID of a workspace
+      required: false
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    resourceId:
+      name: resourceId
+      in: path
+      description: A template or draft ID
+      required: true
+      schema:
+        type: string
+    tagId:
+      name: tagId
+      in: path
+      description: A tag ID
+      required: true
+      schema:
+        type: string
+    tagType:
+      name: type
+      in: query
+      description: A tag type
+      required: false
+      schema:
+        type: string
+        enum:
+        - template
+        - draft
+        - block
   securitySchemes:
     Bearer:
       type: apiKey
