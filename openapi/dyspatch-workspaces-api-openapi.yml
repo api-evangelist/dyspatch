@@ -87,159 +87,9 @@ paths:
         default:
           $ref: '#/components/responses/InternalError'
 components:
-  parameters:
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
-    cursor:
-      name: cursor
-      in: query
-      description: A cursor value used to retrieve a specific page from a paginated result set.
-      required: false
-      schema:
-        type: string
-    folderId:
-      name: folderId
-      in: path
-      description: A workspace/folder ID
-      required: true
-      schema:
-        type: string
-  schemas:
-    folderDescription:
-      type: string
-      description: A description of the workspace/folder
-      example: Description of Folder
-    folderId:
-      type: string
-      description: A workspace/folder ID
-      example: fdr_01g0z4d5aw
-    FolderRead:
-      type: object
-      description: list of template metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/folderId'
-        name:
-          $ref: '#/components/schemas/folderName'
-        description:
-          $ref: '#/components/schemas/folderDescription'
-        url:
-          $ref: '#/components/schemas/folderUrl'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-    cursor:
-      type: object
-      description: Information about paginated results
-      properties:
-        next:
-          type: string
-          description: A cursor to fetch the next page of results
-        hasMore:
-          type: boolean
-          description: Whether there is a next page of results
-    FolderList:
-      type: object
-      description: folder with a list of its sub-folders
-      properties:
-        id:
-          $ref: '#/components/schemas/folderId'
-        name:
-          $ref: '#/components/schemas/folderName'
-        description:
-          $ref: '#/components/schemas/folderDescription'
-        url:
-          $ref: '#/components/schemas/folderUrl'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        subfolders:
-          type: array
-          items:
-            $ref: '#/components/schemas/FolderRead'
-          description: A list of sub-folder objects
-    folderUrl:
-      type: string
-      example: /workspaces/fdr_g3L7Cw6Hp5wUaf395LehwK
-      description: The API url for a specific template
-    folderName:
-      type: string
-      description: The name of a workspace/folder
-      example: Name of Folder
-    WorkspacesRead:
-      type: object
-      description: list of workspaces
-      properties:
-        cursor:
-          $ref: '#/components/schemas/cursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/FolderRead'
-          description: A list of workspace objects
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
-    APIError:
-      type: object
-      description: possible errors from the api
-      properties:
-        code:
-          type: string
-          enum:
-          - server_error
-          - invalid_parameter
-          - invalid_body
-          - invalid_request
-          - unauthorized
-          - unauthenticated
-          - not_found
-          - rate_limited
-          - prohibited_action
-          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
-        message:
-          type: string
-          description: Human readable error message
-        parameter:
-          type: string
-          description: The invalid parameter, if 'code' is invalid_parameter
   responses:
-    Unauthorized:
-      description: Unauthorized
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
     Unauthenticated:
       description: Unauthenticated
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InvalidRequest:
-      description: Invalid request
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -271,6 +121,156 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+  schemas:
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    WorkspacesRead:
+      type: object
+      description: list of workspaces
+      properties:
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolderRead'
+          description: A list of workspace objects
+    folderId:
+      type: string
+      description: A workspace/folder ID
+      example: fdr_01g0z4d5aw
+    cursor:
+      type: object
+      description: Information about paginated results
+      properties:
+        next:
+          type: string
+          description: A cursor to fetch the next page of results
+        hasMore:
+          type: boolean
+          description: Whether there is a next page of results
+    APIError:
+      type: object
+      description: possible errors from the api
+      properties:
+        code:
+          type: string
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          - prohibited_action
+          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
+        message:
+          type: string
+          description: Human readable error message
+        parameter:
+          type: string
+          description: The invalid parameter, if 'code' is invalid_parameter
+    FolderRead:
+      type: object
+      description: list of template metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/folderId'
+        name:
+          $ref: '#/components/schemas/folderName'
+        description:
+          $ref: '#/components/schemas/folderDescription'
+        url:
+          $ref: '#/components/schemas/folderUrl'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+    FolderList:
+      type: object
+      description: folder with a list of its sub-folders
+      properties:
+        id:
+          $ref: '#/components/schemas/folderId'
+        name:
+          $ref: '#/components/schemas/folderName'
+        description:
+          $ref: '#/components/schemas/folderDescription'
+        url:
+          $ref: '#/components/schemas/folderUrl'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        subfolders:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolderRead'
+          description: A list of sub-folder objects
+    folderDescription:
+      type: string
+      description: A description of the workspace/folder
+      example: Description of Folder
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    folderName:
+      type: string
+      description: The name of a workspace/folder
+      example: Name of Folder
+    folderUrl:
+      type: string
+      example: /workspaces/fdr_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific template
+  parameters:
+    folderId:
+      name: folderId
+      in: path
+      description: A workspace/folder ID
+      required: true
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    cursor:
+      name: cursor
+      in: query
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      required: false
+      schema:
+        type: string
   securitySchemes:
     Bearer:
       type: apiKey

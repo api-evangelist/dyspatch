@@ -104,101 +104,7 @@ paths:
         default:
           $ref: '#/components/responses/InternalError'
 components:
-  parameters:
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
-    draftId:
-      name: draftId
-      in: path
-      description: A draft ID
-      required: true
-      schema:
-        type: string
-    liveActivityTargetLanguage:
-      name: targetLanguage
-      in: query
-      description: The type of templating language to use when compiling the content.
-      required: false
-      schema:
-        type: string
-        enum:
-        - liveactivity
-        - handlebars
-        - liquid
-        - django
-        - jinja
-        - handlebarsjava
-    localizationId:
-      name: localizationId
-      in: path
-      description: A localization ID
-      required: true
-      schema:
-        type: string
   schemas:
-    localizationId:
-      type: string
-      description: An opaque, unique identifier for a localization
-      example: loc_g3L7Cw6Hp5wUaf395LehwK
-    localizationUrl:
-      type: string
-      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
-      description: The API url for a specific localization
-    localizationName:
-      type: string
-      example: English (US)
-      description: The user-specified name of a localization
-    localeGroupId:
-      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
-      type: string
-      example: lgr_alka38ajla301
-    LiveActivityCompiledRead:
-      type: object
-      description: revision data
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/LiveActivityContent'
-        variables:
-          $ref: '#/components/schemas/variables'
-    LiveActivityContent:
-      type: object
-      description: live activity draft content
-      properties:
-        type:
-          type: string
-          example: Title
-          description: What type of content this contains (Title, Body)
-        value:
-          type: string
-          example: This is some text
-          description: The value of the content
-    variables:
-      type: array
-      items:
-        type: string
-        example: myVar
-      description: 'a list of variables used in the template
-
-        '
-    templateId:
-      type: string
-      description: An opaque, unique identifier for a template
-      example: tem_g3L7Cw6Hp5wU
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
     languages:
       type: array
       items:
@@ -229,6 +135,22 @@ components:
           $ref: '#/components/schemas/localizationName'
         localeGroup:
           $ref: '#/components/schemas/localeGroupId'
+    localizationUrl:
+      type: string
+      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific localization
+    localizationName:
+      type: string
+      example: English (US)
+      description: The user-specified name of a localization
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    localizationId:
+      type: string
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
     APIError:
       type: object
       description: possible errors from the api
@@ -252,42 +174,51 @@ components:
         parameter:
           type: string
           description: The invalid parameter, if 'code' is invalid_parameter
+    LiveActivityCompiledRead:
+      type: object
+      description: revision data
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/LiveActivityContent'
+        variables:
+          $ref: '#/components/schemas/variables'
+    variables:
+      type: array
+      items:
+        type: string
+        example: myVar
+      description: 'a list of variables used in the template
+
+        '
+    templateId:
+      type: string
+      description: An opaque, unique identifier for a template
+      example: tem_g3L7Cw6Hp5wU
+    LiveActivityContent:
+      type: object
+      description: live activity draft content
+      properties:
+        type:
+          type: string
+          example: Title
+          description: What type of content this contains (Title, Body)
+        value:
+          type: string
+          example: This is some text
+          description: The value of the content
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      type: string
+      example: lgr_alka38ajla301
   responses:
-    Unauthorized:
-      description: Unauthorized
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    NotFound:
-      description: Resource not found
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
     Unauthenticated:
       description: Unauthenticated
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InvalidRequest:
-      description: Invalid request
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -319,6 +250,75 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
+    NotFound:
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    draftId:
+      name: draftId
+      in: path
+      description: A draft ID
+      required: true
+      schema:
+        type: string
+    localizationId:
+      name: localizationId
+      in: path
+      description: A localization ID
+      required: true
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    liveActivityTargetLanguage:
+      name: targetLanguage
+      in: query
+      description: The type of templating language to use when compiling the content.
+      required: false
+      schema:
+        type: string
+        enum:
+        - liveactivity
+        - handlebars
+        - liquid
+        - django
+        - jinja
+        - handlebarsjava
   securitySchemes:
     Bearer:
       type: apiKey

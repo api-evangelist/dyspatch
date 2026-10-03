@@ -518,101 +518,74 @@ paths:
         '400':
           $ref: '#/components/responses/InvalidRequest'
 components:
-  parameters:
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
-    draftId:
-      name: draftId
-      in: path
-      description: A draft ID
-      required: true
-      schema:
-        type: string
-    languageId:
-      name: languageId
-      in: path
-      description: 'A language ID (eg: en-US)'
-      required: true
-      schema:
-        type: string
-    pushTargetLanguage:
-      name: targetLanguage
-      in: query
-      description: The type of templating language to use when compiling the content.
-      required: false
-      schema:
-        type: string
-        enum:
-        - push
-        - handlebars
-        - liquid
-        - django
-        - jinja
-        - handlebarsjava
-    cursor:
-      name: cursor
-      in: query
-      description: A cursor value used to retrieve a specific page from a paginated result set.
-      required: false
-      schema:
-        type: string
-    draftTemplateFilter:
-      name: templateId
-      in: query
-      description: Filter drafts by template ID
-      required: false
-      schema:
-        type: string
-    status:
-      name: status
-      in: query
-      description: Filter the list of drafts by a particular status
-      required: false
-      schema:
-        type: string
-        enum:
-        - LOCKED_FOR_TRANSLATION
   schemas:
-    localizationId:
-      type: string
-      description: An opaque, unique identifier for a localization
-      example: loc_g3L7Cw6Hp5wUaf395LehwK
-    tagName:
-      type: string
-      example: My Tag
-      description: The user-specified name of a tag
+    languages:
+      type: array
+      items:
+        type: string
+        example: fr-FR
+      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
+
+        '
     localizationUrl:
       type: string
       example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
       description: The API url for a specific localization
-    localizationName:
-      type: string
-      example: English (US)
-      description: The user-specified name of a localization
     draftId:
       type: string
       description: An opaque, unique identifier for a draft
       example: tdft_g3L7Cw6Hp5wU
-    localeGroupId:
-      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
-      type: string
-      example: lgr_alka38ajla301
-    DraftsRead:
+    LocalizationKeyRead:
       type: object
-      description: list of draft metadata
+      description: localization key
       properties:
-        cursor:
-          $ref: '#/components/schemas/cursor'
-        data:
+        key:
+          type: string
+        comment:
+          type: string
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    draftUrl:
+      type: string
+      example: /drafts/tdft_g3L7Cw6Hp5wUaf395LehwK/dft_g3L7Cw6Hp5wU
+      description: The API url for a specific draft
+    localizationName:
+      type: string
+      example: English (US)
+      description: The user-specified name of a localization
+    DraftMetaRead:
+      type: object
+      description: draft metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/draftId'
+        templateId:
+          $ref: '#/components/schemas/templateId'
+        name:
+          $ref: '#/components/schemas/draftName'
+        url:
+          $ref: '#/components/schemas/draftUrl'
+        path:
+          $ref: '#/components/schemas/path'
+        workspaceId:
+          $ref: '#/components/schemas/workspaceId'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        status:
+          $ref: '#/components/schemas/status'
+        templateName:
+          $ref: '#/components/schemas/templateName'
+        designApprovedDate:
+          $ref: '#/components/schemas/designApprovedDate'
+        tags:
           type: array
           items:
-            $ref: '#/components/schemas/DraftMetaRead'
-          description: A list of draft metadata objects
+            $ref: '#/components/schemas/AssignedTagsMetaRead'
+          description: A list of Tags assigned to the Draft
     cursor:
       type: object
       description: Information about paginated results
@@ -623,42 +596,6 @@ components:
         hasMore:
           type: boolean
           description: Whether there is a next page of results
-    draftName:
-      type: string
-      description: The name of a draft
-      example: Draft Name
-    variables:
-      type: array
-      items:
-        type: string
-        example: myVar
-      description: 'a list of variables used in the template
-
-        '
-    templateId:
-      type: string
-      description: An opaque, unique identifier for a template
-      example: tem_g3L7Cw6Hp5wU
-    templateName:
-      type: string
-      description: The name of a template
-      example: Template Name
-    PushCompiledRead:
-      type: object
-      description: revision data
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/PushContent'
-        variables:
-          $ref: '#/components/schemas/variables'
-    designApprovedDate:
-      type: string
-      format: date-time
-      description: 'If using the design approval workflow this is the date the template draft design was approved, otherwise it will be empty.
-
-        '
     status:
       type: string
       example: LOCKED_FOR_TRANSLATION
@@ -678,14 +615,6 @@ components:
         - `UNKNOWN`: Status cannot be determined at this time
 
         '
-    AssignedTagsMetaRead:
-      type: object
-      description: assigned tags metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/tagId'
-        name:
-          $ref: '#/components/schemas/tagName'
     PushDraftRead:
       type: object
       description: template draft metadata included latest draft revision
@@ -724,77 +653,16 @@ components:
           items:
             $ref: '#/components/schemas/AssignedTagsMetaRead'
           description: A list of Tags assigned to the Draft
-    PushContent:
-      type: object
-      description: push draft content
-      properties:
-        type:
-          type: string
-          example: Title
-          description: What type of content this contains (Title, Body)
-        value:
-          type: string
-          example: This is some text
-          description: The value of the content
-    path:
-      type: string
-      description: The folder path location for this object
-      example: fdr_01gb8vd6pz/fdr_01gqjmdbq/fdr_01gqjmg1
-    updatedAt:
+    designApprovedDate:
       type: string
       format: date-time
-      description: The time of last update
-    tagId:
-      type: string
-      example: /An opaque, unique identifier for a tag
-      description: tag_01gpe172x7p6aa1c9grr48efq8
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
-    languages:
-      type: array
-      items:
-        type: string
-        example: fr-FR
-      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
+      description: 'If using the design approval workflow this is the date the template draft design was approved, otherwise it will be empty.
 
         '
-    DraftMetaRead:
-      type: object
-      description: draft metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/draftId'
-        templateId:
-          $ref: '#/components/schemas/templateId'
-        name:
-          $ref: '#/components/schemas/draftName'
-        url:
-          $ref: '#/components/schemas/draftUrl'
-        path:
-          $ref: '#/components/schemas/path'
-        workspaceId:
-          $ref: '#/components/schemas/workspaceId'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        status:
-          $ref: '#/components/schemas/status'
-        templateName:
-          $ref: '#/components/schemas/templateName'
-        designApprovedDate:
-          $ref: '#/components/schemas/designApprovedDate'
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssignedTagsMetaRead'
-          description: A list of Tags assigned to the Draft
-    draftUrl:
+    localizationId:
       type: string
-      example: /drafts/tdft_g3L7Cw6Hp5wUaf395LehwK/dft_g3L7Cw6Hp5wU
-      description: The API url for a specific draft
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
     LocalizationMetaRead:
       type: object
       description: localization metadata
@@ -811,18 +679,6 @@ components:
           $ref: '#/components/schemas/languages'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
-    LocalizationKeyRead:
-      type: object
-      description: localization key
-      properties:
-        key:
-          type: string
-        comment:
-          type: string
-    workspaceId:
-      type: string
-      description: The workspace this object belongs to
-      example: fdr_01gb8vd6pz
     APIError:
       type: object
       description: possible errors from the api
@@ -846,6 +702,150 @@ components:
         parameter:
           type: string
           description: The invalid parameter, if 'code' is invalid_parameter
+    variables:
+      type: array
+      items:
+        type: string
+        example: myVar
+      description: 'a list of variables used in the template
+
+        '
+    workspaceId:
+      type: string
+      description: The workspace this object belongs to
+      example: fdr_01gb8vd6pz
+    templateId:
+      type: string
+      description: An opaque, unique identifier for a template
+      example: tem_g3L7Cw6Hp5wU
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      type: string
+      example: lgr_alka38ajla301
+    PushContent:
+      type: object
+      description: push draft content
+      properties:
+        type:
+          type: string
+          example: Title
+          description: What type of content this contains (Title, Body)
+        value:
+          type: string
+          example: This is some text
+          description: The value of the content
+    templateName:
+      type: string
+      description: The name of a template
+      example: Template Name
+    tagName:
+      type: string
+      example: My Tag
+      description: The user-specified name of a tag
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    draftName:
+      type: string
+      description: The name of a draft
+      example: Draft Name
+    path:
+      type: string
+      description: The folder path location for this object
+      example: fdr_01gb8vd6pz/fdr_01gqjmdbq/fdr_01gqjmg1
+    DraftsRead:
+      type: object
+      description: list of draft metadata
+      properties:
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DraftMetaRead'
+          description: A list of draft metadata objects
+    tagId:
+      type: string
+      example: /An opaque, unique identifier for a tag
+      description: tag_01gpe172x7p6aa1c9grr48efq8
+    AssignedTagsMetaRead:
+      type: object
+      description: assigned tags metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/tagId'
+        name:
+          $ref: '#/components/schemas/tagName'
+    PushCompiledRead:
+      type: object
+      description: revision data
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/PushContent'
+        variables:
+          $ref: '#/components/schemas/variables'
+  parameters:
+    languageId:
+      name: languageId
+      in: path
+      description: 'A language ID (eg: en-US)'
+      required: true
+      schema:
+        type: string
+    pushTargetLanguage:
+      name: targetLanguage
+      in: query
+      description: The type of templating language to use when compiling the content.
+      required: false
+      schema:
+        type: string
+        enum:
+        - push
+        - handlebars
+        - liquid
+        - django
+        - jinja
+        - handlebarsjava
+    draftId:
+      name: draftId
+      in: path
+      description: A draft ID
+      required: true
+      schema:
+        type: string
+    draftTemplateFilter:
+      name: templateId
+      in: query
+      description: Filter drafts by template ID
+      required: false
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    status:
+      name: status
+      in: query
+      description: Filter the list of drafts by a particular status
+      required: false
+      schema:
+        type: string
+        enum:
+        - LOCKED_FOR_TRANSLATION
+    cursor:
+      name: cursor
+      in: query
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      required: false
+      schema:
+        type: string
   responses:
     Unauthorized:
       description: Unauthorized
@@ -858,30 +858,8 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-    NotFound:
-      description: Resource not found
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
     Forbidden:
       description: Forbidden
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InvalidRequest:
-      description: Invalid request
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -904,6 +882,28 @@ components:
             $ref: '#/components/schemas/APIError'
     RateLimited:
       description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    NotFound:
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.

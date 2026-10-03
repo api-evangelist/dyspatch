@@ -94,8 +94,8 @@ paths:
           $ref: '#/components/responses/InternalError'
 components:
   responses:
-    Unauthorized:
-      description: Unauthorized
+    RateLimited:
+      description: Rate limit exceeded
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -116,17 +116,6 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-    InternalError:
-      description: Server error
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
     InvalidRequest:
       description: Invalid request
       headers:
@@ -138,8 +127,8 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-    RateLimited:
-      description: Rate limit exceeded
+    InternalError:
+      description: Server error
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -149,17 +138,57 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    workspaceId:
+      name: workspaceId
+      in: query
+      description: An ID of a workspace
+      required: false
+      schema:
+        type: string
+    customerProfileId:
+      name: customerProfileId
+      in: path
+      description: A customer profile ID
+      required: true
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    cursor:
+      name: cursor
+      in: query
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      required: false
+      schema:
+        type: string
   schemas:
-    CustomerProfilesRead:
+    cursor:
       type: object
-      description: A list of customer profiles with pagination cursor
+      description: Information about paginated results
       properties:
-        cursor:
-          $ref: '#/components/schemas/cursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomerProfileRead'
+        next:
+          type: string
+          description: A cursor to fetch the next page of results
+        hasMore:
+          type: boolean
+          description: Whether there is a next page of results
     createdAt:
       type: string
       format: date-time
@@ -211,16 +240,20 @@ components:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
-    cursor:
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    CustomerProfilesRead:
       type: object
-      description: Information about paginated results
+      description: A list of customer profiles with pagination cursor
       properties:
-        next:
-          type: string
-          description: A cursor to fetch the next page of results
-        hasMore:
-          type: boolean
-          description: Whether there is a next page of results
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerProfileRead'
     APIError:
       type: object
       description: possible errors from the api
@@ -244,39 +277,6 @@ components:
         parameter:
           type: string
           description: The invalid parameter, if 'code' is invalid_parameter
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-  parameters:
-    workspaceId:
-      name: workspaceId
-      in: query
-      description: An ID of a workspace
-      required: false
-      schema:
-        type: string
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
-    cursor:
-      name: cursor
-      in: query
-      description: A cursor value used to retrieve a specific page from a paginated result set.
-      required: false
-      schema:
-        type: string
-    customerProfileId:
-      name: customerProfileId
-      in: path
-      description: A customer profile ID
-      required: true
-      schema:
-        type: string
   securitySchemes:
     Bearer:
       type: apiKey
