@@ -104,143 +104,20 @@ paths:
         default:
           $ref: '#/components/responses/InternalError'
 components:
-  schemas:
-    languages:
-      type: array
-      items:
-        type: string
-        example: fr-FR
-      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
-
-        '
-    LiveActivityLocalizationRead:
-      type: object
-      description: localization metadata and latest revision for associated template
-      properties:
-        id:
-          $ref: '#/components/schemas/localizationId'
-        languages:
-          $ref: '#/components/schemas/languages'
-        url:
-          $ref: '#/components/schemas/localizationUrl'
-        template:
-          $ref: '#/components/schemas/templateId'
-        compiled:
-          $ref: '#/components/schemas/LiveActivityCompiledRead'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        name:
-          $ref: '#/components/schemas/localizationName'
-        localeGroup:
-          $ref: '#/components/schemas/localeGroupId'
-    localizationUrl:
-      type: string
-      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
-      description: The API url for a specific localization
-    localizationName:
-      type: string
-      example: English (US)
-      description: The user-specified name of a localization
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-    localizationId:
-      type: string
-      description: An opaque, unique identifier for a localization
-      example: loc_g3L7Cw6Hp5wUaf395LehwK
-    APIError:
-      type: object
-      description: possible errors from the api
-      properties:
-        code:
-          type: string
-          enum:
-          - server_error
-          - invalid_parameter
-          - invalid_body
-          - invalid_request
-          - unauthorized
-          - unauthenticated
-          - not_found
-          - rate_limited
-          - prohibited_action
-          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
-        message:
-          type: string
-          description: Human readable error message
-        parameter:
-          type: string
-          description: The invalid parameter, if 'code' is invalid_parameter
-    LiveActivityCompiledRead:
-      type: object
-      description: revision data
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/LiveActivityContent'
-        variables:
-          $ref: '#/components/schemas/variables'
-    variables:
-      type: array
-      items:
-        type: string
-        example: myVar
-      description: 'a list of variables used in the template
-
-        '
-    templateId:
-      type: string
-      description: An opaque, unique identifier for a template
-      example: tem_g3L7Cw6Hp5wU
-    LiveActivityContent:
-      type: object
-      description: live activity draft content
-      properties:
-        type:
-          type: string
-          example: Title
-          description: What type of content this contains (Title, Body)
-        value:
-          type: string
-          example: This is some text
-          description: The value of the content
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
-    localeGroupId:
-      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
-      type: string
-      example: lgr_alka38ajla301
   responses:
-    Unauthenticated:
-      description: Unauthenticated
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InternalError:
-      description: Server error
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
     RateLimited:
       description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthenticated:
+      description: Unauthenticated
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -272,6 +149,17 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
+    InternalError:
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
     Unauthorized:
       description: Unauthorized
       headers:
@@ -284,27 +172,6 @@ components:
           schema:
             $ref: '#/components/schemas/APIError'
   parameters:
-    draftId:
-      name: draftId
-      in: path
-      description: A draft ID
-      required: true
-      schema:
-        type: string
-    localizationId:
-      name: localizationId
-      in: path
-      description: A localization ID
-      required: true
-      schema:
-        type: string
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
     liveActivityTargetLanguage:
       name: targetLanguage
       in: query
@@ -319,6 +186,139 @@ components:
         - django
         - jinja
         - handlebarsjava
+    localizationId:
+      name: localizationId
+      in: path
+      description: A localization ID
+      required: true
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    draftId:
+      name: draftId
+      in: path
+      description: A draft ID
+      required: true
+      schema:
+        type: string
+  schemas:
+    APIError:
+      type: object
+      description: possible errors from the api
+      properties:
+        code:
+          type: string
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          - prohibited_action
+          description: "Error code:\n  * server_error - Internal server error.\n  * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.\n  * invalid_body - Body could not be parsed, message will contain the reason.\n  * invalid_request - Validation error, the protocol used to make the request was not https.\n  * unauthorized - Credentials were found but permissions were not sufficient.\n  * unauthenticated - Credentials were not found or were not valid.\n  * not_found - The requested resource was not found.\n  * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.\n  * prohibited_action - The request was refused because an action was not valid for the requested resource. Typically this will happen if you try to make changes to a locked resource.\n"
+        message:
+          type: string
+          description: Human readable error message
+        parameter:
+          type: string
+          description: The invalid parameter, if 'code' is invalid_parameter
+    languages:
+      type: array
+      items:
+        type: string
+        example: fr-FR
+      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
+
+        '
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      type: string
+      example: lgr_alka38ajla301
+    LiveActivityCompiledRead:
+      type: object
+      description: revision data
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/LiveActivityContent'
+        variables:
+          $ref: '#/components/schemas/variables'
+    LiveActivityContent:
+      type: object
+      description: live activity draft content
+      properties:
+        type:
+          type: string
+          example: Title
+          description: What type of content this contains (Title, Body)
+        value:
+          type: string
+          example: This is some text
+          description: The value of the content
+    localizationUrl:
+      type: string
+      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific localization
+    templateId:
+      type: string
+      description: An opaque, unique identifier for a template
+      example: tem_g3L7Cw6Hp5wU
+    localizationId:
+      type: string
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
+    variables:
+      type: array
+      items:
+        type: string
+        example: myVar
+      description: 'a list of variables used in the template
+
+        '
+    localizationName:
+      type: string
+      example: English (US)
+      description: The user-specified name of a localization
+    LiveActivityLocalizationRead:
+      type: object
+      description: localization metadata and latest revision for associated template
+      properties:
+        id:
+          $ref: '#/components/schemas/localizationId'
+        languages:
+          $ref: '#/components/schemas/languages'
+        url:
+          $ref: '#/components/schemas/localizationUrl'
+        template:
+          $ref: '#/components/schemas/templateId'
+        compiled:
+          $ref: '#/components/schemas/LiveActivityCompiledRead'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        name:
+          $ref: '#/components/schemas/localizationName'
+        localeGroup:
+          $ref: '#/components/schemas/localeGroupId'
   securitySchemes:
     Bearer:
       type: apiKey

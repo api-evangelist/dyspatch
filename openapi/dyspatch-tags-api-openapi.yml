@@ -286,18 +286,30 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    workspaceIds:
-      type: array
-      items:
-        type: string
-        example: fdr_01gb8vd6pz
-      description: A list of workspace IDs
     tagStatus:
       type: string
       example: active
       description: 'The status of the current tag. States include: "active", "inactive"
 
         '
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    tagId:
+      type: string
+      example: /An opaque, unique identifier for a tag
+      description: tag_01gpe172x7p6aa1c9grr48efq8
+    workspaceIds:
+      type: array
+      items:
+        type: string
+        example: fdr_01gb8vd6pz
+      description: A list of workspace IDs
+    tagName:
+      type: string
+      example: My Tag
+      description: The user-specified name of a tag
     TagRead:
       type: object
       description: tag metadata
@@ -316,18 +328,16 @@ components:
           $ref: '#/components/schemas/updatedAt'
         status:
           $ref: '#/components/schemas/tagStatus'
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
-    tagId:
-      type: string
-      example: /An opaque, unique identifier for a tag
-      description: tag_01gpe172x7p6aa1c9grr48efq8
     updatedAt:
       type: string
       format: date-time
       description: The time of last update
+    tagTypes:
+      type: array
+      items:
+        type: string
+        example: template, draft
+      description: A list of tag types
     APIError:
       type: object
       description: possible errors from the api
@@ -351,31 +361,7 @@ components:
         parameter:
           type: string
           description: The invalid parameter, if 'code' is invalid_parameter
-    tagTypes:
-      type: array
-      items:
-        type: string
-        example: template, draft
-      description: A list of tag types
-    tagName:
-      type: string
-      example: My Tag
-      description: The user-specified name of a tag
   parameters:
-    workspaceId:
-      name: workspaceId
-      in: query
-      description: An ID of a workspace
-      required: false
-      schema:
-        type: string
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
     tagType:
       name: type
       in: query
@@ -387,11 +373,11 @@ components:
         - template
         - draft
         - block
-    resourceId:
-      name: resourceId
-      in: path
-      description: A template or draft ID
-      required: true
+    workspaceId:
+      name: workspaceId
+      in: query
+      description: An ID of a workspace
+      required: false
       schema:
         type: string
     tagId:
@@ -401,18 +387,21 @@ components:
       required: true
       schema:
         type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    resourceId:
+      name: resourceId
+      in: path
+      description: A template or draft ID
+      required: true
+      schema:
+        type: string
   responses:
-    NotFound:
-      description: Resource not found
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
     InvalidRequest:
       description: Invalid request
       headers:
@@ -426,6 +415,17 @@ components:
             $ref: '#/components/schemas/APIError'
     Unauthorized:
       description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    NotFound:
+      description: Resource not found
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.

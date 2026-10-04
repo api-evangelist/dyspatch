@@ -89,20 +89,31 @@ paths:
         default:
           $ref: '#/components/responses/InternalError'
 components:
+  parameters:
+    cursor:
+      name: cursor
+      in: query
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      required: false
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    themeId:
+      name: themeId
+      in: path
+      description: A theme ID
+      required: true
+      schema:
+        type: string
   responses:
-    RateLimited:
-      description: Rate limit exceeded
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    NotFound:
-      description: Resource not found
+    InternalError:
+      description: Server error
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -123,8 +134,8 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-    InternalError:
-      description: Server error
+    RateLimited:
+      description: Rate limit exceeded
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -136,6 +147,17 @@ components:
             $ref: '#/components/schemas/APIError'
     Unauthorized:
       description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    NotFound:
+      description: Resource not found
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -160,20 +182,6 @@ components:
       type: string
       format: date-time
       description: The time of initial creation
-    ThemesRead:
-      type: object
-      description: A list of themes with pagination cursor
-      properties:
-        cursor:
-          $ref: '#/components/schemas/cursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThemeRead'
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
     ThemeRead:
       type: object
       description: Theme metadata
@@ -202,6 +210,20 @@ components:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    ThemesRead:
+      type: object
+      description: A list of themes with pagination cursor
+      properties:
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThemeRead'
     APIError:
       type: object
       description: possible errors from the api
@@ -225,28 +247,6 @@ components:
         parameter:
           type: string
           description: The invalid parameter, if 'code' is invalid_parameter
-  parameters:
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
-    cursor:
-      name: cursor
-      in: query
-      description: A cursor value used to retrieve a specific page from a paginated result set.
-      required: false
-      schema:
-        type: string
-    themeId:
-      name: themeId
-      in: path
-      description: A theme ID
-      required: true
-      schema:
-        type: string
   securitySchemes:
     Bearer:
       type: apiKey

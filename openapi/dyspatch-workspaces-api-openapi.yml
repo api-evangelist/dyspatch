@@ -87,82 +87,7 @@ paths:
         default:
           $ref: '#/components/responses/InternalError'
 components:
-  responses:
-    Unauthenticated:
-      description: Unauthenticated
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InternalError:
-      description: Server error
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    RateLimited:
-      description: Rate limit exceeded
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InvalidRequest:
-      description: Invalid request
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Unauthorized
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
   schemas:
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-    WorkspacesRead:
-      type: object
-      description: list of workspaces
-      properties:
-        cursor:
-          $ref: '#/components/schemas/cursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/FolderRead'
-          description: A list of workspace objects
-    folderId:
-      type: string
-      description: A workspace/folder ID
-      example: fdr_01g0z4d5aw
     cursor:
       type: object
       description: Information about paginated results
@@ -212,6 +137,14 @@ components:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
     FolderList:
       type: object
       description: folder with a list of its sub-folders
@@ -233,28 +166,95 @@ components:
           items:
             $ref: '#/components/schemas/FolderRead'
           description: A list of sub-folder objects
-    folderDescription:
-      type: string
-      description: A description of the workspace/folder
-      example: Description of Folder
-    createdAt:
-      type: string
-      format: date-time
-      description: The time of initial creation
+    WorkspacesRead:
+      type: object
+      description: list of workspaces
+      properties:
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolderRead'
+          description: A list of workspace objects
     folderName:
       type: string
       description: The name of a workspace/folder
       example: Name of Folder
+    folderDescription:
+      type: string
+      description: A description of the workspace/folder
+      example: Description of Folder
     folderUrl:
       type: string
       example: /workspaces/fdr_g3L7Cw6Hp5wUaf395LehwK
       description: The API url for a specific template
-  parameters:
     folderId:
-      name: folderId
-      in: path
+      type: string
       description: A workspace/folder ID
-      required: true
+      example: fdr_01g0z4d5aw
+  responses:
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthenticated:
+      description: Unauthenticated
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InternalError:
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+  parameters:
+    cursor:
+      name: cursor
+      in: query
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      required: false
       schema:
         type: string
     version:
@@ -264,11 +264,11 @@ components:
       description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
       schema:
         type: string
-    cursor:
-      name: cursor
-      in: query
-      description: A cursor value used to retrieve a specific page from a paginated result set.
-      required: false
+    folderId:
+      name: folderId
+      in: path
+      description: A workspace/folder ID
+      required: true
       schema:
         type: string
   securitySchemes:

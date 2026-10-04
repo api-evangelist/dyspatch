@@ -102,31 +102,63 @@ paths:
         default:
           $ref: '#/components/responses/InternalError'
 components:
+  responses:
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    NotFound:
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InvalidRequest:
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    InternalError:
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+    Unauthorized:
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
   schemas:
-    languages:
-      type: array
-      items:
-        type: string
-        example: fr-FR
-      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
-
-        '
-    localizationUrl:
-      type: string
-      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
-      description: The API url for a specific localization
-    localizationName:
-      type: string
-      example: English (US)
-      description: The user-specified name of a localization
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-    localizationId:
-      type: string
-      description: An opaque, unique identifier for a localization
-      example: loc_g3L7Cw6Hp5wUaf395LehwK
     APIError:
       type: object
       description: possible errors from the api
@@ -150,18 +182,26 @@ components:
         parameter:
           type: string
           description: The invalid parameter, if 'code' is invalid_parameter
-    variables:
+    languages:
       type: array
       items:
         type: string
-        example: myVar
-      description: 'a list of variables used in the template
+        example: fr-FR
+      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
 
         '
-    templateId:
+    updatedAt:
       type: string
-      description: An opaque, unique identifier for a template
-      example: tem_g3L7Cw6Hp5wU
+      format: date-time
+      description: The time of last update
+    createdAt:
+      type: string
+      format: date-time
+      description: The time of initial creation
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+      type: string
+      example: lgr_alka38ajla301
     CompiledRead:
       type: object
       description: revision data
@@ -196,10 +236,14 @@ components:
           description: Base64 encoded template text body
         variables:
           $ref: '#/components/schemas/variables'
-    createdAt:
+    localizationUrl:
       type: string
-      format: date-time
-      description: The time of initial creation
+      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific localization
+    templateId:
+      type: string
+      description: An opaque, unique identifier for a template
+      example: tem_g3L7Cw6Hp5wU
     LocalizationRead:
       type: object
       description: localization metadata and latest revision for associated template
@@ -222,11 +266,44 @@ components:
           $ref: '#/components/schemas/localizationName'
         localeGroup:
           $ref: '#/components/schemas/localeGroupId'
-    localeGroupId:
-      description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
+    localizationId:
       type: string
-      example: lgr_alka38ajla301
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
+    variables:
+      type: array
+      items:
+        type: string
+        example: myVar
+      description: 'a list of variables used in the template
+
+        '
+    localizationName:
+      type: string
+      example: English (US)
+      description: The user-specified name of a localization
   parameters:
+    localizationId:
+      name: localizationId
+      in: path
+      description: A localization ID
+      required: true
+      schema:
+        type: string
+    renderThemeId:
+      name: themeId
+      in: query
+      description: A theme ID to use when rendering
+      required: false
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
     targetLanguage:
       name: targetLanguage
       in: query
@@ -251,83 +328,6 @@ components:
       required: true
       schema:
         type: string
-    localizationId:
-      name: localizationId
-      in: path
-      description: A localization ID
-      required: true
-      schema:
-        type: string
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
-    renderThemeId:
-      name: themeId
-      in: query
-      description: A theme ID to use when rendering
-      required: false
-      schema:
-        type: string
-  responses:
-    InternalError:
-      description: Server error
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    RateLimited:
-      description: Rate limit exceeded
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    NotFound:
-      description: Resource not found
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    InvalidRequest:
-      description: Invalid request
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    Unauthorized:
-      description: Unauthorized
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
   securitySchemes:
     Bearer:
       type: apiKey

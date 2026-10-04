@@ -254,42 +254,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    languages:
-      type: array
-      items:
-        type: string
-        example: fr-FR
-      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
-
-        '
-    blockId:
-      type: string
-      description: An opaque, unique identifier for a block
-      example: blk_01gpe172x7p6aa1c9grr48efq8
-    localizationUrl:
-      type: string
-      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
-      description: The API url for a specific localization
-    LocalizationKeyRead:
-      type: object
-      description: localization key
-      properties:
-        key:
-          type: string
-        comment:
-          type: string
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-    localizationName:
-      type: string
-      example: English (US)
-      description: The user-specified name of a localization
-    blockName:
-      type: string
-      example: Header Block
-      description: The user-specified name of a block
     cursor:
       type: object
       description: Information about paginated results
@@ -300,34 +264,10 @@ components:
         hasMore:
           type: boolean
           description: Whether there is a next page of results
-    AssignedTagsMetaRead:
-      type: object
-      description: assigned tags metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/tagId'
-        name:
-          $ref: '#/components/schemas/tagName'
-    localizationId:
+    blockId:
       type: string
-      description: An opaque, unique identifier for a localization
-      example: loc_g3L7Cw6Hp5wUaf395LehwK
-    LocalizationMetaRead:
-      type: object
-      description: localization metadata
-      properties:
-        id:
-          $ref: '#/components/schemas/localizationId'
-        name:
-          $ref: '#/components/schemas/localizationName'
-        url:
-          $ref: '#/components/schemas/localizationUrl'
-        localeGroup:
-          $ref: '#/components/schemas/localeGroupId'
-        languages:
-          $ref: '#/components/schemas/languages'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
+      description: An opaque, unique identifier for a block
+      example: blk_01gpe172x7p6aa1c9grr48efq8
     APIError:
       type: object
       description: possible errors from the api
@@ -351,10 +291,10 @@ components:
         parameter:
           type: string
           description: The invalid parameter, if 'code' is invalid_parameter
-    blockUrl:
+    blockName:
       type: string
-      example: /blocks/blk_01gpe172x7p6aa1c9grr48efq8
-      description: The API url for a specific block
+      example: Header Block
+      description: The user-specified name of a block
     BlocksRead:
       type: object
       description: list of blocks
@@ -366,21 +306,42 @@ components:
           items:
             $ref: '#/components/schemas/BlockRead'
           description: A list of block objects
-    tagId:
-      type: string
-      example: /An opaque, unique identifier for a tag
-      description: tag_01gpe172x7p6aa1c9grr48efq8
-    blockDescription:
-      type: string
-      description: The user-specified description of a block
+    languages:
+      type: array
+      items:
+        type: string
+        example: fr-FR
+      description: 'a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
+
+        '
     tagName:
       type: string
       example: My Tag
       description: The user-specified name of a tag
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
     createdAt:
       type: string
       format: date-time
       description: The time of initial creation
+    LocalizationMetaRead:
+      type: object
+      description: localization metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/localizationId'
+        name:
+          $ref: '#/components/schemas/localizationName'
+        url:
+          $ref: '#/components/schemas/localizationUrl'
+        localeGroup:
+          $ref: '#/components/schemas/localeGroupId'
+        languages:
+          $ref: '#/components/schemas/languages'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
     localeGroupId:
       description: the locale group this localization belongs to, if this field is empty the localization does not belong to any locale group
       type: string
@@ -405,40 +366,46 @@ components:
           $ref: '#/components/schemas/updatedAt'
         url:
           $ref: '#/components/schemas/blockUrl'
-  parameters:
-    languageId:
-      name: languageId
-      in: path
-      description: 'A language ID (eg: en-US)'
-      required: true
-      schema:
-        type: string
-    blockId:
-      name: blockId
-      in: path
-      description: A block ID
-      required: true
-      schema:
-        type: string
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
+    LocalizationKeyRead:
+      type: object
+      description: localization key
+      properties:
+        key:
+          type: string
+        comment:
+          type: string
+    blockUrl:
+      type: string
+      example: /blocks/blk_01gpe172x7p6aa1c9grr48efq8
+      description: The API url for a specific block
+    localizationUrl:
+      type: string
+      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+      description: The API url for a specific localization
+    AssignedTagsMetaRead:
+      type: object
+      description: assigned tags metadata
+      properties:
+        id:
+          $ref: '#/components/schemas/tagId'
+        name:
+          $ref: '#/components/schemas/tagName'
+    tagId:
+      type: string
+      example: /An opaque, unique identifier for a tag
+      description: tag_01gpe172x7p6aa1c9grr48efq8
+    localizationId:
+      type: string
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
+    blockDescription:
+      type: string
+      description: The user-specified description of a block
+    localizationName:
+      type: string
+      example: English (US)
+      description: The user-specified name of a localization
   responses:
-    InternalError:
-      description: Server error
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
     RateLimited:
       description: Rate limit exceeded
       headers:
@@ -472,6 +439,17 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
+    InternalError:
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
     Unauthorized:
       description: Unauthorized
       headers:
@@ -483,6 +461,28 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
+  parameters:
+    languageId:
+      name: languageId
+      in: path
+      description: 'A language ID (eg: en-US)'
+      required: true
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    blockId:
+      name: blockId
+      in: path
+      description: A block ID
+      required: true
+      schema:
+        type: string
   securitySchemes:
     Bearer:
       type: apiKey

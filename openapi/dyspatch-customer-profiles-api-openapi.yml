@@ -93,20 +93,38 @@ paths:
         default:
           $ref: '#/components/responses/InternalError'
 components:
+  parameters:
+    cursor:
+      name: cursor
+      in: query
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      required: false
+      schema:
+        type: string
+    workspaceId:
+      name: workspaceId
+      in: query
+      description: An ID of a workspace
+      required: false
+      schema:
+        type: string
+    version:
+      in: header
+      name: Accept
+      required: true
+      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
+      schema:
+        type: string
+    customerProfileId:
+      name: customerProfileId
+      in: path
+      description: A customer profile ID
+      required: true
+      schema:
+        type: string
   responses:
-    RateLimited:
-      description: Rate limit exceeded
-      headers:
-        X-RateLimit-Remaining:
-          description: The number of requests left for the time window.
-          schema:
-            type: integer
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/APIError'
-    NotFound:
-      description: Resource not found
+    InternalError:
+      description: Server error
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -127,8 +145,8 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-    InternalError:
-      description: Server error
+    NotFound:
+      description: Resource not found
       headers:
         X-RateLimit-Remaining:
           description: The number of requests left for the time window.
@@ -149,35 +167,17 @@ components:
         '*/*':
           schema:
             $ref: '#/components/schemas/APIError'
-  parameters:
-    workspaceId:
-      name: workspaceId
-      in: query
-      description: An ID of a workspace
-      required: false
-      schema:
-        type: string
-    customerProfileId:
-      name: customerProfileId
-      in: path
-      description: A customer profile ID
-      required: true
-      schema:
-        type: string
-    version:
-      in: header
-      name: Accept
-      required: true
-      description: A version of the API that should be used for the request. For example, to use version "2026.06", set the value to "application/vnd.dyspatch.2026.06+json"
-      schema:
-        type: string
-    cursor:
-      name: cursor
-      in: query
-      description: A cursor value used to retrieve a specific page from a paginated result set.
-      required: false
-      schema:
-        type: string
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
   schemas:
     cursor:
       type: object
@@ -189,10 +189,24 @@ components:
         hasMore:
           type: boolean
           description: Whether there is a next page of results
+    updatedAt:
+      type: string
+      format: date-time
+      description: The time of last update
     createdAt:
       type: string
       format: date-time
       description: The time of initial creation
+    CustomerProfilesRead:
+      type: object
+      description: A list of customer profiles with pagination cursor
+      properties:
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerProfileRead'
     CustomerProfileRead:
       type: object
       description: Customer profile data including JSON content
@@ -240,20 +254,6 @@ components:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
-    updatedAt:
-      type: string
-      format: date-time
-      description: The time of last update
-    CustomerProfilesRead:
-      type: object
-      description: A list of customer profiles with pagination cursor
-      properties:
-        cursor:
-          $ref: '#/components/schemas/cursor'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomerProfileRead'
     APIError:
       type: object
       description: possible errors from the api
