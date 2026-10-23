@@ -553,6 +553,8 @@ apis:
   - type: DataModel
     url: data-model/dyspatch-data-model.yml
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/dyspatch/overview
 - url: https://www.dyspatch.io/feed/
   type: BlogRSS
 - type: Website
