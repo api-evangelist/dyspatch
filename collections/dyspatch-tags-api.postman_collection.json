@@ -1,2222 +1,2218 @@
 {
+  "info": {
+    "_postman_id": "568b01b3-15d7-4697-9ea0-398d800319b2",
+    "name": "Dyspatch Tags API",
+    "description": "# Introduction\n\nThe Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response\ncodes to indicate errors.\n\nContact Support:\n Name: Dyspatch Support\n Email: support@dyspatch.io",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T20:45:38.000Z",
+    "updatedAt": "2026-10-21T20:45:38.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-568b01b3-15d7-4697-9ea0-398d800319b2"
+  },
   "item": [
     {
-      "id": "f7a51d9f-c80e-4258-a755-4990355aa746",
-      "name": "Tags",
-      "description": {
-        "content": "Tags are a way of categorizing your resources (template and drafts) with helpful identifying information.\nYou can decide what tags are useful for you, managing a master list of available tags and assigning or removing tags from each resource as part of your workflow.\n",
-        "type": "text/plain"
-      },
+      "name": "tags",
       "item": [
         {
-          "id": "314a4d9b-3ee7-4865-b86b-d3e247bf6159",
-          "name": "Add Tags to a Resource",
-          "request": {
-            "name": "Add Tags to a Resource",
-            "description": {
-              "content": "Add a set of tags to a specified resource (template or draft)",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "tags",
-                "assign",
-                ":resourceId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "resourceId",
-                  "description": "(Required) A template or draft ID"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*"
-              }
-            ],
-            "method": "PUT",
-            "auth": {
-              "type": "apikey",
-              "apikey": [
-                {
-                  "key": "key",
-                  "value": "Authorization"
-                },
-                {
-                  "key": "value",
-                  "value": "{{apiKey}}"
-                },
-                {
-                  "key": "in",
-                  "value": "header"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "assign",
+          "item": [
             {
-              "id": "7030d8d2-b549-4c52-b290-d886ec53ff02",
-              "name": "Successful assigned tags",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "assign",
-                    ":resourceId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "resourceId",
-                      "description": "(Required) A template or draft ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
+              "name": "{resourceId}",
+              "item": [
+                {
+                  "name": "Add Tags to a Resource",
+                  "id": "42f6b488-87a9-4219-a0ad-4d1af4d04338",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
                     },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"tagIds\": [\n    \"tag_id_1, tag_id_2\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "57046a64-9e45-4194-9086-4ac40e274c9f",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "assign",
-                    ":resourceId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "resourceId",
-                      "description": "(Required) A template or draft ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
                     },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"tagIds\": [\n    \"tag_id_1, tag_id_2\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d2f85674-f2c2-4b58-8984-e78667a24e43",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "assign",
-                    ":resourceId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "resourceId",
-                      "description": "(Required) A template or draft ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/assign/:resourceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        "assign",
+                        ":resourceId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "d1f460c7-08b3-4fd7-90e8-4304f57f8c52",
+                          "key": "resourceId",
+                          "value": "<string>",
+                          "description": "(Required) A template or draft ID"
+                        }
+                      ]
                     },
-                    "key": "Authorization",
-                    "value": "<API Key>"
+                    "description": "Add a set of tags to a specified resource (template or draft)"
                   },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"tagIds\": [\n    \"tag_id_1, tag_id_2\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "1e00b59a-3610-477c-9663-a593dbb7c49a",
-          "name": "Unassign Tags from a Resource",
-          "request": {
-            "name": "Unassign Tags from a Resource",
-            "description": {
-              "content": "Unassign a set of tags from a specified resource (template or draft)",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "tags",
-                "unassign",
-                ":resourceId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "resourceId",
-                  "description": "(Required) A template or draft ID"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*"
-              }
-            ],
-            "method": "POST",
-            "auth": {
-              "type": "apikey",
-              "apikey": [
-                {
-                  "key": "key",
-                  "value": "Authorization"
-                },
-                {
-                  "key": "value",
-                  "value": "{{apiKey}}"
-                },
-                {
-                  "key": "in",
-                  "value": "header"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "bf2e2824-f3e5-4b81-a1e0-124de3103af0",
-              "name": "Successfully unassigned tags",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "unassign",
-                    ":resourceId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
+                  "response": [
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "resourceId",
-                      "description": "(Required) A template or draft ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
+                      "id": "cd39ded5-2e82-4ab4-a5d1-a8d97c319b53",
+                      "name": "Successful assigned tags",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/assign/:resourceId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "assign",
+                            ":resourceId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "resourceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-cd39ded5-2e82-4ab4-a5d1-a8d97c319b53"
                     },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"tagIds\": [\n    \"tag_id_1, tag_id_2\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "941f3e6e-aa1e-487b-a249-483d816c65c2",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "unassign",
-                    ":resourceId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "resourceId",
-                      "description": "(Required) A template or draft ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
+                      "id": "47fab5f6-0142-4971-8ee6-56cec6cce57f",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/assign/:resourceId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "assign",
+                            ":resourceId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "resourceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-47fab5f6-0142-4971-8ee6-56cec6cce57f"
                     },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"tagIds\": [\n    \"tag_id_1, tag_id_2\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "68e0acec-8260-430e-aacd-586b42ff2d64",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "unassign",
-                    ":resourceId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "resourceId",
-                      "description": "(Required) A template or draft ID"
+                      "id": "dc197bd4-55d1-4d5c-bf6d-9e723cd0d1d3",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/assign/:resourceId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "assign",
+                            ":resourceId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "resourceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-dc197bd4-55d1-4d5c-bf6d-9e723cd0d1d3"
                     }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"tagIds\": [\n    \"tag_id_1, tag_id_2\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
+                  ],
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-42f6b488-87a9-4219-a0ad-4d1af4d04338"
                 }
               ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "769de41a-b23d-4184-87dd-f38b0839b0cb",
+              "createdAt": "2026-10-21T20:45:38.000Z",
+              "updatedAt": "2026-10-21T20:45:38.000Z",
+              "uid": "35240-769de41a-b23d-4184-87dd-f38b0839b0cb"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "72d6e532-8bc0-4f35-aaaf-e2f8d8ed847b",
+          "createdAt": "2026-10-21T20:45:38.000Z",
+          "updatedAt": "2026-10-21T20:45:38.000Z",
+          "uid": "35240-72d6e532-8bc0-4f35-aaaf-e2f8d8ed847b"
         },
         {
-          "id": "dc337225-6b5a-4675-bfaa-821cf49f755b",
+          "name": "unassign",
+          "item": [
+            {
+              "name": "{resourceId}",
+              "item": [
+                {
+                  "name": "Unassign Tags from a Resource",
+                  "id": "fbbf0138-b183-41c8-91a0-9c1e99f1c8a4",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/unassign/:resourceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        "unassign",
+                        ":resourceId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "82f9ec0d-8c12-4af2-ac66-b0eb4c554e99",
+                          "key": "resourceId",
+                          "value": "<string>",
+                          "description": "(Required) A template or draft ID"
+                        }
+                      ]
+                    },
+                    "description": "Unassign a set of tags from a specified resource (template or draft)"
+                  },
+                  "response": [
+                    {
+                      "id": "b797d03a-1dcd-4309-9727-017ce81cf786",
+                      "name": "Successfully unassigned tags",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/unassign/:resourceId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "unassign",
+                            ":resourceId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "resourceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-b797d03a-1dcd-4309-9727-017ce81cf786"
+                    },
+                    {
+                      "id": "12c1614e-c1df-4e52-b158-39e2a5c739e9",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/unassign/:resourceId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "unassign",
+                            ":resourceId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "resourceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-12c1614e-c1df-4e52-b158-39e2a5c739e9"
+                    },
+                    {
+                      "id": "0358c576-e528-4991-b280-020ee195a46a",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tagIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/unassign/:resourceId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "unassign",
+                            ":resourceId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "resourceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-0358c576-e528-4991-b280-020ee195a46a"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-fbbf0138-b183-41c8-91a0-9c1e99f1c8a4"
+                }
+              ],
+              "id": "b6061905-a6f9-42bf-82e4-f04a591b4822",
+              "createdAt": "2026-10-21T20:45:38.000Z",
+              "updatedAt": "2026-10-21T20:45:38.000Z",
+              "uid": "35240-b6061905-a6f9-42bf-82e4-f04a591b4822"
+            }
+          ],
+          "id": "deb100cf-2b43-473c-b928-7f29e0c92a65",
+          "createdAt": "2026-10-21T20:45:38.000Z",
+          "updatedAt": "2026-10-21T20:45:38.000Z",
+          "uid": "35240-deb100cf-2b43-473c-b928-7f29e0c92a65"
+        },
+        {
+          "name": "{tagId}",
+          "item": [
+            {
+              "name": "Get Tag by ID",
+              "id": "76440526-edf6-4a19-a5e0-c885be81d247",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "Authorization",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.dyspatch.2026.06+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tags/:tagId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tags",
+                    ":tagId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "d625337f-72a1-419a-b0ad-2f5f7bcf551c",
+                      "key": "tagId",
+                      "value": "<string>",
+                      "description": "(Required) A tag ID"
+                    }
+                  ]
+                },
+                "description": "Returns a tag object with the matching ID"
+              },
+              "response": [
+                {
+                  "id": "dc6ec50b-d6b0-4394-8eff-fb9784c5d969",
+                  "name": "A tag object with the requested ID",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.dyspatch.2026.06+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/:tagId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        ":tagId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tagId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.dyspatch.2026.06+json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the current time window",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-dc6ec50b-d6b0-4394-8eff-fb9784c5d969"
+                },
+                {
+                  "id": "46065a6c-73fb-40e0-a9f1-ccbf37294652",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/:tagId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        ":tagId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tagId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-46065a6c-73fb-40e0-a9f1-ccbf37294652"
+                },
+                {
+                  "id": "36ee0f3e-ca4e-4dc3-a909-09333b83355d",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/:tagId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        ":tagId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tagId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-36ee0f3e-ca4e-4dc3-a909-09333b83355d"
+                },
+                {
+                  "id": "be25ff21-cd93-4ab2-8ef2-5e339adada84",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/:tagId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        ":tagId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tagId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-be25ff21-cd93-4ab2-8ef2-5e339adada84"
+                }
+              ],
+              "createdAt": "2026-10-21T20:45:38.000Z",
+              "updatedAt": "2026-10-21T20:45:38.000Z",
+              "uid": "35240-76440526-edf6-4a19-a5e0-c885be81d247"
+            }
+          ],
+          "id": "45ed2c37-2bcb-4fc9-a946-1293598814de",
+          "createdAt": "2026-10-21T20:45:38.000Z",
+          "updatedAt": "2026-10-21T20:45:38.000Z",
+          "uid": "35240-45ed2c37-2bcb-4fc9-a946-1293598814de"
+        },
+        {
+          "name": "create",
+          "item": [
+            {
+              "name": "Create a Tag",
+              "id": "36fc1373-e0c5-4cf6-b704-786751fd81f7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "Authorization",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.dyspatch.2026.06+json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"block\",\n    \"draft\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tags/create",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tags",
+                    "create"
+                  ]
+                },
+                "description": "Creates a new tag"
+              },
+              "response": [
+                {
+                  "id": "8ed3426e-3d08-41b7-aa36-079b914ec5f5",
+                  "name": "Successfully created tag",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.dyspatch.2026.06+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"block\",\n    \"draft\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/create",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        "create"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.dyspatch.2026.06+json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-8ed3426e-3d08-41b7-aa36-079b914ec5f5"
+                },
+                {
+                  "id": "999bb2c1-6e41-43b4-a30f-bf24d26bf0d5",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"block\",\n    \"draft\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/create",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        "create"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-999bb2c1-6e41-43b4-a30f-bf24d26bf0d5"
+                },
+                {
+                  "id": "ceedd8de-9f54-48c1-abd2-5d7d1b8f26a7",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"block\",\n    \"draft\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/create",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        "create"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-ceedd8de-9f54-48c1-abd2-5d7d1b8f26a7"
+                },
+                {
+                  "id": "3b1b69a9-ecfe-4434-90c6-10aae19fa69d",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"block\",\n    \"draft\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/create",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        "create"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-3b1b69a9-ecfe-4434-90c6-10aae19fa69d"
+                }
+              ],
+              "createdAt": "2026-10-21T20:45:38.000Z",
+              "updatedAt": "2026-10-21T20:45:38.000Z",
+              "uid": "35240-36fc1373-e0c5-4cf6-b704-786751fd81f7"
+            }
+          ],
+          "id": "2da7e0ae-91b5-4577-9240-fc274ab9108c",
+          "createdAt": "2026-10-21T20:45:38.000Z",
+          "updatedAt": "2026-10-21T20:45:38.000Z",
+          "uid": "35240-2da7e0ae-91b5-4577-9240-fc274ab9108c"
+        },
+        {
+          "name": "update",
+          "item": [
+            {
+              "name": "{tagId}",
+              "item": [
+                {
+                  "name": "Update a Tag",
+                  "id": "bd4dd538-2e87-4098-a73c-c0b57266065b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"block\",\n    \"template\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"active\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/update/:tagId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        "update",
+                        ":tagId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "14e7c7f6-f62e-4a67-8597-bd41014f184e",
+                          "key": "tagId",
+                          "value": "<string>",
+                          "description": "(Required) A tag ID"
+                        }
+                      ]
+                    },
+                    "description": "Updates an existing tag"
+                  },
+                  "response": [
+                    {
+                      "id": "e9b9da82-2247-44a6-9787-1feac26a7d11",
+                      "name": "Successfully updated tag",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"block\",\n    \"template\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"active\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/update/:tagId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "update",
+                            ":tagId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tagId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-e9b9da82-2247-44a6-9787-1feac26a7d11"
+                    },
+                    {
+                      "id": "d7dae2d6-895e-46c2-989c-14392e01c6dd",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"block\",\n    \"template\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"active\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/update/:tagId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "update",
+                            ":tagId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tagId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-d7dae2d6-895e-46c2-989c-14392e01c6dd"
+                    },
+                    {
+                      "id": "df7dd121-3e2b-42be-94b1-6c1ea6787d30",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"block\",\n    \"template\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"active\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/update/:tagId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "update",
+                            ":tagId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tagId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-df7dd121-3e2b-42be-94b1-6c1ea6787d30"
+                    },
+                    {
+                      "id": "e93edd40-cea0-4615-a98f-472fa4fb4bfa",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"block\",\n    \"template\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"active\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/update/:tagId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "update",
+                            ":tagId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tagId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-e93edd40-cea0-4615-a98f-472fa4fb4bfa"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-bd4dd538-2e87-4098-a73c-c0b57266065b"
+                }
+              ],
+              "id": "b9a546dd-5200-4ac0-9143-f42818a67a1c",
+              "createdAt": "2026-10-21T20:45:38.000Z",
+              "updatedAt": "2026-10-21T20:45:38.000Z",
+              "uid": "35240-b9a546dd-5200-4ac0-9143-f42818a67a1c"
+            }
+          ],
+          "id": "684dc746-5b5a-4b02-ab46-4f82aaff5f3e",
+          "createdAt": "2026-10-21T20:45:38.000Z",
+          "updatedAt": "2026-10-21T20:45:38.000Z",
+          "uid": "35240-684dc746-5b5a-4b02-ab46-4f82aaff5f3e"
+        },
+        {
+          "name": "delete",
+          "item": [
+            {
+              "name": "{tagId}",
+              "item": [
+                {
+                  "name": "Delete a Tag",
+                  "id": "df9651c3-1d85-4a50-9a29-3635ae3b8a6e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/delete/:tagId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        "delete",
+                        ":tagId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "b822b283-6f9d-4c04-acdb-cf56a6abc44f",
+                          "key": "tagId",
+                          "value": "<string>",
+                          "description": "(Required) A tag ID"
+                        }
+                      ]
+                    },
+                    "description": "Deletes a tag with the matching ID"
+                  },
+                  "response": [
+                    {
+                      "id": "46356a35-9296-409e-8097-8cb9a852178f",
+                      "name": "Successfully deleted tag",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/delete/:tagId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "delete",
+                            ":tagId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tagId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-46356a35-9296-409e-8097-8cb9a852178f"
+                    },
+                    {
+                      "id": "b879bf6d-de8c-4f36-81db-ccbc50729ccc",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/delete/:tagId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "delete",
+                            ":tagId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tagId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-b879bf6d-de8c-4f36-81db-ccbc50729ccc"
+                    },
+                    {
+                      "id": "1a347da5-09e9-415e-9ad0-3b2aa9451a53",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/delete/:tagId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "delete",
+                            ":tagId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tagId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-1a347da5-09e9-415e-9ad0-3b2aa9451a53"
+                    },
+                    {
+                      "id": "e38ca917-210c-4342-acf2-fec95be9dd12",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tags/delete/:tagId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tags",
+                            "delete",
+                            ":tagId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tagId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:45:38.000Z",
+                      "updatedAt": "2026-10-21T20:45:38.000Z",
+                      "uid": "35240-e38ca917-210c-4342-acf2-fec95be9dd12"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T20:45:38.000Z",
+                  "updatedAt": "2026-10-21T20:45:38.000Z",
+                  "uid": "35240-df9651c3-1d85-4a50-9a29-3635ae3b8a6e"
+                }
+              ],
+              "id": "fda3c9d4-e8df-4c92-81f6-57a2994324a0",
+              "createdAt": "2026-10-21T20:45:38.000Z",
+              "updatedAt": "2026-10-21T20:45:38.000Z",
+              "uid": "35240-fda3c9d4-e8df-4c92-81f6-57a2994324a0"
+            }
+          ],
+          "id": "2741ad2b-e6b6-4398-bd5d-861430597b59",
+          "createdAt": "2026-10-21T20:45:38.000Z",
+          "updatedAt": "2026-10-21T20:45:38.000Z",
+          "uid": "35240-2741ad2b-e6b6-4398-bd5d-861430597b59"
+        },
+        {
           "name": "Get Tags",
+          "id": "cd1607fd-b920-4d0d-8da6-14129236f682",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Get Tags",
-            "description": {
-              "content": "Returns a list of all tags in the organization",
-              "type": "text/plain"
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
             },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.dyspatch.2026.06+json"
+              }
+            ],
             "url": {
+              "raw": "{{baseUrl}}/tags?type=draft&workspaceId=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "tags"
               ],
-              "host": [
-                "{{baseUrl}}"
-              ],
               "query": [
                 {
-                  "disabled": false,
+                  "description": "A tag type",
                   "key": "type",
-                  "value": "<string>",
-                  "description": "A tag type"
+                  "value": "draft"
                 },
                 {
-                  "disabled": false,
+                  "description": "An ID of a workspace",
                   "key": "workspaceId",
-                  "value": "<string>",
-                  "description": "An ID of a workspace"
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/vnd.dyspatch.2026.06+json"
-              }
-            ],
-            "method": "GET",
-            "auth": {
-              "type": "apikey",
-              "apikey": [
-                {
-                  "key": "key",
-                  "value": "Authorization"
-                },
-                {
-                  "key": "value",
-                  "value": "{{apiKey}}"
-                },
-                {
-                  "key": "in",
-                  "value": "header"
+                  "value": "<string>"
                 }
               ]
-            }
+            },
+            "description": "Returns a list of all tags in the organization"
           },
           "response": [
             {
-              "id": "742e01d3-981b-4f3f-8986-98c21a26d073",
+              "id": "95d43b22-59e3-460e-aa59-96c4a026f06b",
               "name": "A list of tags",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "type",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "workspaceId",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/vnd.dyspatch.2026.06+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/vnd.dyspatch.2026.06+json"
-                }
-              ],
-              "body": "[\n  {\n    \"id\": \"/An opaque, unique identifier for a tag\",\n    \"name\": \"My Tag\",\n    \"types\": [\n      \"template, draft\",\n      \"template, draft\"\n    ],\n    \"workspaceIds\": [\n      \"fdr_01gb8vd6pz\",\n      \"fdr_01gb8vd6pz\"\n    ],\n    \"createdAt\": \"1982-11-01T05:28:17.444Z\",\n    \"updatedAt\": \"1959-01-05T15:22:37.244Z\",\n    \"status\": \"active\"\n  },\n  {\n    \"id\": \"/An opaque, unique identifier for a tag\",\n    \"name\": \"My Tag\",\n    \"types\": [\n      \"template, draft\",\n      \"template, draft\"\n    ],\n    \"workspaceIds\": [\n      \"fdr_01gb8vd6pz\",\n      \"fdr_01gb8vd6pz\"\n    ],\n    \"createdAt\": \"2018-10-14T09:17:17.227Z\",\n    \"updatedAt\": \"2022-11-15T23:07:02.540Z\",\n    \"status\": \"active\"\n  }\n]",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "4ff0c422-d6e6-4748-aa7c-2a27f518c32e",
-              "name": "Invalid request",
-              "originalRequest": {
                 "url": {
+                  "raw": "{{baseUrl}}/tags?type=draft&workspaceId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "tags"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "A tag type",
                       "key": "type",
-                      "value": "<string>"
+                      "value": "draft"
                     },
                     {
+                      "description": "An ID of a workspace",
                       "key": "workspaceId",
                       "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "544dc9b1-ba8e-46bf-9a7a-9776e8703548",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "type",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "workspaceId",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "afe82eab-0f33-4ec1-8039-1bd1eef0ef69",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "type",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "workspaceId",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "98be3fbc-2942-4d86-8b0f-f1abe2c13785",
-          "name": "Get Tag by ID",
-          "request": {
-            "name": "Get Tag by ID",
-            "description": {
-              "content": "Returns a tag object with the matching ID",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "tags",
-                ":tagId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "tagId",
-                  "description": "(Required) A tag ID"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/vnd.dyspatch.2026.06+json"
-              }
-            ],
-            "method": "GET",
-            "auth": {
-              "type": "apikey",
-              "apikey": [
-                {
-                  "key": "key",
-                  "value": "Authorization"
-                },
-                {
-                  "key": "value",
-                  "value": "{{apiKey}}"
-                },
-                {
-                  "key": "in",
-                  "value": "header"
-                }
-              ]
-            }
-          },
-          "response": [
-            {
-              "id": "e421aa37-2bd1-4d78-b4a9-2dcf4f9310b2",
-              "name": "A tag object with the requested ID",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
                     }
                   ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/vnd.dyspatch.2026.06+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the current time window",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
                 {
                   "key": "Content-Type",
                   "value": "application/vnd.dyspatch.2026.06+json"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of requests left for the time window.",
+                    "type": "text/plain"
+                  },
+                  "key": "X-RateLimit-Remaining",
+                  "value": "<integer>"
                 }
               ],
-              "body": "{\n  \"id\": \"/An opaque, unique identifier for a tag\",\n  \"name\": \"My Tag\",\n  \"types\": [\n    \"template, draft\",\n    \"template, draft\"\n  ],\n  \"workspaceIds\": [\n    \"fdr_01gb8vd6pz\",\n    \"fdr_01gb8vd6pz\"\n  ],\n  \"createdAt\": \"2025-06-18T00:15:45.282Z\",\n  \"updatedAt\": \"1988-11-27T03:16:47.227Z\",\n  \"status\": \"active\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"types\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"workspaceIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"status\": \"<string>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"types\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"workspaceIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"status\": \"<string>\"\n  }\n]",
+              "createdAt": "2026-10-21T20:45:38.000Z",
+              "updatedAt": "2026-10-21T20:45:38.000Z",
+              "uid": "35240-95d43b22-59e3-460e-aa59-96c4a026f06b"
             },
             {
-              "id": "836f340a-4f31-41fb-8ec9-681919d654eb",
+              "id": "8f538eb9-f0f2-40e0-be56-7e67342a0f71",
               "name": "Invalid request",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
                 "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "1dc27eef-d330-42a6-bad9-3fb8d4975dee",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
-                    }
-                  ]
-                },
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
                   {
                     "key": "Accept",
                     "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
+                "url": {
+                  "raw": "{{baseUrl}}/tags?type=draft&workspaceId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tags"
+                  ],
+                  "query": [
+                    {
+                      "description": "A tag type",
+                      "key": "type",
+                      "value": "draft"
+                    },
+                    {
+                      "description": "An ID of a workspace",
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of requests left for the time window.",
+                    "type": "text/plain"
+                  },
+                  "key": "X-RateLimit-Remaining",
+                  "value": "<integer>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T20:45:38.000Z",
+              "updatedAt": "2026-10-21T20:45:38.000Z",
+              "uid": "35240-8f538eb9-f0f2-40e0-be56-7e67342a0f71"
+            },
+            {
+              "id": "86fa8958-4a92-46c9-a4bb-69cc15eab2a9",
+              "name": "Unauthorized",
+              "originalRequest": {
                 "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "be5b03fe-cfe3-4dcc-81cb-b947db32c8f2",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
-                    }
-                  ]
-                },
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
                   {
                     "key": "Accept",
                     "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
+                "url": {
+                  "raw": "{{baseUrl}}/tags?type=draft&workspaceId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tags"
+                  ],
+                  "query": [
+                    {
+                      "description": "A tag type",
+                      "key": "type",
+                      "value": "draft"
+                    },
+                    {
+                      "description": "An ID of a workspace",
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of requests left for the time window.",
+                    "type": "text/plain"
+                  },
+                  "key": "X-RateLimit-Remaining",
+                  "value": "<integer>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T20:45:38.000Z",
+              "updatedAt": "2026-10-21T20:45:38.000Z",
+              "uid": "35240-86fa8958-4a92-46c9-a4bb-69cc15eab2a9"
+            },
+            {
+              "id": "171041ce-6951-4b0f-a09a-779c8d4a9de8",
+              "name": "Resource not found",
+              "originalRequest": {
                 "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "d66eccdd-75b7-4e70-a9d1-a2f03f8be6b2",
-          "name": "Create a Tag",
-          "request": {
-            "name": "Create a Tag",
-            "description": {
-              "content": "Creates a new tag",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "tags",
-                "create"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/vnd.dyspatch.2026.06+json"
-              }
-            ],
-            "method": "POST",
-            "auth": {
-              "type": "apikey",
-              "apikey": [
-                {
-                  "key": "key",
-                  "value": "Authorization"
-                },
-                {
-                  "key": "value",
-                  "value": "{{apiKey}}"
-                },
-                {
-                  "key": "in",
-                  "value": "header"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "522f87e0-cb4d-4e38-98d6-910141a5a566",
-              "name": "Successfully created tag",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "create"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/vnd.dyspatch.2026.06+json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"New Tag\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"workspace_id_1\",\n    \"workspace_id_2\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/vnd.dyspatch.2026.06+json"
-                }
-              ],
-              "body": "{\n  \"id\": \"/An opaque, unique identifier for a tag\",\n  \"name\": \"My Tag\",\n  \"types\": [\n    \"template, draft\",\n    \"template, draft\"\n  ],\n  \"workspaceIds\": [\n    \"fdr_01gb8vd6pz\",\n    \"fdr_01gb8vd6pz\"\n  ],\n  \"createdAt\": \"2025-06-18T00:15:45.282Z\",\n  \"updatedAt\": \"1988-11-27T03:16:47.227Z\",\n  \"status\": \"active\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "048f47eb-5aa8-45a0-ad56-1bfc96eef72f",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "create"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
                   {
                     "key": "Accept",
                     "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"New Tag\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"workspace_id_1\",\n    \"workspace_id_2\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "332040d2-afc7-4258-bad2-5f52c3162eaf",
-              "name": "Unauthorized",
-              "originalRequest": {
                 "url": {
-                  "path": [
-                    "tags",
-                    "create"
-                  ],
+                  "raw": "{{baseUrl}}/tags?type=draft&workspaceId=<string>",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"New Tag\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"workspace_id_1\",\n    \"workspace_id_2\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ea5c902e-b56d-41ae-a809-d17af39b9b4c",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
                   "path": [
-                    "tags",
-                    "create"
+                    "tags"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
+                  "query": [
+                    {
+                      "description": "A tag type",
+                      "key": "type",
+                      "value": "draft"
                     },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"New Tag\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"workspace_id_1\",\n    \"workspace_id_2\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                    {
+                      "description": "An ID of a workspace",
+                      "key": "workspaceId",
+                      "value": "<string>"
                     }
-                  }
+                  ]
                 }
               },
               "status": "Not Found",
               "code": 404,
+              "_postman_previewlanguage": "text",
               "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
                 {
                   "key": "Content-Type",
                   "value": "*/*"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of requests left for the time window.",
+                    "type": "text/plain"
+                  },
+                  "key": "X-RateLimit-Remaining",
+                  "value": "<integer>"
                 }
               ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T20:45:38.000Z",
+              "updatedAt": "2026-10-21T20:45:38.000Z",
+              "uid": "35240-171041ce-6951-4b0f-a09a-779c8d4a9de8"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "d2fd3b7a-dd88-4ce5-9b89-e0cd3c11ff2b",
-          "name": "Update a Tag",
-          "request": {
-            "name": "Update a Tag",
-            "description": {
-              "content": "Updates an existing tag",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "tags",
-                "update",
-                ":tagId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "tagId",
-                  "description": "(Required) A tag ID"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*"
-              }
-            ],
-            "method": "PATCH",
-            "auth": {
-              "type": "apikey",
-              "apikey": [
-                {
-                  "key": "key",
-                  "value": "Authorization"
-                },
-                {
-                  "key": "value",
-                  "value": "{{apiKey}}"
-                },
-                {
-                  "key": "in",
-                  "value": "header"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"<string>\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "e4259c56-caa2-401d-ac58-14ab053dc243",
-              "name": "Successfully updated tag",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "update",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"Updated Tag\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"workspace_id_1\",\n    \"workspace_id_2\"\n  ],\n  \"status\": \"active\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "7ab9fbf8-1139-40bc-98ad-ed20d4ce5902",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "update",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"Updated Tag\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"workspace_id_1\",\n    \"workspace_id_2\"\n  ],\n  \"status\": \"active\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ec0de650-d5d3-40ed-a171-074e9e7bc94b",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "update",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"Updated Tag\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"workspace_id_1\",\n    \"workspace_id_2\"\n  ],\n  \"status\": \"active\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "48ed5cd4-b0ce-4512-8fad-b5341c3233ae",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "update",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "PATCH",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"name\": \"Updated Tag\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workspaceIds\": [\n    \"workspace_id_1\",\n    \"workspace_id_2\"\n  ],\n  \"status\": \"active\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "53eaff66-d218-4451-9a4d-7d29740c777d",
-          "name": "Delete a Tag",
-          "request": {
-            "name": "Delete a Tag",
-            "description": {
-              "content": "Deletes a tag with the matching ID",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "tags",
-                "delete",
-                ":tagId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "tagId",
-                  "description": "(Required) A tag ID"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "*/*"
-              }
-            ],
-            "method": "DELETE",
-            "auth": {
-              "type": "apikey",
-              "apikey": [
-                {
-                  "key": "key",
-                  "value": "Authorization"
-                },
-                {
-                  "key": "value",
-                  "value": "{{apiKey}}"
-                },
-                {
-                  "key": "in",
-                  "value": "header"
-                }
-              ]
-            }
-          },
-          "response": [
-            {
-              "id": "4ede90bc-bf84-4aae-8b53-4f6cbf130a29",
-              "name": "Successfully deleted tag",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "delete",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "cea8585b-246d-4927-ad07-18321842c945",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "delete",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "139228f9-39f2-413c-b140-63cc1ac9b66d",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "delete",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9d6948cf-5f94-4be9-ba29-1cf1bdb65146",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "tags",
-                    "delete",
-                    ":tagId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "tagId",
-                      "description": "(Required) A tag ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "6585"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-21T20:45:38.000Z",
+          "updatedAt": "2026-10-21T20:45:38.000Z",
+          "uid": "35240-cd1607fd-b920-4d0d-8da6-14129236f682"
         }
       ],
-      "event": []
+      "id": "f0b1256e-eb6d-4996-b5b3-aa419f7dd835",
+      "createdAt": "2026-10-21T20:45:38.000Z",
+      "updatedAt": "2026-10-21T20:45:38.000Z",
+      "uid": "35240-f0b1256e-eb6d-4996-b5b3-aa419f7dd835"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.dyspatch.io",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.dyspatch.io"
     }
-  ],
-  "info": {
-    "_postman_id": "f9ca2cfb-c59d-41d8-b462-df22cd8b7f2a",
-    "name": "Dyspatch Blocks Tags API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "# Introduction\n\nThe Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response\ncodes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.\nSee our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on\nhow to implement Dyspatch.\n\n## Generating API Clients\nDyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.\n\n\nContact Support:\n Name: Dyspatch Support\n Email: support@dyspatch.io",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

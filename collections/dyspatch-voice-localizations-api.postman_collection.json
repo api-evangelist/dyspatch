@@ -1,1220 +1,1154 @@
 {
+  "info": {
+    "_postman_id": "498c28b9-3ae7-45cf-ade2-16a0b99fcf9d",
+    "name": "Dyspatch Voice Localizations API",
+    "description": "# Introduction\n\nThe Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response\ncodes to indicate errors.\n\nContact Support:\n Name: Dyspatch Support\n Email: support@dyspatch.io",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T20:46:06.000Z",
+    "updatedAt": "2026-10-21T20:46:06.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-498c28b9-3ae7-45cf-ade2-16a0b99fcf9d"
+  },
   "item": [
     {
-      "id": "1f1f8c6b-1833-45e0-81a4-7c2904a344af",
-      "name": "Voice Localizations",
-      "description": {
-        "content": "Voice Localization objects are the same as Template objects except they contain\nlocalized content.\n\nIf your account is using localizations then use this instead of the compiled Template object.\n",
-        "type": "text/plain"
-      },
+      "name": "voice",
       "item": [
         {
-          "id": "b424b1cf-d589-45ae-bead-e6bb0fbf4c1d",
-          "name": "Get Voice Localization Object by ID",
-          "request": {
-            "name": "Get Voice Localization Object by ID",
-            "description": {
-              "content": "Returns the published Voice content associated with the localization of the matching ID",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "voice",
-                "localizations",
-                ":localizationId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "targetLanguage",
-                  "value": "<string>",
-                  "description": "The type of templating language to use when compiling the content."
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "localizationId",
-                  "description": "(Required) A localization ID"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/vnd.dyspatch.2026.06+json"
-              }
-            ],
-            "method": "GET",
-            "auth": {
-              "type": "apikey",
-              "apikey": [
-                {
-                  "key": "key",
-                  "value": "Authorization"
-                },
-                {
-                  "key": "value",
-                  "value": "{{apiKey}}"
-                },
-                {
-                  "key": "in",
-                  "value": "header"
-                }
-              ]
-            }
-          },
-          "response": [
+          "name": "localizations",
+          "item": [
             {
-              "id": "51728868-a6a4-403b-88b4-3fffa7a596c6",
-              "name": "A localization object with the requested ID",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+              "name": "{localizationId}",
+              "item": [
+                {
+                  "name": "drafts",
+                  "item": [
                     {
-                      "key": "targetLanguage",
-                      "value": "<string>"
+                      "name": "{draftId}",
+                      "item": [
+                        {
+                          "name": "Get Voice Draft Localization Object by ID",
+                          "id": "3743cb6b-c056-44c4-b02a-e01d25ed31cc",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "apikey",
+                              "apikey": [
+                                {
+                                  "key": "key",
+                                  "value": "Authorization",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "value",
+                                  "value": "{{apiKey}}",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "in",
+                                  "value": "header",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/vnd.dyspatch.2026.06+json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/voice/localizations/:localizationId/drafts/:draftId?targetLanguage=handlebars",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "voice",
+                                "localizations",
+                                ":localizationId",
+                                "drafts",
+                                ":draftId"
+                              ],
+                              "query": [
+                                {
+                                  "description": "The type of templating language to use when compiling the content.",
+                                  "key": "targetLanguage",
+                                  "value": "handlebars"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "57e24b9c-8c21-412d-8d0f-d1544713219b",
+                                  "key": "localizationId",
+                                  "value": "<string>",
+                                  "description": "(Required) A localization ID"
+                                },
+                                {
+                                  "id": "daabd45e-2296-4faa-8b93-28e9a212615c",
+                                  "key": "draftId",
+                                  "value": "<string>",
+                                  "description": "(Required) A draft ID"
+                                }
+                              ]
+                            },
+                            "description": "Returns a specific localization object of the matching Voice draft with a matching localization ID"
+                          },
+                          "response": [
+                            {
+                              "id": "54ee76c8-b835-4089-a6ab-a8bf26b3b48f",
+                              "name": "A localization object from the matching draft ID with the requested ID",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/vnd.dyspatch.2026.06+json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "Authorization",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/voice/localizations/:localizationId/drafts/:draftId?targetLanguage=handlebars",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "voice",
+                                    "localizations",
+                                    ":localizationId",
+                                    "drafts",
+                                    ":draftId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "The type of templating language to use when compiling the content.",
+                                      "key": "targetLanguage",
+                                      "value": "handlebars"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "localizationId"
+                                    },
+                                    {
+                                      "key": "draftId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/vnd.dyspatch.2026.06+json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests left for the current time window",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "X-RateLimit-Remaining",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<string>\",\n  \"languages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"url\": \"<string>\",\n  \"template\": \"<string>\",\n  \"compiled\": {\n    \"content\": \"<string>\",\n    \"variables\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"localeGroup\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:46:06.000Z",
+                              "updatedAt": "2026-10-21T20:46:06.000Z",
+                              "uid": "35240-54ee76c8-b835-4089-a6ab-a8bf26b3b48f"
+                            },
+                            {
+                              "id": "2c9ea211-6a82-4590-be15-cbc933c6e448",
+                              "name": "Invalid request",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "Authorization",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/voice/localizations/:localizationId/drafts/:draftId?targetLanguage=handlebars",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "voice",
+                                    "localizations",
+                                    ":localizationId",
+                                    "drafts",
+                                    ":draftId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "The type of templating language to use when compiling the content.",
+                                      "key": "targetLanguage",
+                                      "value": "handlebars"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "localizationId"
+                                    },
+                                    {
+                                      "key": "draftId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests left for the time window.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "X-RateLimit-Remaining",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:46:06.000Z",
+                              "updatedAt": "2026-10-21T20:46:06.000Z",
+                              "uid": "35240-2c9ea211-6a82-4590-be15-cbc933c6e448"
+                            },
+                            {
+                              "id": "54f0c6d6-8cc6-484c-ad75-eab147b1d0d3",
+                              "name": "Unauthorized",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "Authorization",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/voice/localizations/:localizationId/drafts/:draftId?targetLanguage=handlebars",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "voice",
+                                    "localizations",
+                                    ":localizationId",
+                                    "drafts",
+                                    ":draftId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "The type of templating language to use when compiling the content.",
+                                      "key": "targetLanguage",
+                                      "value": "handlebars"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "localizationId"
+                                    },
+                                    {
+                                      "key": "draftId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests left for the time window.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "X-RateLimit-Remaining",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:46:06.000Z",
+                              "updatedAt": "2026-10-21T20:46:06.000Z",
+                              "uid": "35240-54f0c6d6-8cc6-484c-ad75-eab147b1d0d3"
+                            },
+                            {
+                              "id": "81c2eddd-85e6-4bf7-8e72-0ac58f851770",
+                              "name": "Resource not found",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "Authorization",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/voice/localizations/:localizationId/drafts/:draftId?targetLanguage=handlebars",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "voice",
+                                    "localizations",
+                                    ":localizationId",
+                                    "drafts",
+                                    ":draftId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "The type of templating language to use when compiling the content.",
+                                      "key": "targetLanguage",
+                                      "value": "handlebars"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "localizationId"
+                                    },
+                                    {
+                                      "key": "draftId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests left for the time window.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "X-RateLimit-Remaining",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:46:06.000Z",
+                              "updatedAt": "2026-10-21T20:46:06.000Z",
+                              "uid": "35240-81c2eddd-85e6-4bf7-8e72-0ac58f851770"
+                            },
+                            {
+                              "id": "c3613b32-2369-4d3b-a8a4-776c1aaa1b9e",
+                              "name": "Rate limit exceeded",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "Authorization",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/voice/localizations/:localizationId/drafts/:draftId?targetLanguage=handlebars",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "voice",
+                                    "localizations",
+                                    ":localizationId",
+                                    "drafts",
+                                    ":draftId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "The type of templating language to use when compiling the content.",
+                                      "key": "targetLanguage",
+                                      "value": "handlebars"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "localizationId"
+                                    },
+                                    {
+                                      "key": "draftId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests left for the time window.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "X-RateLimit-Remaining",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:46:06.000Z",
+                              "updatedAt": "2026-10-21T20:46:06.000Z",
+                              "uid": "35240-c3613b32-2369-4d3b-a8a4-776c1aaa1b9e"
+                            },
+                            {
+                              "id": "5d73531b-5879-4551-ba00-5f973e06d8f3",
+                              "name": "Server error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "Authorization",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/voice/localizations/:localizationId/drafts/:draftId?targetLanguage=handlebars",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "voice",
+                                    "localizations",
+                                    ":localizationId",
+                                    "drafts",
+                                    ":draftId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "The type of templating language to use when compiling the content.",
+                                      "key": "targetLanguage",
+                                      "value": "handlebars"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "localizationId"
+                                    },
+                                    {
+                                      "key": "draftId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests left for the time window.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "X-RateLimit-Remaining",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:46:06.000Z",
+                              "updatedAt": "2026-10-21T20:46:06.000Z",
+                              "uid": "35240-5d73531b-5879-4551-ba00-5f973e06d8f3"
+                            },
+                            {
+                              "id": "4c7fdaa1-9ce4-4265-9668-8190018246c6",
+                              "name": "Server error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "Authorization",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/voice/localizations/:localizationId/drafts/:draftId?targetLanguage=handlebars",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "voice",
+                                    "localizations",
+                                    ":localizationId",
+                                    "drafts",
+                                    ":draftId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "The type of templating language to use when compiling the content.",
+                                      "key": "targetLanguage",
+                                      "value": "handlebars"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "localizationId"
+                                    },
+                                    {
+                                      "key": "draftId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests left for the time window.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "X-RateLimit-Remaining",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                              "createdAt": "2026-10-21T20:46:06.000Z",
+                              "updatedAt": "2026-10-21T20:46:06.000Z",
+                              "uid": "35240-4c7fdaa1-9ce4-4265-9668-8190018246c6"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T20:46:06.000Z",
+                          "updatedAt": "2026-10-21T20:46:06.000Z",
+                          "uid": "35240-3743cb6b-c056-44c4-b02a-e01d25ed31cc"
+                        }
+                      ],
+                      "id": "25f8036f-e313-4929-90b4-22680ff345fa",
+                      "createdAt": "2026-10-21T20:46:06.000Z",
+                      "updatedAt": "2026-10-21T20:46:06.000Z",
+                      "uid": "35240-25f8036f-e313-4929-90b4-22680ff345fa"
                     }
                   ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
+                  "id": "d4d3ecc9-067c-48ba-9bbe-c26d15941358",
+                  "createdAt": "2026-10-21T20:46:06.000Z",
+                  "updatedAt": "2026-10-21T20:46:06.000Z",
+                  "uid": "35240-d4d3ecc9-067c-48ba-9bbe-c26d15941358"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
+                {
+                  "name": "Get Voice Localization Object by ID",
+                  "id": "00eca83c-8b01-4f84-95b0-bcaf69d79e4f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "header",
+                          "type": "string"
+                        }
+                      ]
                     },
-                    "key": "Authorization",
-                    "value": "<API Key>"
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.dyspatch.2026.06+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/voice/localizations/:localizationId?targetLanguage=handlebars",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "voice",
+                        "localizations",
+                        ":localizationId"
+                      ],
+                      "query": [
+                        {
+                          "description": "The type of templating language to use when compiling the content.",
+                          "key": "targetLanguage",
+                          "value": "handlebars"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "6277a5e6-0be1-4f9a-af97-b21d217c8090",
+                          "key": "localizationId",
+                          "value": "<string>",
+                          "description": "(Required) A localization ID"
+                        }
+                      ]
+                    },
+                    "description": "Returns the published Voice content associated with the localization of the matching ID"
                   },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/vnd.dyspatch.2026.06+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the current time window",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/vnd.dyspatch.2026.06+json"
+                  "response": [
+                    {
+                      "id": "37ac887f-4396-49b1-8917-66011a43f80a",
+                      "name": "A localization object with the requested ID",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.dyspatch.2026.06+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/voice/localizations/:localizationId?targetLanguage=handlebars",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "voice",
+                            "localizations",
+                            ":localizationId"
+                          ],
+                          "query": [
+                            {
+                              "description": "The type of templating language to use when compiling the content.",
+                              "key": "targetLanguage",
+                              "value": "handlebars"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "localizationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.dyspatch.2026.06+json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the current time window",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"languages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"url\": \"<string>\",\n  \"template\": \"<string>\",\n  \"compiled\": {\n    \"content\": \"<string>\",\n    \"variables\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"localeGroup\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:46:06.000Z",
+                      "updatedAt": "2026-10-21T20:46:06.000Z",
+                      "uid": "35240-37ac887f-4396-49b1-8917-66011a43f80a"
+                    },
+                    {
+                      "id": "bc3023f2-a447-43a2-9595-dd32a46d67a7",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/voice/localizations/:localizationId?targetLanguage=handlebars",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "voice",
+                            "localizations",
+                            ":localizationId"
+                          ],
+                          "query": [
+                            {
+                              "description": "The type of templating language to use when compiling the content.",
+                              "key": "targetLanguage",
+                              "value": "handlebars"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "localizationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:46:06.000Z",
+                      "updatedAt": "2026-10-21T20:46:06.000Z",
+                      "uid": "35240-bc3023f2-a447-43a2-9595-dd32a46d67a7"
+                    },
+                    {
+                      "id": "10339ff7-1564-44ef-a8dd-a8ac31531019",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/voice/localizations/:localizationId?targetLanguage=handlebars",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "voice",
+                            "localizations",
+                            ":localizationId"
+                          ],
+                          "query": [
+                            {
+                              "description": "The type of templating language to use when compiling the content.",
+                              "key": "targetLanguage",
+                              "value": "handlebars"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "localizationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:46:06.000Z",
+                      "updatedAt": "2026-10-21T20:46:06.000Z",
+                      "uid": "35240-10339ff7-1564-44ef-a8dd-a8ac31531019"
+                    },
+                    {
+                      "id": "795c70d0-f94a-47f4-88dd-e118b541d836",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/voice/localizations/:localizationId?targetLanguage=handlebars",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "voice",
+                            "localizations",
+                            ":localizationId"
+                          ],
+                          "query": [
+                            {
+                              "description": "The type of templating language to use when compiling the content.",
+                              "key": "targetLanguage",
+                              "value": "handlebars"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "localizationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:46:06.000Z",
+                      "updatedAt": "2026-10-21T20:46:06.000Z",
+                      "uid": "35240-795c70d0-f94a-47f4-88dd-e118b541d836"
+                    },
+                    {
+                      "id": "02e5b7e7-34a5-480e-b639-e16c806817c9",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/voice/localizations/:localizationId?targetLanguage=handlebars",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "voice",
+                            "localizations",
+                            ":localizationId"
+                          ],
+                          "query": [
+                            {
+                              "description": "The type of templating language to use when compiling the content.",
+                              "key": "targetLanguage",
+                              "value": "handlebars"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "localizationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:46:06.000Z",
+                      "updatedAt": "2026-10-21T20:46:06.000Z",
+                      "uid": "35240-02e5b7e7-34a5-480e-b639-e16c806817c9"
+                    },
+                    {
+                      "id": "6dcd8788-3f89-4b47-822d-7756ae081ae9",
+                      "name": "Server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/voice/localizations/:localizationId?targetLanguage=handlebars",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "voice",
+                            "localizations",
+                            ":localizationId"
+                          ],
+                          "query": [
+                            {
+                              "description": "The type of templating language to use when compiling the content.",
+                              "key": "targetLanguage",
+                              "value": "handlebars"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "localizationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:46:06.000Z",
+                      "updatedAt": "2026-10-21T20:46:06.000Z",
+                      "uid": "35240-6dcd8788-3f89-4b47-822d-7756ae081ae9"
+                    },
+                    {
+                      "id": "d1524a40-0152-46ec-ab0d-6ace14c2c245",
+                      "name": "Server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/voice/localizations/:localizationId?targetLanguage=handlebars",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "voice",
+                            "localizations",
+                            ":localizationId"
+                          ],
+                          "query": [
+                            {
+                              "description": "The type of templating language to use when compiling the content.",
+                              "key": "targetLanguage",
+                              "value": "handlebars"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "localizationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests left for the time window.",
+                            "type": "text/plain"
+                          },
+                          "key": "X-RateLimit-Remaining",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"invalid_body\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:46:06.000Z",
+                      "updatedAt": "2026-10-21T20:46:06.000Z",
+                      "uid": "35240-d1524a40-0152-46ec-ab0d-6ace14c2c245"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T20:46:06.000Z",
+                  "updatedAt": "2026-10-21T20:46:06.000Z",
+                  "uid": "35240-00eca83c-8b01-4f84-95b0-bcaf69d79e4f"
                 }
               ],
-              "body": "{\n  \"id\": \"loc_g3L7Cw6Hp5wUaf395LehwK\",\n  \"languages\": [\n    \"fr-FR\",\n    \"fr-FR\"\n  ],\n  \"url\": \"/localizations/loc_g3L7Cw6Hp5wUaf395LehwK\",\n  \"template\": \"tem_g3L7Cw6Hp5wU\",\n  \"compiled\": {\n    \"content\": \"This is some text content\",\n    \"variables\": [\n      \"myVar\",\n      \"myVar\"\n    ]\n  },\n  \"createdAt\": \"1995-06-30T13:27:56.350Z\",\n  \"updatedAt\": \"1994-12-08T09:29:02.433Z\",\n  \"name\": \"English (US)\",\n  \"localeGroup\": \"lgr_alka38ajla301\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "1e894f3e-b45e-48bf-be81-7498749fa866",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f267821d-f6a2-488b-bd34-de5ef135265c",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a48a88df-f43b-4109-9653-1ed01c3ea338",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9838c4ad-6d49-42cb-ba17-ac308e4c7107",
-              "name": "Rate limit exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "45c2eb05-d7df-4b8e-ba84-fb49206649a7",
-              "name": "Server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e2d1df3f-a72b-416e-ac06-c5912dac56f0",
-              "name": "Server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "9d1a45f9-bb38-42fb-9ff3-83e0b740800c",
-          "name": "Get Voice Draft Localization Object by ID",
-          "request": {
-            "name": "Get Voice Draft Localization Object by ID",
-            "description": {
-              "content": "Returns a specific localization object of the matching Voice draft with a matching localization ID",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "voice",
-                "localizations",
-                ":localizationId",
-                "drafts",
-                ":draftId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "targetLanguage",
-                  "value": "<string>",
-                  "description": "The type of templating language to use when compiling the content."
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "draftId",
-                  "description": "(Required) A draft ID"
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "localizationId",
-                  "description": "(Required) A localization ID"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/vnd.dyspatch.2026.06+json"
-              }
-            ],
-            "method": "GET",
-            "auth": {
-              "type": "apikey",
-              "apikey": [
-                {
-                  "key": "key",
-                  "value": "Authorization"
-                },
-                {
-                  "key": "value",
-                  "value": "{{apiKey}}"
-                },
-                {
-                  "key": "in",
-                  "value": "header"
-                }
-              ]
-            }
-          },
-          "response": [
-            {
-              "id": "acd86115-194b-4d39-a4d1-616931915334",
-              "name": "A localization object from the matching draft ID with the requested ID",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId",
-                    "drafts",
-                    ":draftId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "draftId",
-                      "description": "(Required) A draft ID"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/vnd.dyspatch.2026.06+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the current time window",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/vnd.dyspatch.2026.06+json"
-                }
-              ],
-              "body": "{\n  \"id\": \"loc_g3L7Cw6Hp5wUaf395LehwK\",\n  \"languages\": [\n    \"fr-FR\",\n    \"fr-FR\"\n  ],\n  \"url\": \"/localizations/loc_g3L7Cw6Hp5wUaf395LehwK\",\n  \"template\": \"tem_g3L7Cw6Hp5wU\",\n  \"compiled\": {\n    \"content\": \"This is some text content\",\n    \"variables\": [\n      \"myVar\",\n      \"myVar\"\n    ]\n  },\n  \"createdAt\": \"1959-09-06T13:53:40.193Z\",\n  \"updatedAt\": \"1960-06-13T04:10:00.285Z\",\n  \"name\": \"English (US)\",\n  \"localeGroup\": \"lgr_alka38ajla301\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "547bbbb3-36d3-47c9-bcd6-a9d5cd284f7d",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId",
-                    "drafts",
-                    ":draftId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "draftId",
-                      "description": "(Required) A draft ID"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3d4e260b-9713-451b-b949-9a176ee28833",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId",
-                    "drafts",
-                    ":draftId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "draftId",
-                      "description": "(Required) A draft ID"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "2af17615-12ee-4ead-b1ff-d51bb7e92859",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId",
-                    "drafts",
-                    ":draftId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "draftId",
-                      "description": "(Required) A draft ID"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3242ebe5-92f5-4492-a23a-8463451177be",
-              "name": "Rate limit exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId",
-                    "drafts",
-                    ":draftId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "draftId",
-                      "description": "(Required) A draft ID"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "89ad5491-a3d9-43e4-952a-63158b97d8a1",
-              "name": "Server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId",
-                    "drafts",
-                    ":draftId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "draftId",
-                      "description": "(Required) A draft ID"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "009411e8-55ab-4c66-a4af-3c3f325b39aa",
-              "name": "Server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "voice",
-                    "localizations",
-                    ":localizationId",
-                    "drafts",
-                    ":draftId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "targetLanguage",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "draftId",
-                      "description": "(Required) A draft ID"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "localizationId",
-                      "description": "(Required) A localization ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "3234"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "e6f63e61-9af9-46e1-aa2d-bdc15911bc77",
+              "createdAt": "2026-10-21T20:46:06.000Z",
+              "updatedAt": "2026-10-21T20:46:06.000Z",
+              "uid": "35240-e6f63e61-9af9-46e1-aa2d-bdc15911bc77"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "a85f84e7-a799-4d1a-a17e-f7a5a6a1bb20",
+          "createdAt": "2026-10-21T20:46:06.000Z",
+          "updatedAt": "2026-10-21T20:46:06.000Z",
+          "uid": "35240-a85f84e7-a799-4d1a-a17e-f7a5a6a1bb20"
         }
       ],
-      "event": []
+      "id": "2b8eb562-53a0-4bb3-821e-4c90182b18d0",
+      "createdAt": "2026-10-21T20:46:06.000Z",
+      "updatedAt": "2026-10-21T20:46:06.000Z",
+      "uid": "35240-2b8eb562-53a0-4bb3-821e-4c90182b18d0"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.dyspatch.io",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.dyspatch.io"
     }
-  ],
-  "info": {
-    "_postman_id": "7296cd12-9e68-4a83-bb09-f13fcfa70dba",
-    "name": "Dyspatch Blocks Voice Localizations API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "# Introduction\n\nThe Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response\ncodes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.\nSee our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on\nhow to implement Dyspatch.\n\n## Generating API Clients\nDyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.\n\n\nContact Support:\n Name: Dyspatch Support\n Email: support@dyspatch.io",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

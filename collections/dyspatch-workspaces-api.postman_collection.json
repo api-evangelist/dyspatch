@@ -1,894 +1,846 @@
 {
+  "info": {
+    "_postman_id": "0bb5ff8d-7d6d-498a-8452-a10a310d461e",
+    "name": "Dyspatch Workspaces API",
+    "description": "# Introduction\n\nThe Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response\ncodes to indicate errors.\n\nContact Support:\n Name: Dyspatch Support\n Email: support@dyspatch.io",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T20:46:16.000Z",
+    "updatedAt": "2026-10-21T20:46:16.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-0bb5ff8d-7d6d-498a-8452-a10a310d461e"
+  },
   "item": [
     {
-      "id": "5ab33ad9-6175-4902-b475-eeb6d1d255d8",
-      "name": "Workspaces",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "workspaces",
       "item": [
         {
-          "id": "79383905-e9f2-4aa6-97f3-0d96372e73e7",
+          "name": "{folderId}",
+          "item": [
+            {
+              "name": "List Folder",
+              "id": "69b1a469-0a7d-4567-ae33-3c211dfcca3b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "key",
+                      "value": "Authorization",
+                      "type": "string"
+                    },
+                    {
+                      "key": "value",
+                      "value": "{{apiKey}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "in",
+                      "value": "header",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.dyspatch.2026.06+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces/:folderId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces",
+                    ":folderId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "037f0446-6e46-4b1e-abf5-dcfb29b48799",
+                      "key": "folderId",
+                      "value": "<string>",
+                      "description": "(Required) A workspace/folder ID"
+                    }
+                  ]
+                },
+                "description": "Gets a Folder with a list of its sub-folders for the provided id."
+              },
+              "response": [
+                {
+                  "id": "e0d33562-af95-4417-9cea-eebcf2c5e18d",
+                  "name": "Folder",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.dyspatch.2026.06+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:folderId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":folderId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folderId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.dyspatch.2026.06+json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"subfolders\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-21T20:46:17.000Z",
+                  "updatedAt": "2026-10-21T20:46:17.000Z",
+                  "uid": "35240-e0d33562-af95-4417-9cea-eebcf2c5e18d"
+                },
+                {
+                  "id": "9b5876a3-7ea8-472c-8338-0f6a1c542efa",
+                  "name": "Invalid request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:folderId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":folderId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folderId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:46:17.000Z",
+                  "updatedAt": "2026-10-21T20:46:17.000Z",
+                  "uid": "35240-9b5876a3-7ea8-472c-8338-0f6a1c542efa"
+                },
+                {
+                  "id": "e22b4969-89d5-436d-95d0-f83d476db8ca",
+                  "name": "Unauthenticated",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:folderId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":folderId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folderId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:46:17.000Z",
+                  "updatedAt": "2026-10-21T20:46:17.000Z",
+                  "uid": "35240-e22b4969-89d5-436d-95d0-f83d476db8ca"
+                },
+                {
+                  "id": "e8ca3e28-7641-414b-83ea-54118de37a1e",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:folderId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":folderId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folderId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:46:17.000Z",
+                  "updatedAt": "2026-10-21T20:46:17.000Z",
+                  "uid": "35240-e8ca3e28-7641-414b-83ea-54118de37a1e"
+                },
+                {
+                  "id": "fcedd575-0f1a-441c-8264-c708b1b26b9a",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:folderId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":folderId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folderId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:46:17.000Z",
+                  "updatedAt": "2026-10-21T20:46:17.000Z",
+                  "uid": "35240-fcedd575-0f1a-441c-8264-c708b1b26b9a"
+                },
+                {
+                  "id": "3aae4b56-e12a-40ee-a8de-c8ebb1330c8e",
+                  "name": "Server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:folderId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":folderId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folderId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of requests left for the time window.",
+                        "type": "text/plain"
+                      },
+                      "key": "X-RateLimit-Remaining",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T20:46:17.000Z",
+                  "updatedAt": "2026-10-21T20:46:17.000Z",
+                  "uid": "35240-3aae4b56-e12a-40ee-a8de-c8ebb1330c8e"
+                }
+              ],
+              "createdAt": "2026-10-21T20:46:17.000Z",
+              "updatedAt": "2026-10-21T20:46:17.000Z",
+              "uid": "35240-69b1a469-0a7d-4567-ae33-3c211dfcca3b"
+            }
+          ],
+          "id": "a83e49d2-4a78-49fc-842a-93393a6aff5a",
+          "createdAt": "2026-10-21T20:46:17.000Z",
+          "updatedAt": "2026-10-21T20:46:17.000Z",
+          "uid": "35240-a83e49d2-4a78-49fc-842a-93393a6aff5a"
+        },
+        {
           "name": "List Workspaces",
+          "id": "9b746795-820e-4750-94cf-57a57ff91359",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "List Workspaces",
-            "description": {
-              "content": "Gets a list of Workspace objects for all workspaces. Up to 25 results returned before results are paginated.",
-              "type": "text/plain"
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
             },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.dyspatch.2026.06+json"
+              }
+            ],
             "url": {
+              "raw": "{{baseUrl}}/workspaces?cursor=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "workspaces"
               ],
-              "host": [
-                "{{baseUrl}}"
-              ],
               "query": [
                 {
-                  "disabled": false,
+                  "description": "A cursor value used to retrieve a specific page from a paginated result set.",
                   "key": "cursor",
-                  "value": "<string>",
-                  "description": "A cursor value used to retrieve a specific page from a paginated result set."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/vnd.dyspatch.2026.06+json"
-              }
-            ],
-            "method": "GET",
-            "auth": {
-              "type": "apikey",
-              "apikey": [
-                {
-                  "key": "key",
-                  "value": "Authorization"
-                },
-                {
-                  "key": "value",
-                  "value": "{{apiKey}}"
-                },
-                {
-                  "key": "in",
-                  "value": "header"
+                  "value": "<string>"
                 }
               ]
-            }
+            },
+            "description": "Gets a list of Workspace objects for all workspaces. Up to 25 results returned before results are paginated."
           },
           "response": [
             {
-              "id": "9bc9a1be-c53e-43c7-be09-7f7b2baa9ed4",
+              "id": "a9da07cd-5eec-4827-9670-6d2a62f7aa17",
               "name": "A list of workspaces",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/vnd.dyspatch.2026.06+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/vnd.dyspatch.2026.06+json"
-                }
-              ],
-              "body": "{\n  \"cursor\": {\n    \"next\": \"string\",\n    \"hasMore\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"fdr_01g0z4d5aw\",\n      \"name\": \"Name of Folder\",\n      \"description\": \"Description of Folder\",\n      \"url\": \"/workspaces/fdr_g3L7Cw6Hp5wUaf395LehwK\",\n      \"createdAt\": \"2021-04-11T10:33:02.302Z\",\n      \"updatedAt\": \"1952-02-15T02:11:45.410Z\"\n    },\n    {\n      \"id\": \"fdr_01g0z4d5aw\",\n      \"name\": \"Name of Folder\",\n      \"description\": \"Description of Folder\",\n      \"url\": \"/workspaces/fdr_g3L7Cw6Hp5wUaf395LehwK\",\n      \"createdAt\": \"1968-06-16T22:15:24.000Z\",\n      \"updatedAt\": \"2019-02-02T15:59:23.204Z\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "0aec87df-4f71-451a-b04d-6b501c179209",
-              "name": "Invalid request",
-              "originalRequest": {
                 "url": {
-                  "path": [
-                    "workspaces"
-                  ],
+                  "raw": "{{baseUrl}}/workspaces?cursor=<string>",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "workspaces"
+                  ],
                   "query": [
                     {
+                      "description": "A cursor value used to retrieve a specific page from a paginated result set.",
                       "key": "cursor",
                       "value": "<string>"
                     }
-                  ],
-                  "variable": []
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.dyspatch.2026.06+json"
                 },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of requests left for the time window.",
+                    "type": "text/plain"
+                  },
+                  "key": "X-RateLimit-Remaining",
+                  "value": "<integer>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"cursor\": {\n    \"next\": \"<string>\",\n    \"hasMore\": \"<boolean>\"\n  },\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    }\n  ]\n}",
+              "createdAt": "2026-10-21T20:46:17.000Z",
+              "updatedAt": "2026-10-21T20:46:17.000Z",
+              "uid": "35240-a9da07cd-5eec-4827-9670-6d2a62f7aa17"
+            },
+            {
+              "id": "76dca322-5dc7-4dcb-9b62-f1a4906638c8",
+              "name": "Invalid request",
+              "originalRequest": {
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
                   {
                     "key": "Accept",
                     "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces?cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ],
+                  "query": [
+                    {
+                      "description": "A cursor value used to retrieve a specific page from a paginated result set.",
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ]
+                }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "text",
               "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
                 {
                   "key": "Content-Type",
                   "value": "*/*"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of requests left for the time window.",
+                    "type": "text/plain"
+                  },
+                  "key": "X-RateLimit-Remaining",
+                  "value": "<integer>"
                 }
               ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T20:46:17.000Z",
+              "updatedAt": "2026-10-21T20:46:17.000Z",
+              "uid": "35240-76dca322-5dc7-4dcb-9b62-f1a4906638c8"
             },
             {
-              "id": "1712a360-527c-4785-ba84-97aab356ca4a",
+              "id": "99f16ee5-3958-4b31-8637-37df9741353f",
               "name": "Unauthorized",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
                   {
                     "key": "Accept",
                     "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces?cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ],
+                  "query": [
+                    {
+                      "description": "A cursor value used to retrieve a specific page from a paginated result set.",
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ]
+                }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "text",
               "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
                 {
                   "key": "Content-Type",
                   "value": "*/*"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of requests left for the time window.",
+                    "type": "text/plain"
+                  },
+                  "key": "X-RateLimit-Remaining",
+                  "value": "<integer>"
                 }
               ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T20:46:17.000Z",
+              "updatedAt": "2026-10-21T20:46:17.000Z",
+              "uid": "35240-99f16ee5-3958-4b31-8637-37df9741353f"
             },
             {
-              "id": "9442c5a4-a1c6-4192-a483-9d60c5248905",
+              "id": "dc7f4477-953b-4ff0-b30a-047e8f10a8d8",
               "name": "Rate limit exceeded",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "cursor",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
                   {
                     "key": "Accept",
                     "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces?cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ],
+                  "query": [
+                    {
+                      "description": "A cursor value used to retrieve a specific page from a paginated result set.",
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ]
+                }
               },
               "status": "Too Many Requests",
               "code": 429,
+              "_postman_previewlanguage": "text",
               "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
                 {
                   "key": "Content-Type",
                   "value": "*/*"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of requests left for the time window.",
+                    "type": "text/plain"
+                  },
+                  "key": "X-RateLimit-Remaining",
+                  "value": "<integer>"
                 }
               ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T20:46:17.000Z",
+              "updatedAt": "2026-10-21T20:46:17.000Z",
+              "uid": "35240-dc7f4477-953b-4ff0-b30a-047e8f10a8d8"
             },
             {
-              "id": "bbbf2489-f771-4b5a-a83b-6e17705cc1b2",
+              "id": "656d14bb-523c-41ab-9405-bb8e110e3b52",
               "name": "Server error",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
+                  "raw": "{{baseUrl}}/workspaces?cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "workspaces"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "A cursor value used to retrieve a specific page from a paginated result set.",
                       "key": "cursor",
                       "value": "<string>"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "Internal Server Error",
               "code": 500,
+              "_postman_previewlanguage": "text",
               "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
                 {
                   "key": "Content-Type",
                   "value": "*/*"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of requests left for the time window.",
+                    "type": "text/plain"
+                  },
+                  "key": "X-RateLimit-Remaining",
+                  "value": "<integer>"
                 }
               ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T20:46:17.000Z",
+              "updatedAt": "2026-10-21T20:46:17.000Z",
+              "uid": "35240-656d14bb-523c-41ab-9405-bb8e110e3b52"
             },
             {
-              "id": "5b482eda-3dc2-4714-ad05-96de1931691c",
+              "id": "af29b70a-206c-4b4a-9393-01c5e37a71df",
               "name": "Server error",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
                 "url": {
+                  "raw": "{{baseUrl}}/workspaces?cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "workspaces"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "A cursor value used to retrieve a specific page from a paginated result set.",
                       "key": "cursor",
                       "value": "<string>"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "Internal Server Error",
               "code": 500,
+              "_postman_previewlanguage": "text",
               "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
                 {
                   "key": "Content-Type",
                   "value": "*/*"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of requests left for the time window.",
+                    "type": "text/plain"
+                  },
+                  "key": "X-RateLimit-Remaining",
+                  "value": "<integer>"
                 }
               ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"<string>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T20:46:17.000Z",
+              "updatedAt": "2026-10-21T20:46:17.000Z",
+              "uid": "35240-af29b70a-206c-4b4a-9393-01c5e37a71df"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "482da220-a2c1-474b-936e-31316213bcfa",
-          "name": "List Folder",
-          "request": {
-            "name": "List Folder",
-            "description": {
-              "content": "Gets a Folder with a list of its sub-folders for the provided id.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "workspaces",
-                ":folderId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "folderId",
-                  "description": "(Required) A workspace/folder ID"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/vnd.dyspatch.2026.06+json"
-              }
-            ],
-            "method": "GET",
-            "auth": {
-              "type": "apikey",
-              "apikey": [
-                {
-                  "key": "key",
-                  "value": "Authorization"
-                },
-                {
-                  "key": "value",
-                  "value": "{{apiKey}}"
-                },
-                {
-                  "key": "in",
-                  "value": "header"
-                }
-              ]
-            }
-          },
-          "response": [
-            {
-              "id": "b7001786-71b3-4cf8-b985-cbcd85e3faf4",
-              "name": "Folder",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces",
-                    ":folderId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "folderId",
-                      "description": "(Required) A workspace/folder ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/vnd.dyspatch.2026.06+json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/vnd.dyspatch.2026.06+json"
-                }
-              ],
-              "body": "{\n  \"id\": \"fdr_01g0z4d5aw\",\n  \"name\": \"Name of Folder\",\n  \"description\": \"Description of Folder\",\n  \"url\": \"/workspaces/fdr_g3L7Cw6Hp5wUaf395LehwK\",\n  \"createdAt\": \"1999-12-15T11:50:59.187Z\",\n  \"updatedAt\": \"1952-03-03T08:35:22.671Z\",\n  \"subfolders\": [\n    {\n      \"id\": \"fdr_01g0z4d5aw\",\n      \"name\": \"Name of Folder\",\n      \"description\": \"Description of Folder\",\n      \"url\": \"/workspaces/fdr_g3L7Cw6Hp5wUaf395LehwK\",\n      \"createdAt\": \"2025-02-01T05:27:17.346Z\",\n      \"updatedAt\": \"2001-01-26T08:04:53.599Z\"\n    },\n    {\n      \"id\": \"fdr_01g0z4d5aw\",\n      \"name\": \"Name of Folder\",\n      \"description\": \"Description of Folder\",\n      \"url\": \"/workspaces/fdr_g3L7Cw6Hp5wUaf395LehwK\",\n      \"createdAt\": \"1972-02-06T15:45:40.326Z\",\n      \"updatedAt\": \"1987-03-05T17:12:10.578Z\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "45bd1350-4a26-46a5-8e13-68e121f14316",
-              "name": "Invalid request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces",
-                    ":folderId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "folderId",
-                      "description": "(Required) A workspace/folder ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a3625cdf-9be3-488c-85b1-5366d28a8516",
-              "name": "Unauthenticated",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces",
-                    ":folderId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "folderId",
-                      "description": "(Required) A workspace/folder ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d923b6e3-dabf-4a3e-8c5d-c0a03e042073",
-              "name": "Rate limit exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces",
-                    ":folderId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "folderId",
-                      "description": "(Required) A workspace/folder ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "23bac672-672b-4386-b9d2-6edeb8e13e4c",
-              "name": "Server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces",
-                    ":folderId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "folderId",
-                      "description": "(Required) A workspace/folder ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "1a753725-e8ee-4786-9e45-5793794b0db6",
-              "name": "Server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces",
-                    ":folderId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "folderId",
-                      "description": "(Required) A workspace/folder ID"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "(Required) A version of the API that should be used for the request. For example, to use version \"2026.06\", set the value to \"application/vnd.dyspatch.2026.06+json\"",
-                    "key": "Accept",
-                    "value": "string"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "The number of requests left for the time window.",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "378"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "*/*"
-                }
-              ],
-              "body": "{\n  \"code\": \"rate_limited\",\n  \"message\": \"string\",\n  \"parameter\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-21T20:46:17.000Z",
+          "updatedAt": "2026-10-21T20:46:17.000Z",
+          "uid": "35240-9b746795-820e-4750-94cf-57a57ff91359"
         }
       ],
-      "event": []
+      "id": "78cf7bbe-c278-48c5-ab6f-c5e121744324",
+      "createdAt": "2026-10-21T20:46:17.000Z",
+      "updatedAt": "2026-10-21T20:46:17.000Z",
+      "uid": "35240-78cf7bbe-c278-48c5-ab6f-c5e121744324"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.dyspatch.io",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.dyspatch.io"
     }
-  ],
-  "info": {
-    "_postman_id": "946b4187-12c3-4b64-897a-203b0123c994",
-    "name": "Dyspatch Blocks Workspaces API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "# Introduction\n\nThe Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response\ncodes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.\nSee our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on\nhow to implement Dyspatch.\n\n## Generating API Clients\nDyspatch provides OpenAPI specifications for our API which can be used to generate API clients in various programming languages. We recommend using [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). To download the latest OpenAPI specifications, click the Download button at the top of this page. To download a specific version, view the [changelog](https://docs.dyspatch.io/api/changelog.html) and select the desired version.\n\n\nContact Support:\n Name: Dyspatch Support\n Email: support@dyspatch.io",
-      "type": "text/plain"
-    }
-  }
+  ]
 }
